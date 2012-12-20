@@ -199,14 +199,51 @@ function updateMemFuncCanvas(variable) {
 	ctx.closePath();                // Ends drawing
 	ctx.fill();                     // Fills rectangle w/ active color
 	
+	
+	// Draw axis and labels
+	ctx.lineWidth = 1;				// Set line width
+	ctx.strokeStyle = "#999";		// Set line color
+	ctx.fillStyle = "#999";			// Set line color
+	// Bottom Line
+	ctx.beginPath();
+	ctx.moveTo(0,FUNC_BOT);
+	ctx.lineTo(CANVAS_WIDTH,FUNC_BOT);
+	ctx.stroke();
+	// Top Line
+	ctx.beginPath();
+	ctx.moveTo(0,FUNC_TOP);
+	ctx.lineTo(CANVAS_WIDTH,FUNC_TOP);
+	ctx.stroke();
+	// Center Line
+	ctx.beginPath();
+	ctx.moveTo(CANVAS_WIDTH/2,0);
+	ctx.lineTo(CANVAS_WIDTH/2,CANVAS_HEIGHT);
+	ctx.stroke();
+	// Y Axis Labels
+	ctx.font = '20px san-serif';
+	ctx.textBaseline = 'top';
+    ctx.textAlign = 'left';
+	ctx.fillText("1", CANVAS_WIDTH/2+5, FUNC_TOP+5);
+	// X Axis Labels
+	ctx.fillText("0", CANVAS_WIDTH/2+5, FUNC_BOT+5);
+    ctx.textAlign = 'center';
+	for (i=1;i<12;i=i+1){
+		if (i != 6) {
+			axis_label = i*100 - 600;
+			ctx.fillText(axis_label, i*100, FUNC_BOT+5);
+		}
+	}
+    ctx.textAlign = 'right';
+	ctx.fillText("600", 1200-5, FUNC_BOT+5);
+    ctx.textAlign = 'left';
+	ctx.fillText("-600", 5, FUNC_BOT+5);
+	
 	// Draw lines
 	drawMemFunc(variable, "farleft", "#339");
 	drawMemFunc(variable, "left", "#393");
 	drawMemFunc(variable, "center", "#933");
 	drawMemFunc(variable, "right", "#993");
 	drawMemFunc(variable, "farright", "#399");
-	
-	// Draw axis and labels
 	
 }
 
@@ -215,9 +252,9 @@ function drawMemFunc(variable, memfunc, color) {
 	// Setup line
 	var canvas = document.getElementById('canvas_memfunc_'+variable);
 	var ctx = canvas.getContext('2d');
-	ctx.lineWidth = 6;				// Set line width
+	ctx.lineWidth = 3;				// Set line width
 	ctx.strokeStyle = color;		// Set line color
-	ctx.fillStyle = color;		// Set line color
+	ctx.fillStyle = color;			// Set line color
 	
 	// Determine points
 	var lbp = 600+ai_variables['memfunc_'+variable+'_'+memfunc+'_lbp'],
@@ -251,7 +288,5 @@ function drawMemFunc(variable, memfunc, color) {
 	ctx.font = '20px san-serif';
 	ctx.textBaseline = 'bottom';
     ctx.textAlign = 'center';
-	console.log('memfunc_'+variable+'_'+memfunc+'_name');
-	console.log(ai_variables['memfunc_'+variable+'_'+memfunc+'_name']);
 	ctx.fillText(ai_variables['memfunc_'+variable+'_'+memfunc+'_name'], (lpp+(rpp-lpp)/2), FUNC_TOP);
 }
