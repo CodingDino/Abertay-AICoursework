@@ -7,7 +7,7 @@
 var ai_variables = new AIVariables();
 var CANVAS_WIDTH = 1200,                 
 	CANVAS_HEIGHT = 300,
-	FUNC_TOP = 20,
+	FUNC_TOP = 50,
 	FUNC_BOT = 250;
 
 // ************************************************************************
@@ -43,10 +43,6 @@ function inputUpdate(variable, memfunc, point, newValue)
 		if (newValue > 10)
 			newValue = 10;
 	}
-	console.log("variable = "+variable)
-	console.log("memfunc = "+memfunc)
-	console.log("point = "+point)
-	console.log("newValue = "+newValue)
 	// Update input fields
 	if (document.getElementById("input_memfunc_"+variable+"_"+memfunc+"_"+point))
 		document.getElementById("input_memfunc_"+variable+"_"+memfunc+"_"+point).value=newValue;
@@ -54,7 +50,8 @@ function inputUpdate(variable, memfunc, point, newValue)
 		document.getElementById("readout_memfunc_"+variable+"_"+memfunc+"_"+point).value=newValue;
 		
 	// Update value
-	ai_variables["memfunc_"+variable+"_"+memfunc+"_"+point] = parseInt(newValue, 10);
+	if (point != "name")
+		ai_variables["memfunc_"+variable+"_"+memfunc+"_"+point] = parseInt(newValue, 10);
 	
 	// Update canvas
 	updateMemFuncCanvas("pos");
@@ -71,88 +68,98 @@ function AIVariables() {
     // ********************************************************************
 	
 	// Far Left Member Function
-    this.memfunc_pos_farleft_lbp = -1000;
-    this.memfunc_pos_farleft_lpp = -1000;
+    this.memfunc_pos_farleft_lbp = -650;
+    this.memfunc_pos_farleft_lpp = -650;
     this.memfunc_pos_farleft_lc = 0;
-    this.memfunc_pos_farleft_rpp = -400;
-    this.memfunc_pos_farleft_rbp = -300;
+    this.memfunc_pos_farleft_rpp = -350;
+    this.memfunc_pos_farleft_rbp = -250;
     this.memfunc_pos_farleft_rc = 0;
+    this.memfunc_pos_farleft_name = "Far Left";
 	
 	// Left Member Function
-    this.memfunc_pos_left_lbp = -400;
-    this.memfunc_pos_left_lpp = -300;
+    this.memfunc_pos_left_lbp = -350;
+    this.memfunc_pos_left_lpp = -250;
     this.memfunc_pos_left_lc = 0;
-    this.memfunc_pos_left_rpp = -200;
-    this.memfunc_pos_left_rbp = -100;
+    this.memfunc_pos_left_rpp = -150;
+    this.memfunc_pos_left_rbp = -50;
     this.memfunc_pos_left_rc = 0;
+    this.memfunc_pos_left_name = "Left";
 	
 	// Center Member Function
-    this.memfunc_pos_center_lbp = -200;
-    this.memfunc_pos_center_lpp = -100;
+    this.memfunc_pos_center_lbp = -150;
+    this.memfunc_pos_center_lpp = -50;
     this.memfunc_pos_center_lc = 0;
-    this.memfunc_pos_center_rpp = 0;
-    this.memfunc_pos_center_rbp = 100;
+    this.memfunc_pos_center_rpp = 50;
+    this.memfunc_pos_center_rbp = 150;
     this.memfunc_pos_center_rc = 0;
+    this.memfunc_pos_center_name = "Center";
 	
 	// Right Member Function
-    this.memfunc_pos_right_lbp = 0;
-    this.memfunc_pos_right_lpp = 100;
+    this.memfunc_pos_right_lbp = 50;
+    this.memfunc_pos_right_lpp = 150;
     this.memfunc_pos_right_lc = 0;
-    this.memfunc_pos_right_rpp = 200;
-    this.memfunc_pos_right_rbp = 300;
+    this.memfunc_pos_right_rpp = 250;
+    this.memfunc_pos_right_rbp = 350;
     this.memfunc_pos_right_rc = 0;
+    this.memfunc_pos_right_name = "Right";
 	
 	// Far Right Member Function
-    this.memfunc_pos_farright_lbp = 200;
-    this.memfunc_pos_farright_lpp = 300;
+    this.memfunc_pos_farright_lbp = 250;
+    this.memfunc_pos_farright_lpp = 350;
     this.memfunc_pos_farright_lc = 0;
-    this.memfunc_pos_farright_rpp = 1000;
-    this.memfunc_pos_farright_rbp = 1000;
+    this.memfunc_pos_farright_rpp = 650;
+    this.memfunc_pos_farright_rbp = 650;
     this.memfunc_pos_farright_rc = 0;
+    this.memfunc_pos_farright_name = "Far Right";
 	
     // ********************************************************************
     // Line Velocity Member Function 
     // ********************************************************************
 	
 	// Far Left Member Function
-    this.memfunc_vel_farleft_lbp = -1000;
-    this.memfunc_vel_farleft_lpp = -1000;
+    this.memfunc_vel_farleft_lbp = -650;
+    this.memfunc_vel_farleft_lpp = -650;
     this.memfunc_vel_farleft_lc = 0;
-    this.memfunc_vel_farleft_rpp = -400;
-    this.memfunc_vel_farleft_rbp = -300;
+    this.memfunc_vel_farleft_rpp = -350;
+    this.memfunc_vel_farleft_rbp = -250;
     this.memfunc_vel_farleft_rc = 0;
+    this.memfunc_vel_farleft_name = "Large Left";
 	
 	// Left Member Function
-    this.memfunc_vel_left_lbp = -400;
-    this.memfunc_vel_left_lpp = -300;
+    this.memfunc_vel_left_lbp = -350;
+    this.memfunc_vel_left_lpp = -250;
     this.memfunc_vel_left_lc = 0;
-    this.memfunc_vel_left_rpp = -200;
-    this.memfunc_vel_left_rbp = -100;
+    this.memfunc_vel_left_rpp = -150;
+    this.memfunc_vel_left_rbp = -50;
     this.memfunc_vel_left_rc = 0;
+    this.memfunc_vel_left_name = "Left";
 	
 	// Center Member Function
-    this.memfunc_vel_center_lbp = -200;
-    this.memfunc_vel_center_lpp = -100;
+    this.memfunc_vel_center_lbp = -150;
+    this.memfunc_vel_center_lpp = -50;
     this.memfunc_vel_center_lc = 0;
-    this.memfunc_vel_center_rpp = 0;
-    this.memfunc_vel_center_rbp = 100;
+    this.memfunc_vel_center_rpp = 50;
+    this.memfunc_vel_center_rbp = 150;
     this.memfunc_vel_center_rc = 0;
+    this.memfunc_vel_center_name = "None";
 	
 	// Right Member Function
-    this.memfunc_vel_right_lbp = 0;
-    this.memfunc_vel_right_lpp = 100;
+    this.memfunc_vel_right_lbp = 50;
+    this.memfunc_vel_right_lpp = 150;
     this.memfunc_vel_right_lc = 0;
-    this.memfunc_vel_right_rpp = 200;
-    this.memfunc_vel_right_rbp = 300;
+    this.memfunc_vel_right_rpp = 250;
+    this.memfunc_vel_right_rbp = 350;
     this.memfunc_vel_right_rc = 0;
+    this.memfunc_vel_right_name = "Right";
 	
 	// Far Right Member Function
-    this.memfunc_vel_farright_lbp = 200;
-    this.memfunc_vel_farright_lpp = 300;
+    this.memfunc_vel_farright_lbp = 250;
+    this.memfunc_vel_farright_lpp = 350;
     this.memfunc_vel_farright_lc = 0;
-    this.memfunc_vel_farright_rpp = 1000;
-    this.memfunc_vel_farright_rbp = 1000;
+    this.memfunc_vel_farright_rpp = 650;
+    this.memfunc_vel_farright_rbp = 650;
     this.memfunc_vel_farright_rc = 0;
+    this.memfunc_vel_farright_name = "Large Right";
 }
 
 // ************************************************************************
@@ -193,11 +200,14 @@ function updateMemFuncCanvas(variable) {
 	ctx.fill();                     // Fills rectangle w/ active color
 	
 	// Draw lines
-	drawMemFunc(variable, "farleft", "#333");
-	drawMemFunc(variable, "left", "#333");
-	drawMemFunc(variable, "center", "#333");
-	drawMemFunc(variable, "right", "#333");
-	drawMemFunc(variable, "farright", "#333");
+	drawMemFunc(variable, "farleft", "#339");
+	drawMemFunc(variable, "left", "#393");
+	drawMemFunc(variable, "center", "#933");
+	drawMemFunc(variable, "right", "#993");
+	drawMemFunc(variable, "farright", "#399");
+	
+	// Draw axis and labels
+	
 }
 
 function drawMemFunc(variable, memfunc, color) {
@@ -207,6 +217,7 @@ function drawMemFunc(variable, memfunc, color) {
 	var ctx = canvas.getContext('2d');
 	ctx.lineWidth = 6;				// Set line width
 	ctx.strokeStyle = color;		// Set line color
+	ctx.fillStyle = color;		// Set line color
 	
 	// Determine points
 	var lbp = 600+ai_variables['memfunc_'+variable+'_'+memfunc+'_lbp'],
@@ -235,4 +246,12 @@ function drawMemFunc(variable, memfunc, color) {
 	ctx.moveTo(rpp, FUNC_TOP);
 	ctx.bezierCurveTo(rpc, FUNC_TOP, rbc, FUNC_BOT, rbp, FUNC_BOT);
 	ctx.stroke();
+	
+	// Title
+	ctx.font = '20px san-serif';
+	ctx.textBaseline = 'bottom';
+    ctx.textAlign = 'center';
+	console.log('memfunc_'+variable+'_'+memfunc+'_name');
+	console.log(ai_variables['memfunc_'+variable+'_'+memfunc+'_name']);
+	ctx.fillText(ai_variables['memfunc_'+variable+'_'+memfunc+'_name'], (lpp+(rpp-lpp)/2), FUNC_TOP);
 }
