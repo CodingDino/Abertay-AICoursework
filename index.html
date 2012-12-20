@@ -1,0 +1,749 @@
+<html>
+    <head>
+        <title>AI Coursework - Sarah Herzog</title>
+        <style>
+        body {
+            margin:50px;
+            padding:0px;
+        }
+        
+        canvas {
+            outline:0;
+            border:1px solid #000;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        </style>
+    </head>
+    <body>
+		
+		<!-- Utility Scripts -->
+        <script src="Utility.js"></script>
+		
+		<!-- Title -->
+		<h1>AI Coursework - Sarah Herzog</h1>
+		<br />
+		
+		<!-- Line Position Membership Function -->
+		<table width="1200px">
+			<tr>
+				<td colspan="10">
+					<hr />
+					<h2>Line Position Membership Function</h2>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<h3>Position = Far Left</h3>
+				</td>
+				<td colspan="2">
+					<h3>Position = Left</h3>
+				</td>
+				<td colspan="2">
+					<h3>Position = Center</h3>
+				</td>
+				<td colspan="2">
+					<h3>Position = Right</h3>
+				</td>
+				<td colspan="2">
+					<h3>Position = Far Right</h3>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+					Left Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_left_lbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('pos', 'left', 'lbp',  this.value)"/>
+				</td>
+				<td>
+					Left Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_center_lbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('pos', 'center', 'lbp',  this.value)"/>
+				</td>
+				<td>
+					Left Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_right_lbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('pos', 'right', 'lbp',  this.value)"/>
+				</td>
+				<td>
+					Left Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_farright_lbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('pos', 'farright', 'lbp',  this.value)"/>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_pos_left_lbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('pos', 'left', 'lbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_pos_center_lbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('pos', 'center', 'lbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_pos_right_lbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('pos', 'right', 'lbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_pos_farright_lbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('pos', 'farright', 'lbp',  this.value)" /> 600
+				</td>
+			</tr>
+			<tr>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+					Left Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_left_lpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('pos', 'left', 'lpp',  this.value)"/>
+				</td>
+				<td>
+					Left Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_center_lpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('pos', 'center', 'lpp',  this.value)"/>
+				</td>
+				<td>
+					Left Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_right_lpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('pos', 'right', 'lpp',  this.value)"/>
+				</td>
+				<td>
+					Left Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_farright_lpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('pos', 'farright', 'lpp',  this.value)"/>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_pos_left_lpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('pos', 'left', 'lpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_pos_center_lpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('pos', 'center', 'lpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_pos_right_lpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('pos', 'right', 'lpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_pos_farright_lpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('pos', 'farright', 'lpp',  this.value)" /> 600
+				</td>
+			</tr>
+			<tr>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+					Left Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_left_lc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('pos', 'left', 'lc',  this.value)"/>
+				</td>
+				<td>
+					Left Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_center_lc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('pos', 'center', 'lc',  this.value)"/>
+				</td>
+				<td>
+					Left Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_right_lc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('pos', 'right', 'lc',  this.value)"/>
+				</td>
+				<td>
+					Left Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_farright_lc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('pos', 'farright', 'lc',  this.value)"/>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_pos_left_lc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('pos', 'left', 'lc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_pos_center_lc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('pos', 'center', 'lc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_pos_right_lc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('pos', 'right', 'lc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_pos_farright_lc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('pos', 'farright', 'lc',  this.value)" /> 10
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Right Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_farleft_rpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('pos', 'farleft', 'rpp',  this.value)"/>
+				</td>
+				<td>
+					Right Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_left_rpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('pos', 'left', 'rpp',  this.value)"/>
+				</td>
+				<td>
+					Right Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_center_rpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('pos', 'center', 'rpp',  this.value)"/>
+				</td>
+				<td>
+					Right Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_right_rpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('pos', 'right', 'rpp',  this.value)"/>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					-600 <input id="input_memfunc_pos_farleft_rpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('pos', 'farleft', 'rpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_pos_left_rpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('pos', 'left', 'rpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_pos_center_rpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('pos', 'center', 'rpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_pos_right_rpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('pos', 'right', 'rpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Right Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_farleft_rbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('pos', 'farleft', 'rbp',  this.value)"/>
+				</td>
+				<td>
+					Right Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_left_rbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('pos', 'left', 'rbp',  this.value)"/>
+				</td>
+				<td>
+					Right Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_center_rbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('pos', 'center', 'rbp',  this.value)"/>
+				</td>
+				<td>
+					Right Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_right_rbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('pos', 'right', 'rbp',  this.value)"/>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					-600 <input id="input_memfunc_pos_farleft_rbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('pos', 'farleft', 'rbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_pos_left_rbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('pos', 'left', 'rbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_pos_center_rbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('pos', 'center', 'rbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_pos_right_rbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('pos', 'right', 'rbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Right Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_farleft_rc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('pos', 'farleft', 'rc',  this.value)"/>
+				</td>
+				<td>
+					Right Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_left_rc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('pos', 'left', 'rc',  this.value)"/>
+				</td>
+				<td>
+					Right Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_center_rc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('pos', 'center', 'rc',  this.value)"/>
+				</td>
+				<td>
+					Right Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_pos_right_rc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('pos', 'right', 'rc',  this.value)"/>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					0 <input id="input_memfunc_pos_farleft_rc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('pos', 'farleft', 'rc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_pos_left_rc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('pos', 'left', 'rc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_pos_center_rc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('pos', 'center', 'rc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_pos_right_rc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('pos', 'right', 'rc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="10">
+					<canvas id="canvas_memfunc_pos"></canvas>
+				</td>
+			</tr>
+		</table>
+		
+		<!-- Line Velocity Membership Function -->
+		<table width="1200px">
+			<tr>
+				<td colspan="10">
+					<hr />
+					<h2>Line Velocity Membership Function</h2>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<h3>Velocity = Large Left</h3>
+				</td>
+				<td colspan="2">
+					<h3>Velocity = Left</h3>
+				</td>
+				<td colspan="2">
+					<h3>Velocity = None</h3>
+				</td>
+				<td colspan="2">
+					<h3>Velocity = Right</h3>
+				</td>
+				<td colspan="2">
+					<h3>Velocity = Large Right</h3>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+					Left Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_left_lbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('vel', 'left', 'lbp',  this.value)"/>
+				</td>
+				<td>
+					Left Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_center_lbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('vel', 'center', 'lbp',  this.value)"/>
+				</td>
+				<td>
+					Left Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_right_lbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('vel', 'right', 'lbp',  this.value)"/>
+				</td>
+				<td>
+					Left Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_farright_lbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('vel', 'farright', 'lbp',  this.value)"/>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_vel_left_lbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('vel', 'left', 'lbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_vel_center_lbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('vel', 'center', 'lbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_vel_right_lbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('vel', 'right', 'lbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_vel_farright_lbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('vel', 'farright', 'lbp',  this.value)" /> 600
+				</td>
+			</tr>
+			<tr>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+					Left Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_left_lpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('vel', 'left', 'lpp',  this.value)"/>
+				</td>
+				<td>
+					Left Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_center_lpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('vel', 'center', 'lpp',  this.value)"/>
+				</td>
+				<td>
+					Left Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_right_lpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('vel', 'right', 'lpp',  this.value)"/>
+				</td>
+				<td>
+					Left Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_farright_lpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('vel', 'farright', 'lpp',  this.value)"/>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_vel_left_lpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('vel', 'left', 'lpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_vel_center_lpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('vel', 'center', 'lpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_vel_right_lpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('vel', 'right', 'lpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_vel_farright_lpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('vel', 'farright', 'lpp',  this.value)" /> 600
+				</td>
+			</tr>
+			<tr>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+					Left Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_left_lc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('vel', 'left', 'lc',  this.value)"/>
+				</td>
+				<td>
+					Left Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_center_lc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('vel', 'center', 'lc',  this.value)"/>
+				</td>
+				<td>
+					Left Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_right_lc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('vel', 'right', 'lc',  this.value)"/>
+				</td>
+				<td>
+					Left Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_farright_lc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('vel', 'farright', 'lc',  this.value)"/>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_vel_left_lc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('vel', 'left', 'lc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_vel_center_lc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('vel', 'center', 'lc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_vel_right_lc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('vel', 'right', 'lc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_vel_farright_lc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('vel', 'farright', 'lc',  this.value)" /> 10
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Right Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_farleft_rpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('vel', 'farleft', 'rpp',  this.value)"/>
+				</td>
+				<td>
+					Right Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_left_rpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('vel', 'left', 'rpp',  this.value)"/>
+				</td>
+				<td>
+					Right Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_center_rpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('vel', 'center', 'rpp',  this.value)"/>
+				</td>
+				<td>
+					Right Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_right_rpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('vel', 'right', 'rpp',  this.value)"/>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					-600 <input id="input_memfunc_vel_farleft_rpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('vel', 'farleft', 'rpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_vel_left_rpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('vel', 'left', 'rpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_vel_center_rpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('vel', 'center', 'rpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_vel_right_rpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('vel', 'right', 'rpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Right Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_farleft_rbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('vel', 'farleft', 'rbp',  this.value)"/>
+				</td>
+				<td>
+					Right Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_left_rbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('vel', 'left', 'rbp',  this.value)"/>
+				</td>
+				<td>
+					Right Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_center_rbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('vel', 'center', 'rbp',  this.value)"/>
+				</td>
+				<td>
+					Right Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_right_rbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('vel', 'right', 'rbp',  this.value)"/>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					-600 <input id="input_memfunc_vel_farleft_rbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('vel', 'farleft', 'rbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_vel_left_rbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('vel', 'left', 'rbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_vel_center_rbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('vel', 'center', 'rbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_vel_right_rbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('vel', 'right', 'rbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Right Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_farleft_rc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('vel', 'farleft', 'rc',  this.value)"/>
+				</td>
+				<td>
+					Right Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_left_rc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('vel', 'left', 'rc',  this.value)"/>
+				</td>
+				<td>
+					Right Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_center_rc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('vel', 'center', 'rc',  this.value)"/>
+				</td>
+				<td>
+					Right Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_vel_right_rc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('vel', 'right', 'rc',  this.value)"/>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					0 <input id="input_memfunc_vel_farleft_rc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('vel', 'farleft', 'rc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_vel_left_rc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('vel', 'left', 'rc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_vel_center_rc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('vel', 'center', 'rc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_vel_right_rc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('vel', 'right', 'rc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="10">
+					<canvas id="canvas_memfunc_vel"></canvas>
+				</td>
+			</tr>
+		</table>
+		
+		<!-- Initialise Input Values -->
+		<script>memfuncInit();</script>
+		
+	
+		<!-- Canvas -->
+        <canvas id="canvas_game"></canvas>	
+		
+		<!-- Game Scripts -->
+        <script src="Game.js"></script>
+    </body>
+</html>
