@@ -54,8 +54,7 @@ function inputUpdate(variable, memfunc, point, newValue)
 		ai_variables["memfunc_"+variable+"_"+memfunc+"_"+point] = parseInt(newValue, 10);
 	
 	// Update canvas
-	updateMemFuncCanvas("pos");
-	updateMemFuncCanvas("vel");
+	updateMemFuncCanvas(variable);
 }
 
 // ************************************************************************
@@ -160,6 +159,91 @@ function AIVariables() {
     this.memfunc_vel_farright_rbp = 650;
     this.memfunc_vel_farright_rc = 0;
     this.memfunc_vel_farright_name = "Large Right";
+	
+    // ********************************************************************
+    // Action Member Function 
+    // ********************************************************************
+	
+	// Extreme Left Member Function
+    this.memfunc_act_extremeleft_lbp = -650;
+    this.memfunc_act_extremeleft_lpp = -650;
+    this.memfunc_act_extremeleft_lc = 0;
+    this.memfunc_act_extremeleft_rpp = -550;
+    this.memfunc_act_extremeleft_rbp = -450;
+    this.memfunc_act_extremeleft_rc = 0;
+    this.memfunc_act_extremeleft_name = "Extreme Left";
+	
+	// Large Left Member Function
+    this.memfunc_act_largeleft_lbp = -600;
+    this.memfunc_act_largeleft_lpp = -500;
+    this.memfunc_act_largeleft_lc = 0;
+    this.memfunc_act_largeleft_rpp = -400;
+    this.memfunc_act_largeleft_rbp = -300;
+    this.memfunc_act_largeleft_rc = 0;
+    this.memfunc_act_largeleft_name = "Large Left";
+	
+	// Left Member Function
+    this.memfunc_act_left_lbp = -450;
+    this.memfunc_act_left_lpp = -350;
+    this.memfunc_act_left_lc = 0;
+    this.memfunc_act_left_rpp = -250;
+    this.memfunc_act_left_rbp = -150;
+    this.memfunc_act_left_rc = 0;
+    this.memfunc_act_left_name = "Left";
+	
+	// Slight Left Member Function
+    this.memfunc_act_slightleft_lbp = -300;
+    this.memfunc_act_slightleft_lpp = -200;
+    this.memfunc_act_slightleft_lc = 0;
+    this.memfunc_act_slightleft_rpp = -100;
+    this.memfunc_act_slightleft_rbp = 0;
+    this.memfunc_act_slightleft_rc = 0;
+    this.memfunc_act_slightleft_name = "Slight Left";
+	
+	// Center Member Function
+    this.memfunc_act_center_lbp = -150;
+    this.memfunc_act_center_lpp = -50;
+    this.memfunc_act_center_lc = 0;
+    this.memfunc_act_center_rpp = 50;
+    this.memfunc_act_center_rbp = 150;
+    this.memfunc_act_center_rc = 0;
+    this.memfunc_act_center_name = "None";
+	
+	// Slight Right Member Function
+    this.memfunc_act_slightright_lbp = 0;
+    this.memfunc_act_slightright_lpp = 100;
+    this.memfunc_act_slightright_lc = 0;
+    this.memfunc_act_slightright_rpp = 200;
+    this.memfunc_act_slightright_rbp = 300;
+    this.memfunc_act_slightright_rc = 0;
+    this.memfunc_act_slightright_name = "Slight Right";
+	
+	// Right Member Function
+    this.memfunc_act_right_lbp = 150;
+    this.memfunc_act_right_lpp = 250;
+    this.memfunc_act_right_lc = 0;
+    this.memfunc_act_right_rpp = 350;
+    this.memfunc_act_right_rbp = 450;
+    this.memfunc_act_right_rc = 0;
+    this.memfunc_act_right_name = "Right";
+	
+	// Large Right Member Function
+    this.memfunc_act_largeright_lbp = 300;
+    this.memfunc_act_largeright_lpp = 400;
+    this.memfunc_act_largeright_lc = 0;
+    this.memfunc_act_largeright_rpp = 500;
+    this.memfunc_act_largeright_rbp = 600;
+    this.memfunc_act_largeright_rc = 0;
+    this.memfunc_act_largeright_name = "Large Right";
+	
+	// Extreme Right Member Function
+    this.memfunc_act_extremeright_lbp = 450;
+    this.memfunc_act_extremeright_lpp = 550;
+    this.memfunc_act_extremeright_lc = 0;
+    this.memfunc_act_extremeright_rpp = 650;
+    this.memfunc_act_extremeright_rbp = 650;
+    this.memfunc_act_extremeright_rc = 0;
+    this.memfunc_act_extremeright_name = "Extreme Right";
 }
 
 // ************************************************************************
@@ -176,12 +260,16 @@ function memfuncInit() {
 	// Initialise canvas
 	var canvas_memfunc_pos = document.getElementById('canvas_memfunc_pos');
 	var canvas_memfunc_vel = document.getElementById('canvas_memfunc_vel');
+	var canvas_memfunc_act = document.getElementById('canvas_memfunc_act');
 	canvas_memfunc_pos.width = CANVAS_WIDTH;
 	canvas_memfunc_pos.height = CANVAS_HEIGHT;
 	canvas_memfunc_vel.width = CANVAS_WIDTH;
 	canvas_memfunc_vel.height = CANVAS_HEIGHT;
+	canvas_memfunc_act.width = CANVAS_WIDTH;
+	canvas_memfunc_act.height = CANVAS_HEIGHT;
 	updateMemFuncCanvas("pos");
 	updateMemFuncCanvas("vel");
+	updateMemFuncCanvas("act");
 }
 
 
@@ -239,11 +327,24 @@ function updateMemFuncCanvas(variable) {
 	ctx.fillText("-600", 5, FUNC_BOT+5);
 	
 	// Draw lines
+	if (variable == "act") {
+		drawMemFunc(variable, "extremeleft", "#339");
+		drawMemFunc(variable, "largeleft", "#939");
+		drawMemFunc(variable, "left", "#393");
+		drawMemFunc(variable, "slightleft", "#336");
+		drawMemFunc(variable, "center", "#933");
+		drawMemFunc(variable, "slightright", "#363");
+		drawMemFunc(variable, "right", "#993");
+		drawMemFunc(variable, "largeright", "#399");
+		drawMemFunc(variable, "extremeright", "#633");
+	}
+	else {
 	drawMemFunc(variable, "farleft", "#339");
 	drawMemFunc(variable, "left", "#393");
 	drawMemFunc(variable, "center", "#933");
 	drawMemFunc(variable, "right", "#993");
 	drawMemFunc(variable, "farright", "#399");
+	}
 	
 }
 

@@ -736,6 +736,702 @@
 			</tr>
 		</table>
 		
+		<!-- Action Membership Function -->
+		<table width="1200px">
+			<tr> <!-- Section Title -->
+				<td colspan="10">
+					<hr />
+					<h2>Action Membership Function</h2>
+				</td>
+			</tr>
+			<tr>  <!-- Column Titles -->
+				<td colspan="2">
+					<h3>Action = Extreme Left</h3>
+				</td>
+				<td colspan="2">
+					<h3>Action = Large Left</h3>
+				</td>
+				<td colspan="2">
+					<h3>Action = Left</h3>
+				</td>
+				<td colspan="2">
+					<h3>Action = Slight Left</h3>
+				</td>
+				<td colspan="2">
+					<h3>Action = None</h3>
+				</td>
+			</tr>
+			<tr>  <!-- Left Base Point label -->
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+					Left Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_largeleft_lbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'largeleft', 'lbp',  this.value)"/>
+				</td>
+				<td>
+					Left Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_left_lbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'left', 'lbp',  this.value)"/>
+				</td>
+				<td>
+					Left Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_slightleft_lbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'slightleft', 'lbp',  this.value)"/>
+				</td>
+				<td>
+					Left Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_center_lbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'center', 'lbp',  this.value)"/>
+				</td>
+			</tr>
+			<tr>  <!-- Left Base Point slider -->
+				<td colspan="2">
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_largeleft_lbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'largeleft', 'lbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_left_lbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'left', 'lbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_slightleft_lbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'slightleft', 'lbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_center_lbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'center', 'lbp',  this.value)" /> 600
+				</td>
+			</tr>
+			<tr>  <!-- Left Peak Point label -->
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+					Left Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_largeleft_lpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'largeleft', 'lpp',  this.value)"/>
+				</td>
+				<td>
+					Left Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_left_lpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'left', 'lpp',  this.value)"/>
+				</td>
+				<td>
+					Left Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_slightleft_lpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'slightleft', 'lpp',  this.value)"/>
+				</td>
+				<td>
+					Left Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_center_lpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'center', 'lpp',  this.value)"/>
+				</td>
+			</tr>
+			<tr>  <!-- Left Peak Point slider -->
+				<td colspan="2">
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_largeleft_lpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'largeleft', 'lpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_left_lpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'left', 'lpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_slightleft_lpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'slightleft', 'lpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_center_lpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'center', 'lpp',  this.value)" /> 600
+				</td>
+			</tr>
+			<tr>  <!-- Left Curve label -->
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+					Left Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_largeleft_lc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('act', 'largeleft', 'lc',  this.value)"/>
+				</td>
+				<td>
+					Left Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_left_lc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('act', 'left', 'lc',  this.value)"/>
+				</td>
+				<td>
+					Left Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_slightleft_lc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('act', 'slightleft', 'lc',  this.value)"/>
+				</td>
+				<td>
+					Left Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_center_lc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('act', 'center', 'lc',  this.value)"/>
+				</td>
+			</tr>
+			<tr>  <!-- Left Curve slider -->
+				<td colspan="2">
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_act_largeleft_lc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('act', 'largeleft', 'lc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_act_left_lc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('act', 'left', 'lc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_act_slightleft_lc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('act', 'slightleft', 'lc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_act_center_lc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('act', 'center', 'lc',  this.value)" /> 10
+				</td>
+			</tr>
+			<tr>  <!-- Right Peak Point label -->
+				<td>
+					Right Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_extremeleft_rpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'extremeleft', 'rpp',  this.value)"/>
+				</td>
+				<td>
+					Right Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_largeleft_rpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'largeleft', 'rpp',  this.value)"/>
+				</td>
+				<td>
+					Right Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_left_rpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'left', 'rpp',  this.value)"/>
+				</td>
+				<td>
+					Right Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_slightleft_rpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'slightleft', 'rpp',  this.value)"/>
+				</td>
+				<td>
+					Right Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_center_rpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'center', 'rpp',  this.value)"/>
+				</td>
+			</tr>
+			<tr>  <!-- Right Peak Point slider -->
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_extremeleft_rpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'extremeleft', 'rpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_largeleft_rpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'largeleft', 'rpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_left_rpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'left', 'rpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_slightleft_rpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'slightleft', 'rpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_center_rpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'center', 'rpp',  this.value)" /> 600
+				</td>
+			</tr>
+			<tr>  <!-- Right Base Point label -->
+				<td>
+					Right Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_extremeleft_rbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'extremeleft', 'rbp',  this.value)"/>
+				</td>
+				<td>
+					Right Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_largeleft_rbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'largeleft', 'rbp',  this.value)"/>
+				</td>
+				<td>
+					Right Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_left_rbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'left', 'rbp',  this.value)"/>
+				</td>
+				<td>
+					Right Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_slightleft_rbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'slightleft', 'rbp',  this.value)"/>
+				</td>
+				<td>
+					Right Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_center_rbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'center', 'rbp',  this.value)"/>
+				</td>
+			</tr>
+			<tr>  <!-- Right Base Point slider -->
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_extremeleft_rbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'extremeleft', 'rbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_largeleft_rbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'largeleft', 'rbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_left_rbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'left', 'rbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_slightleft_rbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'slightleft', 'rbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_center_rbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'center', 'rbp',  this.value)" /> 600
+				</td>
+			</tr>
+			<tr>  <!-- Right Curve label -->
+				<td>
+					Right Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_extremeleft_rc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('act', 'extremeleft', 'rc',  this.value)"/>
+				</td>
+				<td>
+					Right Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_largeleft_rc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('act', 'largeleft', 'rc',  this.value)"/>
+				</td>
+				<td>
+					Right Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_left_rc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('act', 'left', 'rc',  this.value)"/>
+				</td>
+				<td>
+					Right Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_slightleft_rc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('act', 'slightleft', 'rc',  this.value)"/>
+				</td>
+				<td>
+					Right Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_center_rc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('act', 'center', 'rc',  this.value)"/>
+				</td>
+			</tr>
+			<tr>  <!-- Right Curve slider -->
+				<td colspan="2">
+					0 <input id="input_memfunc_act_extremeleft_rc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('act', 'extremeleft', 'rc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_act_largeleft_rc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('act', 'largeleft', 'rc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_act_left_rc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('act', 'left', 'rc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_act_slightleft_rc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('act', 'slightleft', 'rc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_act_center_rc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('act', 'center', 'rc',  this.value)" /> 10
+				</td>
+			</tr>
+			<tr>  <!-- Column Titles -->
+				<td colspan="2">
+					<h3>Action = Slight Right</h3>
+				</td>
+				<td colspan="2">
+					<h3>Action = Right</h3>
+				</td>
+				<td colspan="2">
+					<h3>Action = Large Right</h3>
+				</td>
+				<td colspan="2">
+					<h3>Action = Extreme Right</h3>
+				</td>
+				<td colspan="2">
+				</td>
+			</tr>
+			<tr>  <!-- Left Base Point label -->
+				<td>
+					Left Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_slightright_lbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'slightright', 'lbp',  this.value)"/>
+				</td>
+				<td>
+					Left Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_right_lbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'right', 'lbp',  this.value)"/>
+				</td>
+				<td>
+					Left Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_largeright_lbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'largeright', 'lbp',  this.value)"/>
+				</td>
+				<td>
+					Left Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_extremeright_lbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'extremeright', 'lbp',  this.value)"/>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>  <!-- Left Base Point slider -->
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_slightright_lbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'slightright', 'lbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_right_lbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'right', 'lbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_largeright_lbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'largeright', 'lbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_extremeright_lbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'extremeright', 'lbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+				</td>
+			</tr>
+			<tr>  <!-- Left Peak Point label -->
+				<td>
+					Left Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_slightright_lpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'slightright', 'lpp',  this.value)"/>
+				</td>
+				<td>
+					Left Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_right_lpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'right', 'lpp',  this.value)"/>
+				</td>
+				<td>
+					Left Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_largeright_lpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'largeright', 'lpp',  this.value)"/>
+				</td>
+				<td>
+					Left Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_extremeright_lpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'extremeright', 'lpp',  this.value)"/>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>  <!-- Left Peak Point slider -->
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_slightright_lpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'slightright', 'lpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_right_lpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'right', 'lpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_largeright_lpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'largeright', 'lpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_extremeright_lpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'extremeright', 'lpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+				</td>
+			</tr>
+			<tr>  <!-- Left Curve label -->
+				<td>
+					Left Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_slightright_lc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('act', 'slightright', 'lc',  this.value)"/>
+				</td>
+				<td>
+					Left Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_right_lc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('act', 'right', 'lc',  this.value)"/>
+				</td>
+				<td>
+					Left Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_largeright_lc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('act', 'largeright', 'lc',  this.value)"/>
+				</td>
+				<td>
+					Left Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_extremeright_lc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('act', 'extremeright', 'lc',  this.value)"/>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>  <!-- Left Curve slider -->
+				<td colspan="2">
+					0 <input id="input_memfunc_act_slightright_lc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('act', 'slightright', 'lc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_act_right_lc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('act', 'right', 'lc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_act_largeright_lc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('act', 'largeright', 'lc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_act_extremeright_lc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('act', 'extremeright', 'lc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+				</td>
+			</tr>
+			<tr>  <!-- Right Peak Point label -->
+				<td>
+					Right Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_slightright_rpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'slightright', 'rpp',  this.value)"/>
+				</td>
+				<td>
+					Right Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_right_rpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'right', 'rpp',  this.value)"/>
+				</td>
+				<td>
+					Right Peak Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_largeright_rpp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'largeright', 'rpp',  this.value)"/>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>  <!-- Right Peak Point slider -->
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_slightright_rpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'slightright', 'rpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_right_rpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'right', 'rpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_largeright_rpp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'largeright', 'rpp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+				</td>
+				<td colspan="2">
+				</td>
+			</tr>
+			<tr>  <!-- Right Base Point label -->
+				<td>
+					Right Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_slightright_rbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'slightright', 'rbp',  this.value)"/>
+				</td>
+				<td>
+					Right Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_right_rbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'right', 'rbp',  this.value)"/>
+				</td>
+				<td>
+					Right Base Point:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_largeright_rbp" type="number" value="0" 
+							size="5" min="-600" max="600" onchange="inputUpdate('act', 'largeright', 'rbp',  this.value)"/>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>  <!-- Right Base Point slider -->
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_slightright_rbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'slightright', 'rbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_right_rbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'right', 'rbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+					-600 <input id="input_memfunc_act_largeright_rbp" type="range" value="0" 
+							size="25" min="-600" max="600" onchange="inputUpdate('act', 'largeright', 'rbp',  this.value)" /> 600
+				</td>
+				<td colspan="2">
+				</td>
+				<td colspan="2">
+				</td>
+			</tr>
+			<tr>  <!-- Right Curve label -->
+				<td>
+					Right Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_slightright_rc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('act', 'slightright', 'rc',  this.value)"/>
+				</td>
+				<td>
+					Right Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_right_rc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('act', 'right', 'rc',  this.value)"/>
+				</td>
+				<td>
+					Right Curviness:
+				</td>
+				<td>
+					<input id="readout_memfunc_act_largeright_rc" type="number" value="0" 
+							size="5" min="0" max="10" onchange="inputUpdate('act', 'largeright', 'rc',  this.value)"/>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>  <!-- Right Curve slider -->
+				<td colspan="2">
+					0 <input id="input_memfunc_act_slightright_rc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('act', 'slightright', 'rc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_act_right_rc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('act', 'right', 'rc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+					0 <input id="input_memfunc_act_largeright_rc" type="range" value="0" 
+							size="25" min="0" max="10" onchange="inputUpdate('act', 'largeright', 'rc',  this.value)" /> 10
+				</td>
+				<td colspan="2">
+				</td>
+				<td colspan="2">
+				</td>
+			</tr>
+			<tr>  <!-- Canvas -->
+				<td colspan="10">
+					<canvas id="canvas_memfunc_act"></canvas>
+				</td>
+			</tr>
+		</table>
+		
 		<!-- Initialise Input Values -->
 		<script>memfuncInit();</script>
 		
