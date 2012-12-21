@@ -18,6 +18,8 @@
     <body>
 		
 		<!-- Utility Scripts -->
+        <script src="AI.js"></script>
+        <script src="FuzzyController.js"></script>
         <script src="Utility.js"></script>
 		
 		<!-- Title -->
@@ -30,6 +32,7 @@
 				<td colspan="10">
 					<hr />
 					<h2>Line Position Membership Function</h2>
+					Position of the line with player as origin, in units of pixels.<br /><br />
 				</td>
 			</tr>
 			<tr>
@@ -386,6 +389,7 @@
 				<td colspan="10">
 					<hr />
 					<h2>Line Velocity Membership Function</h2>
+					<i>Relative</i> velocity of the line with respect to the player, in units of pixels/second. Combines line velocity (set by course) and player velocity (controlled by AI).<br /><br />
 				</td>
 			</tr>
 			<tr>
@@ -742,6 +746,7 @@
 				<td colspan="10">
 					<hr />
 					<h2>Action Membership Function</h2>
+					Resulting velocity <i>change</i> of the player, in units of pixels/second.<br /><br />
 				</td>
 			</tr>
 			<tr>  <!-- Column Titles -->
@@ -1434,6 +1439,7 @@
 		
 		<!-- Initialise Input Values -->
 		<script>memfuncInit();</script>
+		
 		
 	
 		<!-- Canvas -->
