@@ -15,28 +15,28 @@ var CANVAS_WIDTH = 1200,
 // Function:    inputUpdate()
 // Purpose:     Updates the provided element to the provided value. 
 // ************************************************************************
-function inputUpdate(variable, memfunc, point, newValue)
+function inputUpdate(variable, set, point, newValue)
 {
 	// Error checking
 	if (point == "lbp") {
-		if (newValue > ai_variables["memfunc_"+variable+"_"+memfunc+"_lpp"])
-			newValue = ai_variables["memfunc_"+variable+"_"+memfunc+"_lpp"];
+		if (newValue > ai_variables[variable].sets[set].memfunc.lpp)
+			newValue = ai_variables[variable].sets[set].memfunc.lpp;
 	}
 	if (point == "lpp") {
-		if (newValue < ai_variables["memfunc_"+variable+"_"+memfunc+"_lbp"])
-			newValue = ai_variables["memfunc_"+variable+"_"+memfunc+"_lbp"];
-		if (newValue > ai_variables["memfunc_"+variable+"_"+memfunc+"_rpp"])
-			newValue = ai_variables["memfunc_"+variable+"_"+memfunc+"_rpp"];
+		if (newValue < ai_variables[variable].sets[set].memfunc.lbp)
+			newValue = ai_variables[variable].sets[set].memfunc.lbp;
+		if (newValue > ai_variables[variable].sets[set].memfunc.rpp)
+			newValue = ai_variables[variable].sets[set].memfunc.rpp;
 	}
 	if (point == "rpp") {
-		if (newValue < ai_variables["memfunc_"+variable+"_"+memfunc+"_lpp"])
-			newValue = ai_variables["memfunc_"+variable+"_"+memfunc+"_lpp"];
-		if (newValue > ai_variables["memfunc_"+variable+"_"+memfunc+"_rbp"])
-			newValue = ai_variables["memfunc_"+variable+"_"+memfunc+"_rbp"];
+		if (newValue < ai_variables[variable].sets[set].memfunc.lpp)
+			newValue = ai_variables[variable].sets[set].memfunc.lpp;
+		if (newValue > ai_variables[variable].sets[set].memfunc.rbp)
+			newValue = ai_variables[variable].sets[set].memfunc.rbp;
 	}
 	if (point == "rbp") {
-		if (newValue < ai_variables["memfunc_"+variable+"_"+memfunc+"_rpp"])
-			newValue = ai_variables["memfunc_"+variable+"_"+memfunc+"_rpp"];
+		if (newValue < ai_variables[variable].sets[set].memfunc.rpp)
+			newValue = ai_variables[variable].sets[set].memfunc.rpp;
 	}
 	if (point == "lc" || point == "rc") {
 		if (newValue < 0)
@@ -45,14 +45,14 @@ function inputUpdate(variable, memfunc, point, newValue)
 			newValue = 10;
 	}
 	// Update input fields
-	if (document.getElementById("input_memfunc_"+variable+"_"+memfunc+"_"+point))
-		document.getElementById("input_memfunc_"+variable+"_"+memfunc+"_"+point).value=newValue;
-	if (document.getElementById("readout_memfunc_"+variable+"_"+memfunc+"_"+point))
-		document.getElementById("readout_memfunc_"+variable+"_"+memfunc+"_"+point).value=newValue;
+	if (document.getElementById("input_"+variable+"_memfunc_"+set+"_"+point))
+		document.getElementById("input_"+variable+"_memfunc_"+set+"_"+point).value=newValue;
+	if (document.getElementById("readout_"+variable+"_memfunc_"+set+"_"+point))
+		document.getElementById("readout_"+variable+"_memfunc_"+set+"_"+point).value=newValue;
 		
 	// Update value
 	if (point != "name")
-		ai_variables["memfunc_"+variable+"_"+memfunc+"_"+point] = parseInt(newValue, 10);
+		ai_variables[variable].sets[set].memfunc[point] = parseInt(newValue, 10);
 	
 	// Update canvas
 	updateMemFuncCanvas(variable);
@@ -64,31 +64,39 @@ function inputUpdate(variable, memfunc, point, newValue)
 // ************************************************************************
 function memfuncInit() {
 	// Set inputs to default values
-	for (var variable in ai_variables) {
-		var str = variable.split("_")
-		inputUpdate(str[1], str[2], str[3], ai_variables[variable]);
+	
+	for (i=0; i < ai_variables.position.sets.length; ++i) {
+		for (var point in ai_variables.position.sets[i].memfunc) {
+			inputUpdate("position", i, point, ai_variables.position.sets[i].memfunc[point]);
+		}
 	}
 	
+	// OLD CODE
+	// for (var variable in ai_variables) {
+		// var str = variable.split("_")
+		// inputUpdate(str[1], str[2], str[3], ai_variables[variable]);
+	// }
+	
 	// Initialise canvas
-	var canvas_memfunc_pos = document.getElementById('canvas_memfunc_pos');
-	var canvas_memfunc_vel = document.getElementById('canvas_memfunc_vel');
-	var canvas_memfunc_act = document.getElementById('canvas_memfunc_act');
+	var canvas_memfunc_pos = document.getElementById('canvas_position_memfunc');
+	var canvas_memfunc_vel = document.getElementById('canvas_velocity_memfunc');
+	var canvas_memfunc_act = document.getElementById('canvas_action_memfunc');
 	canvas_memfunc_pos.width = CANVAS_WIDTH;
 	canvas_memfunc_pos.height = CANVAS_HEIGHT;
 	canvas_memfunc_vel.width = CANVAS_WIDTH;
 	canvas_memfunc_vel.height = CANVAS_HEIGHT;
 	canvas_memfunc_act.width = CANVAS_WIDTH;
 	canvas_memfunc_act.height = CANVAS_HEIGHT;
-	updateMemFuncCanvas("pos");
-	updateMemFuncCanvas("vel");
-	updateMemFuncCanvas("act");
+	updateMemFuncCanvas("position");
+	updateMemFuncCanvas("velocity");
+	updateMemFuncCanvas("action");
 }
 
 
 function updateMemFuncCanvas(variable) {
 
 	// Setup
-	var canvas = document.getElementById('canvas_memfunc_'+variable);
+	var canvas = document.getElementById('canvas_'+variable+'_memfunc');
 	if (!canvas) return; 			// Exit out if we failed to get the canvas
 	var ctx = canvas.getContext('2d');
 	ctx.fillStyle = 'rgba('+        // Sets fill color
@@ -202,5 +210,7 @@ function drawMemFunc(variable, memfunc, color) {
 	ctx.font = '20px san-serif';
 	ctx.textBaseline = 'bottom';
     ctx.textAlign = 'center';
+	
+	//ctx.fillText(ai_variables[variable].sets[0].name, (lpp+(rpp-lpp)/2), FUNC_TOP);
 	ctx.fillText(ai_variables['memfunc_'+variable+'_'+memfunc+'_name'], (lpp+(rpp-lpp)/2), FUNC_TOP);
 }
