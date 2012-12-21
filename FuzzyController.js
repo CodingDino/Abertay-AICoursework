@@ -460,17 +460,9 @@ function FuzzyController() {
     // ********************************************************************
 	this.process = function(line_position, line_velocity) {
 		// Default membership values
-		var sets = new Object();
-		sets.pos = new Object();
-		sets.pos.farleft=0,sets.pos.left=0,sets.pos.center=0,
-			sets.pos.right=0,sets.pos.farright=0;
-		sets.vel = new Object();
-		sets.vel.farleft=0,sets.vel.left=0,sets.vel.center=0,
-			sets.vel.right=0,sets.vel.farright=0;
-		sets.act = new Object();
-		sets.act.extremeleft=0,sets.act.largeleft=0,sets.act.slightleft=0,
-			sets.act.left=0,sets.act.center=0,sets.act.slightright=0,
-			sets.act.right=0,sets.act.largeright=0,sets.act.extremeright=0;
+		var pos = new Array(0,0,0,0,0), 
+			vel = new Array(0,0,0,0,0),
+			act = new Array(0,0,0,0,0,0,0,0,0);
 		
 		// clamp(value, min, max) - limits value to the range min..max
 		clamp = function(value, min, max) {
@@ -484,11 +476,19 @@ function FuzzyController() {
 		line_velocity = clamp(line_velocity, -600, 600);
 		
 		// Process inputs into set membership values
-		sets.pos.farleft=processSetMembership("pos_farleft",line_position);
-		sets.pos.left=processSetMembership("pos_left",line_position);
-		sets.pos.center=processSetMembership("pos_center",line_position);
-		sets.pos.right=processSetMembership("pos_right",line_position);
-		sets.pos.farright=processSetMembership("pos_farright",line_position);
+		for (iter = 0; iter < pos.length; ++iter) {
+			pos[iter] = this.processSetMembership("position",iter,line_position);
+		}
+		for (iter = 0; iter < vel.length; ++iter) {
+			vel[iter] = this.processSetMembership("velocity",iter,line_velocity);
+		}
+		
+		// OLD CODE
+		// pos.farleft=processSetMembership("pos_farleft",line_position);
+		// pos.left=processSetMembership("pos_left",line_position);
+		// pos.center=processSetMembership("pos_center",line_position);
+		// pos.right=processSetMembership("pos_right",line_position);
+		// pos.farright=processSetMembership("pos_farright",line_position);
 		
 		// TODO: Use rules to determine degree of action membership
 		
@@ -500,38 +500,35 @@ function FuzzyController() {
     // ********************************************************************
     // Function:    processSetMembership()
     // Purpose:     Determine the set membership for the given input
-    // Input:       set - The name of the set to be used
+    // Input:       variable - The variable being processed
+	//				set - the set to check for membership
 	//				input - velocity of line relative to player
     // Output:      velcoty_change - recommended change in player velocity
     // ********************************************************************
-	this.processSetMembership = function(set, input) {
-		//console.log("processSetMembership("+set+", "+input+") called");
+	this.processSetMembership = function(variable, set, input) {
+	
 		// Determine points
-		var lbp = this['memfunc_'+set+'_lbp'],
-			lpp = this['memfunc_'+set+'_lpp'];
-		var	lc = this['memfunc_'+set+'_lc'],
-			lbc = lbp+(this['memfunc_'+set+'_lc']/10)*(lpp-lbp),
-			lpc = lpp-(this['memfunc_'+set+'_lc']/10)*(lpp-lbp);
-		var rbp = this['memfunc_'+set+'_rbp'],
-			rpp = this['memfunc_'+set+'_rpp'];
-		var	rc = this['memfunc_'+set+'_rc'],
-			rpc = rpp+(this['memfunc_'+set+'_rc']/10)*(rbp-rpp),
-			rbc = rbp-(this['memfunc_'+set+'_rc']/10)*(rbp-rpp);
+		var lbp = this[variable].sets[set].memfunc.lbp,
+			lpp = this[variable].sets[set].memfunc.lpp;
+		var	lc = this[variable].sets[set].memfunc.lc,
+			lbc = lbp+(this[variable].sets[set].memfunc.lc/10)*(lpp-lbp),
+			lpc = lpp-(this[variable].sets[set].memfunc.lc/10)*(lpp-lbp);
+		var rbp = this[variable].sets[set].memfunc.rbp,
+			rpp = this[variable].sets[set].memfunc.rpp;
+		var	rc = this[variable].sets[set].memfunc.rc,
+			rpc = rpp+(this[variable].sets[set].memfunc.rc/10)*(rbp-rpp),
+			rbc = rbp-(this[variable].sets[set].memfunc.rc/10)*(rbp-rpp);
 		
 		// Below lbp - non-member
 		if (input <= lbp) {
-			//console.log("input ("+input+") <= lbp ("+lbp+")");
-			//console.log("processSetMembership("+set+", "+input+") return "+0);
 			return 0;
 		}
-		//console.log("input ("+input+") NOT <= lbp ("+lbp+")");
 		
 		// Between lbp and lpp - in the sloped region of the graph
 		if (input > lbp && input < lpp) {
 			// If there's no curviness, just use a straight line (faster)
 			if (lc == 0) {
 				var slope = (1)/(lpp-lbp);
-				//console.log("processSetMembership("+set+", "+input+") return "+(input-lbp)*slope);
 				return (input-lbp)*slope;
 			}
 			else { // use bezier curve equation to determine membership
@@ -544,27 +541,20 @@ function FuzzyController() {
 				
 				// Given t, calculate y
 				var y = Math.pow((1-t),3) + 3*Math.pow((1-t),2)*t;
-				//console.log("processSetMembership("+set+", "+input+") return "+y);
 				return y;
 			}
 		}
-		//console.log("input ("+input+") NOT > lbp ("+lbp+") and < lpp ("+lpp+")");
 		
 		// Between lpp and rpp - total membership
 		if (input >= lpp && input <= rpp) {
-			//console.log("input ("+input+") >= lpp ("+lpp+") and < =rpp ("+rpp+")");
-			//console.log("processSetMembership("+set+", "+input+") return "+1);
 			return 1;
 		}
-		//console.log("input ("+input+") NOT >= lpp ("+lpp+") and < =rpp ("+rpp+")");
 		
 		// Between rpp and rbp - in the sloped region of the graph
 		if (input > rpp && input < rbp) {
-			//console.log("input ("+input+") > rpp ("+rpp+") and < rbp ("+rbp+")");
 			// If there's no curviness, just use a straight line (faster)
 			if (rc == 0) {
 				var slope = (1)/(rbp-rpp);
-				//console.log("processSetMembership("+set+", "+input+") return "+(input-rpp)*slope);
 				return (input-rpp)*slope;
 			}
 			else { // use bezier curve equation to determine membership
@@ -577,16 +567,12 @@ function FuzzyController() {
 				
 				// Given t, calculate y
 				var y = Math.pow((1-t),3) + 3*Math.pow((1-t),2)*t;
-				//console.log("processSetMembership("+set+", "+input+") return "+y);
 				return y;
 			}
 		}
-		//console.log("input ("+input+") NOT > rpp ("+rpp+") and < rbp ("+rbp+")");
 		
 		// Above rbp - non-member
 		if (input >= rbp) {
-			//console.log("input ("+input+") >= rbp ("+rbp+")");
-			//console.log("processSetMembership("+set+", "+input+") return "+0);
 			return 0;
 		}
 	}
@@ -599,24 +585,17 @@ function FuzzyController() {
 	// Output:		t = x falling between 0 and 1
     // ********************************************************************
 	this.solveCubic = function(a,b,c,d) {
-		//console.log("solveCubic() called");
 		var p = (3*a*c - Math.pow(b,2)) / (3 * Math.pow(a,2));
 		var q = (9*a*b*c - 27*Math.pow(a,2)*d - 2*Math.pow(b,3)) / (27*Math.pow(a,3));
 		var Q = p/3;
 		var R = q/2;
-		//console.log("Q = "+Q);
-		//console.log("R = "+R);
 		
 		// Solve for w
 		var w3 = (R + Math.sqrt(Math.pow(Q,3) + Math.pow(R,2)));
 		var w = Math.pow((R + Math.sqrt(Math.pow(Q,3) + Math.pow(R,2))),(1/3)); 
-		//console.log("w3 = "+w3);
-		//console.log("w = "+w);
 		
 		var t = w - p/(3*w);
 		var x = t - b/(3*a);
-		//console.log("t = "+t);
-		//console.log("x = "+x);
 		return x;
 	}
 	

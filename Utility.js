@@ -4,8 +4,8 @@
 // Purpose:     Utility JS functions for use with the HTML inputs
 // ************************************************************************ 
 
-var ai_variables = new FuzzyController();
-ai_variables.initialise();
+var controller = new FuzzyController();
+controller.initialise();
 var CANVAS_WIDTH = 1200,                 
 	CANVAS_HEIGHT = 300,
 	FUNC_TOP = 50,
@@ -19,24 +19,24 @@ function inputUpdate(variable, set, point, newValue)
 {
 	// Error checking
 	if (point == "lbp") {
-		if (newValue > ai_variables[variable].sets[set].memfunc.lpp)
-			newValue = ai_variables[variable].sets[set].memfunc.lpp;
+		if (newValue > controller[variable].sets[set].memfunc.lpp)
+			newValue = controller[variable].sets[set].memfunc.lpp;
 	}
 	if (point == "lpp") {
-		if (newValue < ai_variables[variable].sets[set].memfunc.lbp)
-			newValue = ai_variables[variable].sets[set].memfunc.lbp;
-		if (newValue > ai_variables[variable].sets[set].memfunc.rpp)
-			newValue = ai_variables[variable].sets[set].memfunc.rpp;
+		if (newValue < controller[variable].sets[set].memfunc.lbp)
+			newValue = controller[variable].sets[set].memfunc.lbp;
+		if (newValue > controller[variable].sets[set].memfunc.rpp)
+			newValue = controller[variable].sets[set].memfunc.rpp;
 	}
 	if (point == "rpp") {
-		if (newValue < ai_variables[variable].sets[set].memfunc.lpp)
-			newValue = ai_variables[variable].sets[set].memfunc.lpp;
-		if (newValue > ai_variables[variable].sets[set].memfunc.rbp)
-			newValue = ai_variables[variable].sets[set].memfunc.rbp;
+		if (newValue < controller[variable].sets[set].memfunc.lpp)
+			newValue = controller[variable].sets[set].memfunc.lpp;
+		if (newValue > controller[variable].sets[set].memfunc.rbp)
+			newValue = controller[variable].sets[set].memfunc.rbp;
 	}
 	if (point == "rbp") {
-		if (newValue < ai_variables[variable].sets[set].memfunc.rpp)
-			newValue = ai_variables[variable].sets[set].memfunc.rpp;
+		if (newValue < controller[variable].sets[set].memfunc.rpp)
+			newValue = controller[variable].sets[set].memfunc.rpp;
 	}
 	if (point == "lc" || point == "rc") {
 		if (newValue < 0)
@@ -52,7 +52,7 @@ function inputUpdate(variable, set, point, newValue)
 		
 	// Update value
 	if (point != "name")
-		ai_variables[variable].sets[set].memfunc[point] = parseInt(newValue, 10);
+		controller[variable].sets[set].memfunc[point] = parseInt(newValue, 10);
 	
 	// Update canvas
 	updateMemFuncCanvas(variable);
@@ -64,17 +64,21 @@ function inputUpdate(variable, set, point, newValue)
 // ************************************************************************
 function memfuncInit() {
 	// Set inputs to default values
-	
-	for (i=0; i < ai_variables.position.sets.length; ++i) {
-		for (var point in ai_variables.position.sets[i].memfunc) {
-			inputUpdate("position", i, point, ai_variables.position.sets[i].memfunc[point]);
+	var variables = new Array("position", "velocity", "action")
+	for (var variable in variables) {
+		variable = variables[variable];
+		for (iter=0; iter < controller[variable].sets.length; ++iter) {
+			var test = controller[variable].sets[iter].memfunc;
+			for (var point in controller[variable].sets[iter].memfunc) {
+				inputUpdate(variable, iter, point, controller[variable].sets[iter].memfunc[point]);
+			}
 		}
 	}
 	
 	// OLD CODE
-	// for (var variable in ai_variables) {
+	// for (var variable in controller) {
 		// var str = variable.split("_")
-		// inputUpdate(str[1], str[2], str[3], ai_variables[variable]);
+		// inputUpdate(str[1], str[2], str[3], controller[variable]);
 	// }
 	
 	// Initialise canvas
@@ -148,45 +152,38 @@ function updateMemFuncCanvas(variable) {
 	ctx.fillText("-600", 5, FUNC_BOT+5);
 	
 	// Draw lines
-	if (variable == "act") {
-		drawMemFunc(variable, "extremeleft", "#339");
-		drawMemFunc(variable, "largeleft", "#939");
-		drawMemFunc(variable, "left", "#393");
-		drawMemFunc(variable, "slightleft", "#336");
-		drawMemFunc(variable, "center", "#933");
-		drawMemFunc(variable, "slightright", "#363");
-		drawMemFunc(variable, "right", "#993");
-		drawMemFunc(variable, "largeright", "#399");
-		drawMemFunc(variable, "extremeright", "#633");
-	}
-	else {
-	drawMemFunc(variable, "farleft", "#339");
-	drawMemFunc(variable, "left", "#393");
-	drawMemFunc(variable, "center", "#933");
-	drawMemFunc(variable, "right", "#993");
-	drawMemFunc(variable, "farright", "#399");
+	drawMemFunc(variable, 0, "#339");
+	drawMemFunc(variable, 1, "#939");
+	drawMemFunc(variable, 2, "#393");
+	drawMemFunc(variable, 3, "#336");
+	drawMemFunc(variable, 4, "#933");
+	if (variable == "action") {
+		drawMemFunc(variable, 5, "#363");
+		drawMemFunc(variable, 6, "#993");
+		drawMemFunc(variable, 7, "#399");
+		drawMemFunc(variable, 8, "#633");
 	}
 	
 }
 
-function drawMemFunc(variable, memfunc, color) {
+function drawMemFunc(variable, set, color) {
 
 	// Setup line
-	var canvas = document.getElementById('canvas_memfunc_'+variable);
+	var canvas = document.getElementById('canvas_'+variable+'_memfunc');
 	var ctx = canvas.getContext('2d');
 	ctx.lineWidth = 3;				// Set line width
 	ctx.strokeStyle = color;		// Set line color
 	ctx.fillStyle = color;			// Set line color
 	
 	// Determine points
-	var lbp = 600+ai_variables['memfunc_'+variable+'_'+memfunc+'_lbp'],
-		lpp = 600+ai_variables['memfunc_'+variable+'_'+memfunc+'_lpp'];
-	var	lbc = lbp+(ai_variables['memfunc_'+variable+'_'+memfunc+'_lc']/10)*(lpp-lbp),
-		lpc = lpp-(ai_variables['memfunc_'+variable+'_'+memfunc+'_lc']/10)*(lpp-lbp);
-	var rbp = 600+ai_variables['memfunc_'+variable+'_'+memfunc+'_rbp'],
-		rpp = 600+ai_variables['memfunc_'+variable+'_'+memfunc+'_rpp'];
-	var	rpc = rpp+(ai_variables['memfunc_'+variable+'_'+memfunc+'_rc']/10)*(rbp-rpp),
-		rbc = rbp-(ai_variables['memfunc_'+variable+'_'+memfunc+'_rc']/10)*(rbp-rpp);
+	var lbp = 600+controller[variable].sets[set].memfunc.lbp,
+		lpp = 600+controller[variable].sets[set].memfunc.lpp;
+	var	lbc = lbp+(controller[variable].sets[set].memfunc.lc/10)*(lpp-lbp),
+		lpc = lpp-(controller[variable].sets[set].memfunc.lc/10)*(lpp-lbp);
+	var rbp = 600+controller[variable].sets[set].memfunc.rbp,
+		rpp = 600+controller[variable].sets[set].memfunc.rpp;
+	var	rpc = rpp+(controller[variable].sets[set].memfunc.rc/10)*(rbp-rpp),
+		rbc = rbp-(controller[variable].sets[set].memfunc.rc/10)*(rbp-rpp);
 		
 	// Left side
 	ctx.beginPath();
@@ -211,6 +208,6 @@ function drawMemFunc(variable, memfunc, color) {
 	ctx.textBaseline = 'bottom';
     ctx.textAlign = 'center';
 	
-	//ctx.fillText(ai_variables[variable].sets[0].name, (lpp+(rpp-lpp)/2), FUNC_TOP);
-	ctx.fillText(ai_variables['memfunc_'+variable+'_'+memfunc+'_name'], (lpp+(rpp-lpp)/2), FUNC_TOP);
+	// Label
+	ctx.fillText(controller[variable].sets[set].name, (lpp+(rpp-lpp)/2), FUNC_TOP);
 }
