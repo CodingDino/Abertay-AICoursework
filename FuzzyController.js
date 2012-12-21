@@ -45,7 +45,7 @@ function FuzzyController() {
 		this.memfunc_pos_center_lc = 0;
 		this.memfunc_pos_center_rpp = 50;
 		this.memfunc_pos_center_rbp = 150;
-		this.memfunc_pos_center_rc = 0;
+		this.memfunc_pos_center_rc = 5;
 		this.memfunc_pos_center_name = "Center";
 		
 		// Right Member Function
@@ -201,4 +201,174 @@ function FuzzyController() {
 		this.memfunc_act_extremeright_name = "Extreme Right";
 	}
 
+    // ********************************************************************
+    // Function:    process()
+    // Purpose:     Given input, process using AI logic and recommend an
+	//				action.
+    // Input:       line_position - position of the line relative to player
+	//				line_velocity - velocity of line relative to player
+    // Output:      velcoty_change - recommended change in player velocity
+    // ********************************************************************
+	this.process = function(line_position, line_velocity) {
+		// Default membership values
+		var pos_farleft=0,pos_left=0,pos_center=0,pos_right=0,pos_farright=0;
+		var vel_farleft=0,vel_left=0,vel_center=0,vel_right=0,vel_farright=0;
+		var act_extremeleft=0,act_largeleft=0,act_slightleft=0,act_left=0,
+			act_center=0,act_slightright=0,act_right=0,act_largeright=0,act_extremeright=0;
+		
+		// clamp(value, min, max) - limits value to the range min..max
+		clamp = function(value, min, max) {
+			if (value < min) value = min;
+			if (value > max) value = max;
+			return value;
+		}
+		
+		// Clamp input into universe of discourse
+		line_position = clamp(line_position, -600, 600);
+		line_velocity = clamp(line_velocity, -600, 600);
+		
+		// Process inputs into set membership values
+		pos_farleft=processSetMembership("pos_farleft",line_position);
+		pos_left=processSetMembership("pos_left",line_position);
+		pos_center=processSetMembership("pos_center",line_position);
+		pos_right=processSetMembership("pos_right",line_position);
+		pos_farright=processSetMembership("pos_farright",line_position);
+		
+		return velocity_change = 0; // default value of 0
+	}
+	
+    // ********************************************************************
+    // Function:    processSetMembership()
+    // Purpose:     Determine the set membership for the given input
+    // Input:       set - The name of the set to be used
+	//				input - velocity of line relative to player
+    // Output:      velcoty_change - recommended change in player velocity
+    // ********************************************************************
+	this.processSetMembership = function(set, input) {
+		console.log("processSetMembership("+set+", "+input+") called");
+		// Determine points
+		var lbp = this['memfunc_'+set+'_lbp'],
+			lpp = this['memfunc_'+set+'_lpp'];
+		var	lc = this['memfunc_'+set+'_lc'],
+			lbc = lbp+(this['memfunc_'+set+'_lc']/10)*(lpp-lbp),
+			lpc = lpp-(this['memfunc_'+set+'_lc']/10)*(lpp-lbp);
+		var rbp = this['memfunc_'+set+'_rbp'],
+			rpp = this['memfunc_'+set+'_rpp'];
+		var	rc = this['memfunc_'+set+'_rc'],
+			rpc = rpp+(this['memfunc_'+set+'_rc']/10)*(rbp-rpp),
+			rbc = rbp-(this['memfunc_'+set+'_rc']/10)*(rbp-rpp);
+		
+		// Below lbp - non-member
+		if (input <= lbp) {
+			console.log("input ("+input+") <= lbp ("+lbp+")");
+			console.log("processSetMembership("+set+", "+input+") return "+0);
+			return 0;
+		}
+		console.log("input ("+input+") NOT <= lbp ("+lbp+")");
+		
+		// Between lbp and lpp - in the sloped region of the graph
+		if (input > lbp && input < lpp) {
+			// If there's no curviness, just use a straight line (faster)
+			if (lc == 0) {
+				var slope = (1)/(lpp-lbp);
+				console.log("processSetMembership("+set+", "+input+") return "+(input-lbp)*slope);
+				return (input-lbp)*slope;
+			}
+			else { // use bezier curve equation to determine membership
+				// Find cubic root t from x coordinates
+				var a = -lbp+3*lbc-3*lpc+lpp,
+					b = 3*lbp-6*lbc+3*lpc,
+					c = -3*lbp+3*lbc,
+					d = lbp - input;
+				var t = this.solveCubic(a,b,c,d);
+				
+				// Given t, calculate y
+				var y = Math.pow((1-t),3) + 3*Math.pow((1-t),2)*t;
+				console.log("processSetMembership("+set+", "+input+") return "+y);
+				return y;
+			}
+		}
+		console.log("input ("+input+") NOT > lbp ("+lbp+") and < lpp ("+lpp+")");
+		
+		// Between lpp and rpp - total membership
+		if (input >= lpp && input <= rpp) {
+			console.log("input ("+input+") >= lpp ("+lpp+") and < =rpp ("+rpp+")");
+			console.log("processSetMembership("+set+", "+input+") return "+1);
+			return 1;
+		}
+		console.log("input ("+input+") NOT >= lpp ("+lpp+") and < =rpp ("+rpp+")");
+		
+		// Between rpp and rbp - in the sloped region of the graph
+		if (input > rpp && input < rbp) {
+			console.log("input ("+input+") > rpp ("+rpp+") and < rbp ("+rbp+")");
+			// If there's no curviness, just use a straight line (faster)
+			if (rc == 0) {
+				var slope = (1)/(rbp-rpp);
+				console.log("processSetMembership("+set+", "+input+") return "+(input-rpp)*slope);
+				return (input-rpp)*slope;
+			}
+			else { // use bezier curve equation to determine membership
+				// Find cubic root t from x coordinates
+				var a = -rpp+3*rpc-3*rbc+rbp,
+					b = 3*rpp-6*rpc+3*rbc,
+					c = -3*rpp+3*rpc,
+					d = rpp - input;
+				var t = this.solveCubic(a,b,c,d);
+				
+				// Given t, calculate y
+				var y = Math.pow((1-t),3) + 3*Math.pow((1-t),2)*t;
+				console.log("processSetMembership("+set+", "+input+") return "+y);
+				return y;
+			}
+		}
+		console.log("input ("+input+") NOT > rpp ("+rpp+") and < rbp ("+rbp+")");
+		
+		// Above rbp - non-member
+		if (input >= rbp) {
+			console.log("input ("+input+") >= rbp ("+rbp+")");
+			console.log("processSetMembership("+set+", "+input+") return "+0);
+			return 0;
+		}
+	}
+	
+    // ********************************************************************
+    // Function:    solveCubic()
+    // Purpose:     Given 4 coefficients, determine the root falling 
+	//					between 0 and 1
+    // Input:       a*x^3 + b*x^2 + c*x + d = 0
+	// Output:		t = x falling between 0 and 1
+    // ********************************************************************
+	this.solveCubic = function(a,b,c,d) {
+		console.log("solveCubic() called");
+		var p = (3*a*c - Math.pow(b,2)) / (3 * Math.pow(a,2));
+		var q = (9*a*b*c - 27*Math.pow(a,2)*d - 2*Math.pow(b,3)) / (27*Math.pow(a,3));
+		var Q = p/3;
+		var R = q/2;
+		console.log("Q = "+Q);
+		console.log("R = "+R);
+		
+		// Solve for w
+		var w3 = (R + Math.sqrt(Math.pow(Q,3) + Math.pow(R,2)));
+		var w = Math.pow((R + Math.sqrt(Math.pow(Q,3) + Math.pow(R,2))),(1/3)); 
+		//var t = Math.pow((R - Math.sqrt(Math.pow(Q,3) + Math.pow(R,2))),(1/3));  
+		console.log("w3 = "+w3);
+		console.log("w = "+w);
+		//console.log("t = ",t);
+		
+		var t = w - p/(3*w);
+		var x = t - b/(3*a);
+		//var x1 = s + t - (b / (3*a)); 
+		//var x2 = -(1/2)*(s+t) - (b / (3*a)) + (Math.sqrt(3)/2)*(s-t)*j; 
+		//var x3 = -(1/2)*(s+t) - (b / (3*a)) - (Math.sqrt(3)/2)*(s-t)*j;
+		console.log("t = "+t);
+		console.log("x = "+x);
+		return x;
+		//console.log("x2 = ",x2);
+		//console.log("x3 = ",x3);
+		
+		//if (x1 >= 0 && x1 <= 1) return x1;
+		//if (x2 >= 0 && x2 <= 1) return x2;
+		//if (x3 >= 0 && x3 <= 1) return x3;
+	}
+	
 }

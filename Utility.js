@@ -6,7 +6,6 @@
 
 var ai_variables = new FuzzyController();
 ai_variables.initialise();
-console.log(ai_variables["memfunc_pos_farleft_lbp"]);
 var CANVAS_WIDTH = 1200,                 
 	CANVAS_HEIGHT = 300,
 	FUNC_TOP = 50,
