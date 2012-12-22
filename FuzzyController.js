@@ -440,7 +440,6 @@ function FuzzyController() {
 				var limit = this.position.sets.length;
 				if (iter2 < limit && (iter-iter2) < limit) {
 					this.action.sets[iter].rules.addRule(iter2,(iter-iter2));
-					console.log("Added rule "+iter2+" && "+(iter-iter2)+" for output "+iter);
 				}
 			}
 		}
@@ -481,14 +480,10 @@ function FuzzyController() {
 			vel[iter] = this.processSetMembership("velocity",iter,line_velocity);
 		}
 		
-		// OLD CODE
-		// pos.farleft=processSetMembership("pos_farleft",line_position);
-		// pos.left=processSetMembership("pos_left",line_position);
-		// pos.center=processSetMembership("pos_center",line_position);
-		// pos.right=processSetMembership("pos_right",line_position);
-		// pos.farright=processSetMembership("pos_farright",line_position);
-		
-		// TODO: Use rules to determine degree of action membership
+		// Use rules to determine degree of action membership
+		for (iter = 0; iter < act.length; ++iter) {
+			act[iter] = this.action.sets[iter].rules.processOutput(pos, vel);
+		}
 		
 		// TODO: Use defuzzification to determine action from degree of membership
 		

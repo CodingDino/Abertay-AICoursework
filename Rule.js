@@ -33,10 +33,10 @@ function Rule() {
     // ********************************************************************
 	this.processOutput = function(pos_input, vel_input) {
 		var result = 0;
-		for (var i = 0; i < posrules.length; ++i) {
+		for (var iter = 0; iter < this.posrules.length; ++iter) {
 			// get the correct position and velocity from the provided sets
-			var position = pos_input[this.posrules[i]]; 
-			var velocity = vel_input[this.velrules[i]];
+			var position = pos_input[this.posrules[iter]]; 
+			var velocity = vel_input[this.velrules[iter]];
 			// AND the two together, then OR them with the result.
 			result = Math.max(result, Math.min(position,velocity))
 		}
