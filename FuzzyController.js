@@ -434,18 +434,16 @@ function FuzzyController() {
 		// ********************************************************************
 		// Rules 
 		// ********************************************************************
-		this.action.sets[0].rules = new Rule();
-		this.action.sets[0].rules.addRule(0,0);
-		this.action.sets[0].rules = new Rule();
-		this.action.sets[0].rules.addRule(0,1);
-		this.action.sets[0].rules.addRule(1,0);
-		
-		// OLD CODE
-		// this.rule_extremeleft = new Output();
-		// this.rule_extremeleft.addRule("farleft","largeleft");
-		// this.rule_largeleft = new Output();
-		// this.rule_largeleft.addRule("farleft","left");
-		// this.rule_largeleft.addRule("left","largeleft");
+		for (iter = 0; iter < this.action.sets.length; ++iter) {
+			this.action.sets[iter].rules = new Rule();
+			for(iter2 = 0; iter2 <= iter; ++iter2) {
+				var limit = this.position.sets.length;
+				if (iter2 < limit && (iter-iter2) < limit) {
+					this.action.sets[iter].rules.addRule(iter2,(iter-iter2));
+					console.log("Added rule "+iter2+" && "+(iter-iter2)+" for output "+iter);
+				}
+			}
+		}
 		
 		
 	}
