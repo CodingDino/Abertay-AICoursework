@@ -474,10 +474,10 @@ function FuzzyController() {
 		
 		// Process inputs into set membership values
 		for (iter = 0; iter < pos.length; ++iter) {
-			pos[iter] = this.processSetMembership("position",iter,line_position);
+			pos[iter] = this.fuzzify("position",iter,line_position);
 		}
 		for (iter = 0; iter < vel.length; ++iter) {
-			vel[iter] = this.processSetMembership("velocity",iter,line_velocity);
+			vel[iter] = this.fuzzify("velocity",iter,line_velocity);
 		}
 		
 		// Use rules to determine degree of action membership
@@ -485,20 +485,29 @@ function FuzzyController() {
 			act[iter] = this.action.sets[iter].rules.processOutput(pos, vel);
 		}
 		
-		// TODO: Use defuzzification to determine action from degree of membership
+		// Use defuzzification to determine action from degree of membership
+		var weighted_result = 0, // default value of 0
+			total_area = 0,
+			velocity_change = 0;
+		for (iter = 0; iter < act.length; ++iter) {
+			var result = this.defuzzify("action",iter,act[iter])
+			weighted_result += result.value*result.area;
+			total_area += result.area;
+		}
+		if (total_area > 0) velocity_change = weighted_result/total_area;
 		
-		return velocity_change = 0; // default value of 0
+		return velocity_change; 
 	}
 	
     // ********************************************************************
-    // Function:    processSetMembership()
+    // Function:    fuzzify()
     // Purpose:     Determine the set membership for the given input
     // Input:       variable - The variable being processed
 	//				set - the set to check for membership
-	//				input - velocity of line relative to player
-    // Output:      velcoty_change - recommended change in player velocity
+	//				input - value to evaluate membership from
+    // Output:      fuzzy_value - value of the fuzzy membership
     // ********************************************************************
-	this.processSetMembership = function(variable, set, input) {
+	this.fuzzify = function(variable, set, input) {
 	
 		// Determine points
 		var lbp = this[variable].sets[set].memfunc.lbp,
@@ -582,14 +591,121 @@ function FuzzyController() {
 		var q = (9*a*b*c - 27*Math.pow(a,2)*d - 2*Math.pow(b,3)) / (27*Math.pow(a,3));
 		var Q = p/3;
 		var R = q/2;
+		console.log("   Solving cubic root for a="+a+", b="+b+", c="+c+", d="+d);
+		console.log("      Depressed cubic values p="+p+", q="+q+", Q="+Q+", R="+R);
 		
 		// Solve for w
 		var w3 = (R + Math.sqrt(Math.pow(Q,3) + Math.pow(R,2)));
-		var w = Math.pow((R + Math.sqrt(Math.pow(Q,3) + Math.pow(R,2))),(1/3)); 
+		var w = Math.pow(w3,(1/3)); 
+		console.log("      w3="+w3+", w="+w);
 		
 		var t = w - p/(3*w);
 		var x = t - b/(3*a);
+		console.log("      t="+t+", x="+x);
 		return x;
 	}
 	
+    // ********************************************************************
+    // Function:    defuzzify()
+    // Purpose:     Given a set membership, determine the action to be
+	//					taken.
+    // Input:       variable - The variable being processed
+	//				set - the set to check for membership
+	//				input - fuzzy set membership
+    // Output:      result.value - real interpretation based on fuzzy set
+	//				result.area - weighting for the value
+    // ********************************************************************
+	this.defuzzify = function(variable, set, input) {
+		// Error handling
+		if (!this[variable]) {
+			console.error("Cannor find variable "+variable);
+			return;
+		}
+		
+		console.log("Defuzzifying variable = "+variable+", set="+set+", input="+input);
+	
+		// Determine points
+		var lbp = this[variable].sets[set].memfunc.lbp,
+			lpp = this[variable].sets[set].memfunc.lpp;
+		var	lc = this[variable].sets[set].memfunc.lc,
+			lbc = lbp+(this[variable].sets[set].memfunc.lc/10)*(lpp-lbp),
+			lpc = lpp-(this[variable].sets[set].memfunc.lc/10)*(lpp-lbp);
+		var rbp = this[variable].sets[set].memfunc.rbp,
+			rpp = this[variable].sets[set].memfunc.rpp;
+		var	rc = this[variable].sets[set].memfunc.rc,
+			rpc = rpp+(this[variable].sets[set].memfunc.rc/10)*(rbp-rpp),
+			rbc = rbp-(this[variable].sets[set].memfunc.rc/10)*(rbp-rpp);
+		var result = new Object(); 
+		result.value = 0; 
+		result.area = 0;
+		
+		// Non-member - no recommendation able to be made
+		if (input == 0) {
+			// Result remains 0,0
+		}
+		// Full-member
+		if (input == 1) {
+			// Area under the peak
+			result.value = lpp+(rpp-lpp)/2;
+			result.area = (rpp-lpp);
+		}
+		
+		// Partial member
+		if (input > 0 && input < 1) {
+			// Area under the partial shape, we need x coordinates for both sides.
+			var lx, rx;
+			
+			// Left side
+			// If there's no curviness, just use a straight line (faster)
+			if (lc == 0) {
+				var slope = (1)/(lpp-lbp);
+				lx = lbp + input/slope;
+			} else { // use bezier curve equation to determine x
+				// var a = 0+3*0-3*1+1,
+					// b = 3*0-6*0+3*1,
+					// c = -3*0+3*0,
+					// d = 0 - input;
+				var a = -4,
+					b = 3,
+					c = 0,
+					d = 0-input;
+				var t = this.solveCubic(a,b,c,d);
+				console.log("   Cubic root t = "+t);
+				
+				// Given t, calculate x
+				lx = Math.pow((1-t),3)*lbp + 3*Math.pow((1-t),2)*t*lbc 
+						+ (1-t)*t*t*lpc + t*t*t*lpp;
+			}
+			
+			// Left side
+			// If there's no curviness, just use a straight line (faster)
+			if (rc == 0) {
+				var slope = (1)/(rbp-rpp);
+				rx = rpp + input/slope;
+			} else { // use bezier curve equation to determine x
+				// var a = 1+3*1-3*0+0,
+					// b = 3*1-6*1+3*0,
+					// c = -3*1+3*1,
+					// d = 1 - input;
+				var a = 4,
+					b = -3,
+					c = 0,
+					d = 1 - input;
+				var t = this.solveCubic(a,b,c,d);
+				
+				// Given t, calculate x
+				rx = Math.pow((1-t),3)*rpp + 3*Math.pow((1-t),2)*t*rpc 
+						+ (1-t)*t*t*rbc + t*t*t*rbp;
+			}
+			
+			// Calculate value and area
+			result.value = lx+(rx-lx)/2;
+			result.area = (rx-lx)*input;
+		}
+		
+		// Return the result
+		console.log("   Defuzzification result: value = "+result.value+", area = "+result.area);
+		return result;
+		
+	}
 }
