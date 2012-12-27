@@ -262,15 +262,15 @@ function FuzzyController() {
 		// ********************************************************************
 		// Rules 
 		// ********************************************************************
-		for (iter = 0; iter < this.action.sets.length; ++iter) {
-			this.action.sets[iter].rules = new Rule();
-			for(iter2 = 0; iter2 <= iter; ++iter2) {
-				var limit = this.position.sets.length;
-				if (iter2 < limit && (iter-iter2) < limit) {
-					this.action.sets[iter].rules.addRule(iter2,(iter-iter2));
-				}
-			}
-		}
+		// for (iter = 0; iter < this.action.sets.length; ++iter) {
+			// this.action.sets[iter].rules = new Rule();
+			// for(iter2 = 0; iter2 <= iter; ++iter2) {
+				// var limit = this.position.sets.length;
+				// if (iter2 < limit && (iter-iter2) < limit) {
+					// this.action.sets[iter].rules.addRule(iter2,(iter-iter2));
+				// }
+			// }
+		// }
 		this.rules = [];
 		for (iter = 0; iter < this.position.sets.length; ++iter) { // For each pos value, add an array of velocity
 			this.rules.push([]);
@@ -324,8 +324,15 @@ function FuzzyController() {
 		}
 		
 		// Use rules to determine degree of action membership
-		for (iter = 0; iter < act.length; ++iter) {
-			act[iter] = this.action.sets[iter].rules.processOutput(pos, vel);
+		// for (iter = 0; iter < act.length; ++iter) {
+			// act[iter] = this.action.sets[iter].rules.processOutput(pos, vel);
+		// }
+		for (iter = 0; iter < pos.length; ++iter) {
+			for (iter2 = 0; iter2 < vel.length; ++iter2) {
+				console.log("Getting rule for position = "+iter+" and velocity = "+iter2)
+				var act_index = this.rules[iter][iter2];
+				act[act_index] = Math.max(act[act_index], Math.min(pos[iter],vel[iter2]));
+			}
 		}
 		
 		// Use defuzzification to determine action from degree of membership
@@ -340,6 +347,27 @@ function FuzzyController() {
 		if (total_area > 0) velocity_change = weighted_result/total_area;
 		
 		return velocity_change; 
+	}
+	
+	
+    // ********************************************************************
+    // Function:    processOutput()
+    // Purpose:     Given inputs and their set memberships, determines the
+	//				output based it's rules.
+    // Input:       pos_input - position set membership values
+	//				vel_input - velocity set membership values
+    // Output:      result - the membership value for this output
+    // ********************************************************************
+	this.processOutput = function(pos_input, vel_input) {
+		var result = 0;
+		for (var iter = 0; iter < this.posrules.length; ++iter) {
+			// get the correct position and velocity from the provided sets
+			var position = pos_input[this.posrules[iter]]; 
+			var velocity = vel_input[this.velrules[iter]];
+			// AND the two together, then OR them with the result.
+			result = Math.max(result, Math.min(position,velocity))
+		}
+		return result;
 	}
 	
     // ********************************************************************
