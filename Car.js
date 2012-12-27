@@ -7,6 +7,9 @@
 // ************************************************************************
 // Global Constants
 // ************************************************************************
+var CAR_Y = 40;
+var CAR_MAX_VEL = 200;  // Can't go faster than this
+var CAR_MAX_ACC = 20;	// Can't accelerate faster than this
 
 // Car Class
 function Car() {
@@ -21,30 +24,38 @@ function Car() {
     // ********************************************************************
     // Function:    logic()
     // Purpose:     Handles logic for line. 
-	// Arguments:	abs_line_pos - the line position in the game world
+	// Arguments:	line - the line
     // ********************************************************************
-    this.logic = function(abs_line_pos) {
+    this.logic = function(line) {
 		// Process abs_line_pos
-		var new_line_position = abs_line_pos - this.position;
-		this.line_rel_vel = (new_line_position - this.line_position) * FPS;
-		this.line_position = new_line_position;
+		this.line_rel_vel = line.velocity - this.velocity;
+		this.line_position = line.position - this.position;
 		
 		// Send through fuzzy controller
-		this.velocity = controller.process(this.line_position, this.line_rel_vel);
+		vel_change = controller.process(this.line_position, this.line_rel_vel);
+		
+		// Check for max acceleration
+		if (vel_change > CAR_MAX_ACC) vel_change = CAR_MAX_ACC;
+		if (vel_change < -1*CAR_MAX_ACC) vel_change = -1*CAR_MAX_ACC;
+		this.velocity += vel_change;
+		
+		// Check for max velocity
+		if (this.velocity > CAR_MAX_VEL) this.velocity = CAR_MAX_VEL;
+		if (this.velocity < -1*CAR_MAX_VEL) this.velocity = -1*CAR_MAX_VEL;
 		
 		// Update position based on velocity
-		this.position = this.velocity / FPS;
+		this.position += this.velocity / FPS;
     } 
 	
     // ********************************************************************
     // Function:    draw()
     // Purpose:     Draws the line to the screen
     // ********************************************************************
-    this.draw = function() {
+    this.draw = function(camera) {
 		ctx.fillStyle = "#900";		// Set color
 		// Circle (car)
         ctx.beginPath();
-        ctx.arc(CANVAS_WIDTH/2, 70, 
+        ctx.arc(CANVAS_WIDTH/2+this.position-camera, CAR_Y, 
             20, 0, Math.PI * 2, true);
         ctx.closePath();
         ctx.fill();

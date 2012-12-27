@@ -22,11 +22,15 @@
 			- Test input and button for controller
 			- Way to save and load settings
 			- Game with track controlled by user
-			- Game through set track
+			- DONE! - Game through set track
 			- Way to save and load tracks
 			- Results display
-			- Realtime feedback while running game
+			- (partially done) Realtime feedback while running game
 			- Organize website into multiple pages
+			- Graphic feedback of member functions while running
+			- Display of rules
+			- Editing of rules
+			- Genetic Algorithm Tuning
 		-->
 		
 		<!-- Utility Scripts -->
@@ -54,8 +58,9 @@
 					<br />1. <a href="#position_membership">Line Position Membership Function</a>
 					<br />2. <a href="#velocity_membership">Line Velocity Membership Function</a>
 					<br />3. <a href="#action_membership">Action Membership Function</a>
-					<br />4. <a href="#game">Game</a>
-					<br />5. <a href="#results">Results</a>
+					<br />4. <a href="#rules">Rules</a>
+					<br />5. <a href="#game">Game</a>
+					<br />6. <a href="#results">Results</a>
 				</td>
 			</tr>
 		</table>
@@ -1477,9 +1482,119 @@
 			</tr>
 		</table>
 		
+		<!-- Rules -->
+		<a name="rules"> </a>
+		<table width="1200px">
+			<tr>
+				<td>
+					<hr />
+					<h2>Rules</h2>
+					<a href="#top">[Back to the top]</a><br /><br />
+					These rules govern which sets from the position and velocity variables map to which sets from the action variables. For each combination of position and velocity, a rule can be chosen.<br /><br />
+				</td>
+			</tr>
+		</table>
+		<table width="1200px" border="1">
+			<tr>
+				<td colspan="2" rowspan="2"></td>
+				<td colspan="5">
+				<h3>Line Position</h3>
+				</td>
+			<tr>  <!-- TOP TITLES -->
+				<td>
+					Far Left
+				</td>
+				<td>
+					Left
+				</td>
+				<td>
+					Center
+				</td>
+				<td>
+					Right
+				</td>
+				<td>
+					Far Right
+				</td>
+			</tr>
+			<tr>  <!-- LARGE LEFT -->
+				<td rowspan="5">
+				<h3>Line Velocity</h3>
+				</td>
+				<td>
+					Large Left
+				</td>
+				<td>
+					<select id="readout_rules_0_0">
+						<option value=0>Extreme Left</option>
+						<option value=1>Large Left</option>
+						<option value=2>Left</option>
+						<option value=3>Slight Left</option>
+						<option value=4>None</option>
+						<option value=5>Slight Right</option>
+						<option value=6>Right</option>
+						<option value=7>Large Right</option>
+						<option value=8>Extreme Right</option>
+					</select>
+				</td>
+				<td>
+					<select id="readout_rules_1_0">
+						<option value=0>Extreme Left</option>
+						<option value=1>Large Left</option>
+						<option value=2>Left</option>
+						<option value=3>Slight Left</option>
+						<option value=4>None</option>
+						<option value=5>Slight Right</option>
+						<option value=6>Right</option>
+						<option value=7>Large Right</option>
+						<option value=8>Extreme Right</option>
+					</select>
+				</td>
+				<td>
+					<select id="readout_rules_2_0">
+						<option value=0>Extreme Left</option>
+						<option value=1>Large Left</option>
+						<option value=2>Left</option>
+						<option value=3>Slight Left</option>
+						<option value=4>None</option>
+						<option value=5>Slight Right</option>
+						<option value=6>Right</option>
+						<option value=7>Large Right</option>
+						<option value=8>Extreme Right</option>
+					</select>
+				</td>
+				<td>
+					<select id="readout_rules_3_0">
+						<option value=0>Extreme Left</option>
+						<option value=1>Large Left</option>
+						<option value=2>Left</option>
+						<option value=3>Slight Left</option>
+						<option value=4>None</option>
+						<option value=5>Slight Right</option>
+						<option value=6>Right</option>
+						<option value=7>Large Right</option>
+						<option value=8>Extreme Right</option>
+					</select>
+				</td>
+				<td>
+					<select id="readout_rules_4_0">
+						<option value=0>Extreme Left</option>
+						<option value=1>Large Left</option>
+						<option value=2>Left</option>
+						<option value=3>Slight Left</option>
+						<option value=4>None</option>
+						<option value=5>Slight Right</option>
+						<option value=6>Right</option>
+						<option value=7>Large Right</option>
+						<option value=8>Extreme Right</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		
 		<!-- Initialise Input Values -->
 		<script>memfuncInit();</script>
-	
+		
 		<!-- Game -->
 		<a name="game"> </a>
 		<table width="1200px">
@@ -1519,6 +1634,7 @@
 		<!-- Game Scripts -->
         <script src="Car.js"></script>
         <script src="Line.js"></script>
+        <script src="Readout.js"></script>
         <script src="Game.js"></script>
         <script>startGame();</script>
     </body>

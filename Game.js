@@ -8,7 +8,7 @@
 var gLoop,                              // Game loop timer
     canvas_game = document.getElementById('canvas_game'),   // The canvas itself
     ctx = canvas_game.getContext('2d'),           // 2d graphics context
-    FPS = 50,                           // Frames per second
+    FPS = 5,                            // Frames per second
     DEBUGMODE = true;                   // Debug mode
     
 // Set canvas size    
@@ -41,6 +41,7 @@ function Game() {
 	// Objects
 	game_car = new Car();
 	game_line = new Line();
+	game_readout = new Readout();
     
     // ********************************************************************
     // Function:    onkeydown()
@@ -51,7 +52,6 @@ function Game() {
         if (e.keyCode == LEFT) {
 			game_keypress.left = true;
 			game_line.direction = -1;
-			console.log("Keydown: LEFT");
         }
         if (e.keyCode == RIGHT) {
 			game_keypress.right = true;
@@ -130,7 +130,7 @@ function Game() {
 		game_line.logic();
 		
 		// Perform Car Logic
-		game_car.logic(game_line.position);
+		game_car.logic(game_line);
     } 
     
     // ********************************************************************
@@ -154,8 +154,9 @@ function Game() {
     draw = function() {
         // Clear the canvas to the level's bg color
         clear();
-		game_line.draw(game_car.position);
-		game_car.draw();
+		game_line.draw(game_line.position);
+		game_car.draw(game_line.position);
+		game_readout.draw(game_car,game_line);
     }  
 	
 }

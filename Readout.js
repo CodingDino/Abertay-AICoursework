@@ -1,11 +1,77 @@
 // ************************************************************************ 
 // File Name:   Readout.js 
 // Author:      Sarah Herzog 
-// Purpose:     AI racecar 
+// Purpose:     Readout which displays member function results in realtime 
 // ************************************************************************
 
-	// Y Axis Labels
-	ctx.font = '20px san-serif';
-	ctx.textBaseline = 'top';
-    ctx.textAlign = 'left';
-	ctx.fillText("1", CANVAS_WIDTH/2+5, FUNC_TOP+5);
+// ************************************************************************
+// Global Constants
+// ************************************************************************
+var READOUT_TOP = 100,
+	READOUT_X_PAD = 250,
+	READOUT_Y_PAD = 20,
+	READOUT_TRUNC = 25;
+
+// Readout Class
+function Readout() {
+    
+    // ********************************************************************
+    // Function:    clear()
+    // Purpose:     Sets up the readout for each frame. 
+    // ********************************************************************
+    this.clear = function() {
+		ctx.fillStyle = 'rgba('+        // Sets fill color
+		'255,255,200,255)';
+        ctx.beginPath();                // Start drawing
+        ctx.rect(0,READOUT_TOP,         // Draws rectangle
+            CANVAS_WIDTH,
+            CANVAS_HEIGHT);        
+        ctx.closePath();                // Ends drawing
+        ctx.fill();                     // Fills rectangle w/ active color
+    }
+	
+    // ********************************************************************
+    // Function:    draw()
+    // Purpose:     Draws all readout text to the canvas. 
+    // ********************************************************************
+    this.draw = function(car,line) {
+        // Clear the readout
+        this.clear();
+		
+		// Text properties
+		ctx.font = '20px san-serif';
+		ctx.textBaseline = 'top';
+		ctx.textAlign = 'left';
+		ctx.fillStyle = "#222";
+		
+		// Line Position
+		ctx.fillText("LINE POSITION", 5, READOUT_TOP+5);
+		ctx.fillText(("Absolute Position = "+line.position).substring(0,READOUT_TRUNC), 5, READOUT_TOP+5+READOUT_Y_PAD);
+		ctx.fillText(("Relative Position = "+car.line_position).substring(0,READOUT_TRUNC), 5, READOUT_TOP+5+READOUT_Y_PAD*2);
+		ctx.fillText(("Fuzzy Membership:").substring(0,READOUT_TRUNC), 5, READOUT_TOP+5+READOUT_Y_PAD*3);
+		var pos = new Array(0,0,0,0,0);
+		for (iter = 0; iter < pos.length; ++iter) {
+			pos[iter] = controller.fuzzify("position",iter,car.line_position);
+			ctx.fillText(("   "+controller["position"].sets[iter].name+" = "+pos[iter]).substring(0,READOUT_TRUNC), 5, READOUT_TOP+5+READOUT_Y_PAD*(4+iter));
+		}
+		
+		// Line Velocity
+		ctx.fillText("LINE VELOCITY", READOUT_X_PAD, READOUT_TOP+5);
+		ctx.fillText(("abs velocity = "+line.velocity).substring(0,READOUT_TRUNC), READOUT_X_PAD, READOUT_TOP+5+READOUT_Y_PAD);
+		ctx.fillText(("rel velcoity = "+car.line_rel_vel).substring(0,READOUT_TRUNC), READOUT_X_PAD, READOUT_TOP+5+READOUT_Y_PAD*2);
+		ctx.fillText(("Fuzzy Membership:").substring(0,READOUT_TRUNC), READOUT_X_PAD, READOUT_TOP+5+READOUT_Y_PAD*3);
+		var vel = new Array(0,0,0,0,0);
+		for (iter = 0; iter < vel.length; ++iter) {
+			vel[iter] = controller.fuzzify("velocity",iter,car.line_rel_vel);
+			ctx.fillText(("   "+controller["velocity"].sets[iter].name+" = "+vel[iter]).substring(0,READOUT_TRUNC), READOUT_X_PAD, READOUT_TOP+5+READOUT_Y_PAD*(4+iter));
+		}
+		
+		// Car Absolutes
+		ctx.fillText("CAR DETAILS", READOUT_X_PAD*2, READOUT_TOP+5);
+		ctx.fillText(("car position = "+car.position).substring(0,READOUT_TRUNC), READOUT_X_PAD*2, READOUT_TOP+5+READOUT_Y_PAD);
+		ctx.fillText(("car velocity = "+car.velocity).substring(0,READOUT_TRUNC), READOUT_X_PAD*2, READOUT_TOP+5+READOUT_Y_PAD*2);
+		// Get fuzzy membership string - TODO
+	
+    }  
+	
+}

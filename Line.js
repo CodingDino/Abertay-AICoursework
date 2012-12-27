@@ -7,14 +7,15 @@
 // ************************************************************************
 // Global Constants
 // ************************************************************************
-var LINE_SPEED = 10;			// Constant speed factor for line movement
+var LINE_SPEED = 100;			// Constant speed factor for line movement
 
 // Line Class
 function Line() {
     // ********************************************************************
     // Data Members 
     // ********************************************************************
-	this.position = 0;
+	this.position = 0;		// The x position of the line in game world
+	this.velocity = 0;		// The x velocity of the line in game world
 	this.change_rate = 1;
 	this.direction = 0;
 	
@@ -24,20 +25,23 @@ function Line() {
     // ********************************************************************
     this.logic = function() {
 		// Move the line based on it's direction and change rate
-		this.position += this.direction*this.change_rate*LINE_SPEED;
+		this.velocity = this.direction*this.change_rate*LINE_SPEED;
+		
+		// Update position based on velocity
+		this.position += this.velocity / FPS;
     } 
 	
     // ********************************************************************
     // Function:    draw()
     // Purpose:     Draws the line to the screen
     // ********************************************************************
-    this.draw = function(car_position) {
+    this.draw = function(camera) {
 		ctx.lineWidth = 5;				// Set line width
 		ctx.strokeStyle = "#FFF";		// Set line color
 		// Line
 		ctx.beginPath();
-		ctx.moveTo(CANVAS_WIDTH/2+this.position-car_position,0);
-		ctx.lineTo(CANVAS_WIDTH/2+this.position-car_position,CANVAS_HEIGHT);
+		ctx.moveTo(CANVAS_WIDTH/2+(this.position-camera),0);
+		ctx.lineTo(CANVAS_WIDTH/2+(this.position-camera),CANVAS_HEIGHT);
 		ctx.stroke();
     }
 }

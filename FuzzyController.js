@@ -271,6 +271,21 @@ function FuzzyController() {
 				}
 			}
 		}
+		this.rules = [];
+		for (iter = 0; iter < this.position.sets.length; ++iter) { // For each pos value, add an array of velocity
+			this.rules.push([]);
+			for (iter2 = 0; iter2 < this.velocity.sets.length; ++iter2) { // Set all rules to 0 initially
+				this.rules[iter].push(0);
+			}
+		}
+		for (iter = 0; iter < this.action.sets.length; ++iter) {
+			for(iter2 = 0; iter2 <= iter; ++iter2) {
+				var limit = this.position.sets.length;
+				if (iter2 < limit && (iter-iter2) < limit) {
+					this.rules[iter2][iter-iter2] = iter
+				}
+			}
+		}
 		
 		
 	}
