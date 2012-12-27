@@ -16,6 +16,18 @@
         </style>
     </head>
     <body>
+	
+		<!-- TODO:
+			- Test input and button for membership functions
+			- Test input and button for controller
+			- Way to save and load settings
+			- Game with track controlled by user
+			- Game through set track
+			- Way to save and load tracks
+			- Results display
+			- Realtime feedback while running game
+			- Organize website into multiple pages
+		-->
 		
 		<!-- Utility Scripts -->
         <script src="Rule.js"></script>
@@ -23,17 +35,40 @@
         <script src="FuzzyController.js"></script>
         <script src="Utility.js"></script>
 		
-		<!-- Title -->
-		<h1>AI Coursework - Sarah Herzog</h1>
-		<br />
+		<!-- Overview -->
+		<a name="top"></a>
+		<table width="1200px">
+			<tr>
+				<td>
+					<h1>AI Coursework - Sarah Herzog</h1>
+					<hr />
+					This webpage is an application demonstrating a fuzzy logic controller via a simple racing game. From this page, the user can edit
+					the fuzzy logic parameters and see their results in the game. The user can choose to run the AI through a set track, or to manually
+					control the track during the game's opperation. After the run, the game will display the statistics from it's previous run.
+					<br /><br />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h2>Table of Contents</h2>
+					<br />1. <a href="#position_membership">Line Position Membership Function</a>
+					<br />2. <a href="#velocity_membership">Line Velocity Membership Function</a>
+					<br />3. <a href="#action_membership">Action Membership Function</a>
+					<br />4. <a href="#game">Game</a>
+					<br />5. <a href="#results">Results</a>
+				</td>
+			</tr>
+		</table>
 		
 		<!-- Line Position Membership Function -->
+		<a name="position_membership"> </a>
 		<table width="1200px">
 			<tr>
 				<td colspan="10">
 					<hr />
 					<h2>Line Position Membership Function</h2>
-					Position of the line with player as origin, in units of pixels.<br /><br />
+					<a href="#top">[Back to the top]</a><br /><br />
+					Position of the line with AI car as origin, in units of pixels.<br /><br />
 				</td>
 			</tr>
 			<tr>
@@ -385,12 +420,14 @@
 		</table>
 		
 		<!-- Line Velocity Membership Function -->
+		<a name="velocity_membership"> </a>
 		<table width="1200px">
 			<tr>
 				<td colspan="10">
 					<hr />
 					<h2>Line Velocity Membership Function</h2>
-					<i>Relative</i> velocity of the line with respect to the player, in units of pixels/second. Combines line velocity (set by course) and player velocity (controlled by AI).<br /><br />
+					<a href="#top">[Back to the top]</a><br /><br />
+					<i>Relative</i> velocity of the line with respect to the AI car, in units of pixels/second. Combines line velocity (set by course) and AI car velocity (controlled by AI).<br /><br />
 				</td>
 			</tr>
 			<tr>
@@ -742,12 +779,14 @@
 		</table>
 		
 		<!-- Action Membership Function -->
+		<a name="action_membership"> </a>
 		<table width="1200px">
 			<tr> <!-- Section Title -->
 				<td colspan="10">
 					<hr />
 					<h2>Action Membership Function</h2>
-					Resulting velocity <i>change</i> of the player, in units of pixels/second.<br /><br />
+					<a href="#top">[Back to the top]</a><br /><br />
+					Resulting velocity <i>change</i> of the <b>AI car</b>, in units of pixels/second. NOTE: Curviness for this section currenly bugged - all lines will be treated as curviness 0.<br /><br />
 				</td>
 			</tr>
 			<tr>  <!-- Column Titles -->
@@ -1440,14 +1479,45 @@
 		
 		<!-- Initialise Input Values -->
 		<script>memfuncInit();</script>
-		
-		
 	
-		<!-- Canvas -->
-        <canvas id="canvas_game"></canvas>	
+		<!-- Game -->
+		<a name="game"> </a>
+		<table width="1200px">
+			<tr>
+				<td>
+					<hr />
+					<h2>Game</h2>
+					<a href="#top">[Back to the top]</a><br /><br />
+					TODO<br /><br />
+				</td>
+			</tr>
+			<tr>  <!-- Canvas -->
+				<td>
+					<canvas id="canvas_game"></canvas>
+				</td>
+			</tr>
+		</table>
+	
+		<!-- Results -->
+		<a name="results"> </a>
+		<table width="1200px">
+			<tr>
+				<td>
+					<hr />
+					<h2>Results</h2>
+					<a href="#top">[Back to the top]</a><br /><br />
+					TODO<br /><br />
+				</td>
+			</tr>
+			<tr>  <!-- Canvas -->
+				<td>
+					<canvas id="canvas_results"></canvas>
+				</td>
+			</tr>
+		</table>
 		
 		<!-- Game Scripts -->
-        <script>console.log("Recommended change for pos=-100, vel=75: "+controller.process(-100,75));</script>
         <script src="Game.js"></script>
+        <script>startGame();</script>
     </body>
 </html>

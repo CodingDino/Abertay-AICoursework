@@ -8,7 +8,6 @@
 FuzzyController.prototype = new AI();
 FuzzyController.prototype.constructor = FuzzyController;
 
-
 // FuzzyController Class
 function FuzzyController() {
 
@@ -134,46 +133,46 @@ function FuzzyController() {
 		this.velocity.sets[0].memfunc = new Object();
 		this.velocity.sets[0].memfunc.lbp = -650;
 		this.velocity.sets[0].memfunc.lpp = -650;
-		this.velocity.sets[0].memfunc.lc = 0;
+		this.velocity.sets[0].memfunc.lc = 5;
 		this.velocity.sets[0].memfunc.rpp = -350;
 		this.velocity.sets[0].memfunc.rbp = -250;
-		this.velocity.sets[0].memfunc.rc = 0;
+		this.velocity.sets[0].memfunc.rc = 5;
 		
 		// Left Member Function
 		this.velocity.sets[1].memfunc = new Object();
 		this.velocity.sets[1].memfunc.lbp = -350;
 		this.velocity.sets[1].memfunc.lpp = -250;
-		this.velocity.sets[1].memfunc.lc = 0;
+		this.velocity.sets[1].memfunc.lc = 5;
 		this.velocity.sets[1].memfunc.rpp = -150;
 		this.velocity.sets[1].memfunc.rbp = -50;
-		this.velocity.sets[1].memfunc.rc = 0;
+		this.velocity.sets[1].memfunc.rc = 5;
 		
 		// Center Member Function
 		this.velocity.sets[2].memfunc = new Object();
 		this.velocity.sets[2].memfunc.lbp = -150;
 		this.velocity.sets[2].memfunc.lpp = -50;
-		this.velocity.sets[2].memfunc.lc = 0;
+		this.velocity.sets[2].memfunc.lc = 5;
 		this.velocity.sets[2].memfunc.rpp = 50;
 		this.velocity.sets[2].memfunc.rbp = 150;
-		this.velocity.sets[2].memfunc.rc = 0;
+		this.velocity.sets[2].memfunc.rc = 5;
 		
 		// Right Member Function
 		this.velocity.sets[3].memfunc = new Object();
 		this.velocity.sets[3].memfunc.lbp = 50;
 		this.velocity.sets[3].memfunc.lpp = 150;
-		this.velocity.sets[3].memfunc.lc = 0;
+		this.velocity.sets[3].memfunc.lc = 5;
 		this.velocity.sets[3].memfunc.rpp = 250;
 		this.velocity.sets[3].memfunc.rbp = 350;
-		this.velocity.sets[3].memfunc.rc = 0;
+		this.velocity.sets[3].memfunc.rc = 5;
 		
 		// Far Right Member Function
 		this.velocity.sets[4].memfunc = new Object();
 		this.velocity.sets[4].memfunc.lbp = 250;
 		this.velocity.sets[4].memfunc.lpp = 350;
-		this.velocity.sets[4].memfunc.lc = 0;
+		this.velocity.sets[4].memfunc.lc = 5;
 		this.velocity.sets[4].memfunc.rpp = 650;
 		this.velocity.sets[4].memfunc.rbp = 650;
-		this.velocity.sets[4].memfunc.rc = 0;
+		this.velocity.sets[4].memfunc.rc = 5;
 		
 		// ********************************************************************
 		// Action Member Function 
