@@ -337,7 +337,7 @@ function FuzzyController() {
     // ********************************************************************
 	this.fuzzify = function(variable, set, input) {
 		
-		console.log("Fuzzifying variable = "+variable+", set="+set+", input="+input);
+		//console.log("Fuzzifying variable = "+variable+", set="+set+", input="+input);
 	
 		// Determine points
 		var lbp = this[variable].sets[set].memfunc.lbp,
@@ -351,8 +351,8 @@ function FuzzyController() {
 			rpc = rpp+(this[variable].sets[set].memfunc.rc/10)*(rbp-rpp),
 			rbc = rbp-(this[variable].sets[set].memfunc.rc/10)*(rbp-rpp);
 		var fuzzy_value=0;
-		console.log("   lbp = "+lbp+", lpp="+lpp+", lc="+lc+", lbc="+lbc+", lpc="+lpc);
-		console.log("   rbp = "+rbp+", rpp="+rpp+", rc="+rc+", rpc="+rpc+", rbc="+rbc);
+		//console.log("   lbp = "+lbp+", lpp="+lpp+", lc="+lc+", lbc="+lbc+", lpc="+lpc);
+		//console.log("   rbp = "+rbp+", rpp="+rpp+", rc="+rc+", rpc="+rpc+", rbc="+rbc);
 		
 		// Below lbp - non-member
 		if (input <= lbp) {
@@ -412,7 +412,7 @@ function FuzzyController() {
 		}
 		
 		// Return result
-		console.log("   Fuzzification result: fuzzy_value = "+fuzzy_value);
+		//console.log("   Fuzzification result: fuzzy_value = "+fuzzy_value);
 		return fuzzy_value;
 	}
 	
@@ -428,17 +428,17 @@ function FuzzyController() {
 		var q = (9*a*b*c - 27*Math.pow(a,2)*d - 2*Math.pow(b,3)) / (27*Math.pow(a,3));
 		var Q = p/3;
 		var R = q/2;
-		console.log("   Solving cubic root for a="+a+", b="+b+", c="+c+", d="+d);
-		console.log("      Depressed cubic values p="+p+", q="+q+", Q="+Q+", R="+R);
+		//console.log("   Solving cubic root for a="+a+", b="+b+", c="+c+", d="+d);
+		//console.log("      Depressed cubic values p="+p+", q="+q+", Q="+Q+", R="+R);
 		
 		// Solve for w
 		var w3 = (R + Math.sqrt(Q*Q*Q + R*R));
 		var w = Math.pow(w3,(1/3)); 
-		console.log("      w3="+w3+", w="+w);
+		//console.log("      w3="+w3+", w="+w);
 		
 		var t = w - p/(3*w);
 		var x = t - b/(3*a);
-		console.log("      t="+t+", x="+x);
+		//console.log("      t="+t+", x="+x);
 		
 		// As one equation
 		// x = -b/(3*a)
@@ -466,7 +466,7 @@ function FuzzyController() {
 												// -4*Math.pow((b*b-3*a*c),3)
 									// )
 								// ),1/3)
-		// console.log("      x="+x);
+		// //console.log("      x="+x);
 		
 		return x;
 	}
@@ -489,7 +489,7 @@ function FuzzyController() {
 			return;
 		}
 		
-		console.log("Defuzzifying variable = "+variable+", set="+set+", input="+input);
+		//console.log("Defuzzifying variable = "+variable+", set="+set+", input="+input);
 	
 		// Determine points
 		var lbp = this[variable].sets[set].memfunc.lbp,
@@ -538,13 +538,13 @@ function FuzzyController() {
 					// d = -input;
 				// var t = this.solveCubic(a,b,c,d);
 				
-				// console.log("   Cubic root t = "+t);
+				// //console.log("   Cubic root t = "+t);
 				
 				// t = 0.5 * (
 					// Math.pow(2*Math.sqrt(input*input - input)-2*input+1,(1/3))
 					// + 1 / (Math.pow((2*Math.sqrt(input*input - input)-2*input+1),(1/3))) + 1
 					// )
-				// console.log("   Wolfram t = "+t);
+				// //console.log("   Wolfram t = "+t);
 				
 				
 				//Given t, calculate x
@@ -579,7 +579,7 @@ function FuzzyController() {
 		}
 		
 		// Return the result
-		console.log("   Defuzzification result: value = "+result.value+", area = "+result.area);
+		//console.log("   Defuzzification result: value = "+result.value+", area = "+result.area);
 		return result;
 		
 	}

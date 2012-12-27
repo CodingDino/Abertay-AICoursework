@@ -5,9 +5,7 @@
 // ************************************************************************ 
 
 // Global Variables
-var CANVAS_WIDTH = 1200,                 // width of the canvas
-    CANVAS_HEIGHT = 300,                // height of the canvas
-    gLoop,                              // Game loop timer
+var gLoop,                              // Game loop timer
     canvas_game = document.getElementById('canvas_game'),   // The canvas itself
     ctx = canvas_game.getContext('2d'),           // 2d graphics context
     FPS = 50,                           // Frames per second
@@ -38,11 +36,11 @@ function Game() {
     this.current_time = this.start_time;
 	
 	// Keypresses
-	this.keypress = new Object();
+	game_keypress = new Object();
 	
 	// Objects
-	//this.car = new Car();
-	//this.line = new Line();
+	game_car = new Car();
+	game_line = new Line();
     
     // ********************************************************************
     // Function:    onkeydown()
@@ -51,25 +49,28 @@ function Game() {
     // ********************************************************************
     document.onkeydown = function(e) {
         if (e.keyCode == LEFT) {
-			this.keypress.left = true;
+			game_keypress.left = true;
+			game_line.direction = -1;
+			console.log("Keydown: LEFT");
         }
         if (e.keyCode == RIGHT) {
-			this.keypress.right = true;
+			game_keypress.right = true;
+			game_line.direction = 1;
         }
         if (e.keyCode == UP) {
-			this.keypress.up = true;
+			game_keypress.up = true;
         }
         if (e.keyCode == DOWN) {
-			this.keypress.down = true;
+			game_keypress.down = true;
         }
         if (e.keyCode == NUM1) {
-			this.keypress.num1 = true;
+			game_keypress.num1 = true;
         }
         if (e.keyCode == NUM2) {
-			this.keypress.num2 = true;
+			game_keypress.num2 = true;
         }
         if (e.keyCode == NUM3) {
-			this.keypress.num3 = true;
+			game_keypress.num3 = true;
         }
     }
 
@@ -80,25 +81,34 @@ function Game() {
     // ********************************************************************
     document.onkeyup = function(e) {
         if (e.keyCode == LEFT) {
-			this.keypress.left = false;
+			game_keypress.left = false;
+			game_line.direction = 0;
         }
         if (e.keyCode == RIGHT) {
-			this.keypress.right = false;
+			game_keypress.right = false;
+			game_line.direction = 0;
         }
         if (e.keyCode == UP) {
-			this.keypress.up = false;
+			game_keypress.up = false;
+			game_line.change_rate +=1;
+			if (game_line.change_rate >3) game_line.change_rate = 3;
         }
         if (e.keyCode == DOWN) {
-			this.keypress.down = false;
+			game_keypress.down = false;
+			game_line.change_rate -=1;
+			if (game_line.change_rate <1) game_line.change_rate = 1;
         }
         if (e.keyCode == NUM1) {
-			this.keypress.num1 = false;
+			game_keypress.num1 = false;
+			game_line.change_rate =1;
         }
         if (e.keyCode == NUM2) {
-			this.keypress.num2 = false;
+			game_keypress.num2 = false;
+			game_line.change_rate =2;
         }
         if (e.keyCode == NUM3) {
-			this.keypress.num3 = false;
+			game_keypress.num3 = false;
+			game_line.change_rate =3;
         }
     }
 
@@ -116,6 +126,11 @@ function Game() {
     // Purpose:     Handle all game logic. 
     // ********************************************************************
     logic = function() {
+		// Perform Line Logic
+		game_line.logic();
+		
+		// Perform Car Logic
+		game_car.logic(game_line.position);
     } 
     
     // ********************************************************************
@@ -139,6 +154,8 @@ function Game() {
     draw = function() {
         // Clear the canvas to the level's bg color
         clear();
+		game_line.draw(game_car.position);
+		game_car.draw();
     }  
 	
 }

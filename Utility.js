@@ -96,7 +96,6 @@ function memfuncInit() {
 	updateMemFuncCanvas("action");
 }
 
-
 function updateMemFuncCanvas(variable) {
 
 	// Setup
