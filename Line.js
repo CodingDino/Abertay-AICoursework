@@ -7,7 +7,7 @@
 // ************************************************************************
 // Global Constants
 // ************************************************************************
-var LINE_SPEED = 100;			// Constant speed factor for line movement
+var LINE_SPEED = 600;			// Constant speed factor for line movement
 
 // Line Class
 function Line() {

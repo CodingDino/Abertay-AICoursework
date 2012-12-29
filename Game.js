@@ -8,7 +8,7 @@
 var gLoop,                              // Game loop timer
     canvas_game = document.getElementById('canvas_game'),   // The canvas itself
     ctx = canvas_game.getContext('2d'),           // 2d graphics context
-    FPS = 5,                            // Frames per second
+    FPS = 60,                            // Frames per second
     DEBUGMODE = true;                   // Debug mode
     
 // Set canvas size    

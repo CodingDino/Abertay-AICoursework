@@ -8,8 +8,8 @@
 // Global Constants
 // ************************************************************************
 var CAR_Y = 40;
-var CAR_MAX_VEL = 200;  // Can't go faster than this
-var CAR_MAX_ACC = 20;	// Can't accelerate faster than this
+var CAR_MAX_VEL = 1000;   // Can't go faster than this
+var CAR_MAX_ACC = 600;	  // Can't accelerate faster than this
 
 // Car Class
 function Car() {

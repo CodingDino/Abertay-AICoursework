@@ -15,8 +15,7 @@ var CANVAS_WIDTH = 1200,
 // Function:    inputUpdate()
 // Purpose:     Updates the provided element to the provided value. 
 // ************************************************************************
-function inputUpdate(variable, set, point, newValue)
-{
+function inputUpdate(variable, set, point, newValue) {
 	// Error checking
 	if (point == "lbp") {
 		if (newValue > controller[variable].sets[set].memfunc.lpp)
@@ -59,6 +58,14 @@ function inputUpdate(variable, set, point, newValue)
 }
 
 // ************************************************************************
+// Function:    ruleUpdate()
+// Purpose:     Updates a rule in the controller to the provided value
+// ************************************************************************
+function ruleUpdate(pos, vel, val) {
+	controller.rules[pos][vel] = val;
+}
+
+// ************************************************************************
 // Function:    memfuncInit()
 // Purpose:     Initialises the memory function values and input. 
 // ************************************************************************
@@ -75,11 +82,12 @@ function memfuncInit() {
 		}
 	}
 	
-	// OLD CODE
-	// for (var variable in controller) {
-		// var str = variable.split("_")
-		// inputUpdate(str[1], str[2], str[3], controller[variable]);
-	// }
+	// Rules set to defaults
+	for (iter = 0; iter < controller.rules.length; ++iter) {
+		for (iter2 = 0; iter2 < controller.rules[iter].length; ++iter2) {
+			document.getElementById("readout_rules_"+iter+"_"+iter2).value=controller.rules[iter][iter2];
+		}
+	}
 	
 	// Initialise canvas
 	var canvas_memfunc_pos = document.getElementById('canvas_position_memfunc');
@@ -96,6 +104,10 @@ function memfuncInit() {
 	updateMemFuncCanvas("action");
 }
 
+// ************************************************************************
+// Function:    updateMemFuncCanvas()
+// Purpose:     Updates the canvas for the provided variable 
+// ************************************************************************
 function updateMemFuncCanvas(variable) {
 
 	// Setup
@@ -165,6 +177,10 @@ function updateMemFuncCanvas(variable) {
 	
 }
 
+// ************************************************************************
+// Function:    drawMemFunc()
+// Purpose:     Draws a specific set's membership function 
+// ************************************************************************
 function drawMemFunc(variable, set, color) {
 
 	// Setup line
@@ -209,4 +225,27 @@ function drawMemFunc(variable, set, color) {
 	
 	// Label
 	ctx.fillText(controller[variable].sets[set].name, (lpp+(rpp-lpp)/2), FUNC_TOP);
+}
+
+// ************************************************************************
+// Function:    testMemFunc()
+// Purpose:     Tests the position member function with the provided value 
+// ************************************************************************
+function testMemFunc(variable, newValue) {
+	for (iter = 0; iter < controller[variable].sets.length; ++iter) {
+		document.getElementById("readout_"+variable+"_test_"+iter).value=controller.fuzzify(variable,iter,newValue);
+	}
+}
+
+// ************************************************************************
+// Function:    testDefuzzify()
+// Purpose:     Defuzzifies the selected action set and value 
+// ************************************************************************
+function testDefuzzify() {
+	var result = 
+		controller.defuzzify("action",
+			document.getElementById("input_action_test_set").value,
+			document.getElementById("input_action_test_value").value);
+	document.getElementById("input_action_test_result").value = result.value;
+	document.getElementById("input_action_test_area").value = result.area;
 }

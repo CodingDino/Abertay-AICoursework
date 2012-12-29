@@ -66,11 +66,35 @@ function Readout() {
 			ctx.fillText(("   "+controller["velocity"].sets[iter].name+" = "+vel[iter]).substring(0,READOUT_TRUNC), READOUT_X_PAD, READOUT_TOP+5+READOUT_Y_PAD*(4+iter));
 		}
 		
-		// Car Absolutes
+		// Car Stats
 		ctx.fillText("CAR DETAILS", READOUT_X_PAD*2, READOUT_TOP+5);
 		ctx.fillText(("car position = "+car.position).substring(0,READOUT_TRUNC), READOUT_X_PAD*2, READOUT_TOP+5+READOUT_Y_PAD);
 		ctx.fillText(("car velocity = "+car.velocity).substring(0,READOUT_TRUNC), READOUT_X_PAD*2, READOUT_TOP+5+READOUT_Y_PAD*2);
-		// Get fuzzy membership string - TODO
+		ctx.fillText(("Fuzzy Membership:").substring(0,READOUT_TRUNC), READOUT_X_PAD*2, READOUT_TOP+5+READOUT_Y_PAD*3);
+		var act = new Array(0,0,0,0,0,0,0,0,0);
+		for (iter = 0; iter < pos.length; ++iter) {
+			for (iter2 = 0; iter2 < vel.length; ++iter2) {
+				var act_index = controller.rules[iter][iter2];
+				act[act_index] = Math.max(act[act_index], Math.min(pos[iter],vel[iter2]));
+			}
+		}
+		for (iter = 0; iter < 5; ++iter) {
+			ctx.fillText(("   "+controller["action"].sets[iter].name+" = "
+				+(act[iter]+"").substring(0,4)
+				+" ("
+				+(""+(controller.defuzzify("action",iter,act[iter])).value).substring(0,5) + ", "
+				+(""+(controller.defuzzify("action",iter,act[iter])).area).substring(0,5)
+				+")"), 
+				READOUT_X_PAD*2, READOUT_TOP+5+READOUT_Y_PAD*(4+iter));
+		}
+		for (iter = 5; iter < act.length; ++iter) {
+			ctx.fillText(("   "+controller["action"].sets[iter].name+" = "
+				+(act[iter]+"").substring(0,4)
+				+" ("
+				+(""+(controller.defuzzify("action",iter,act[iter])).value).substring(0,5) + ", "
+				+(""+(controller.defuzzify("action",iter,act[iter])).area).substring(0,5)
+				+")"), READOUT_X_PAD*3, READOUT_TOP+5+READOUT_Y_PAD*(iter-1));
+		}
 	
     }  
 	

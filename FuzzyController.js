@@ -329,7 +329,6 @@ function FuzzyController() {
 		// }
 		for (iter = 0; iter < pos.length; ++iter) {
 			for (iter2 = 0; iter2 < vel.length; ++iter2) {
-				console.log("Getting rule for position = "+iter+" and velocity = "+iter2)
 				var act_index = this.rules[iter][iter2];
 				act[act_index] = Math.max(act[act_index], Math.min(pos[iter],vel[iter2]));
 			}
@@ -379,6 +378,8 @@ function FuzzyController() {
     // Output:      fuzzy_value - value of the fuzzy membership
     // ********************************************************************
 	this.fuzzify = function(variable, set, input) {
+		
+		input = clamp(input, -600, 600);
 		
 		//console.log("Fuzzifying variable = "+variable+", set="+set+", input="+input);
 	
@@ -568,8 +569,8 @@ function FuzzyController() {
 			// Left side
 			// If there's no curviness, just use a straight line (faster)
 			//if (lc == 0) {
-				var slope = (1)/(lpp-lbp);
-				lx = lbp + input/slope;
+				var lslope = (1)/(lpp-lbp);
+				lx = lbp + input/lslope;
 			// } else { // use bezier curve equation to determine x
 				// var a = 0+3*0-3*1+1,
 					// b = 3*0-6*0+3*1,
@@ -598,8 +599,8 @@ function FuzzyController() {
 			// Left side
 			// If there's no curviness, just use a straight line (faster)
 			// if (rc == 0) {
-				var slope = (1)/(rbp-rpp);
-				rx = rpp + input/slope;
+				var rslope = (-1)/(rbp-rpp);
+				rx = rpp + (input-1)/rslope;
 			// } else { // use bezier curve equation to determine x
 				// var a = -1+3*1-3*0+0,
 					// b = 3*1-6*1+3*0,
