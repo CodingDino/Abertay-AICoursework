@@ -86,39 +86,39 @@ function FuzzyController() {
 		this.position.sets[0].memfunc.lpp = -650;
 		this.position.sets[0].memfunc.lc = 5;
 		this.position.sets[0].memfunc.rpp = -350;
-		this.position.sets[0].memfunc.rbp = -250;
+		this.position.sets[0].memfunc.rbp = -200;
 		this.position.sets[0].memfunc.rc = 5;
 		
 		// Left Member Function
 		this.position.sets[1].memfunc = new Object();
-		this.position.sets[1].memfunc.lbp = -350;
+		this.position.sets[1].memfunc.lbp = -400;
 		this.position.sets[1].memfunc.lpp = -250;
 		this.position.sets[1].memfunc.lc = 5;
 		this.position.sets[1].memfunc.rpp = -150;
-		this.position.sets[1].memfunc.rbp = -50;
+		this.position.sets[1].memfunc.rbp = 0;
 		this.position.sets[1].memfunc.rc = 5;
 		
 		// Center Member Function
 		this.position.sets[2].memfunc = new Object();
-		this.position.sets[2].memfunc.lbp = -150;
+		this.position.sets[2].memfunc.lbp = -200;
 		this.position.sets[2].memfunc.lpp = -50;
 		this.position.sets[2].memfunc.lc = 5;
 		this.position.sets[2].memfunc.rpp = 50;
-		this.position.sets[2].memfunc.rbp = 150;
+		this.position.sets[2].memfunc.rbp = 200;
 		this.position.sets[2].memfunc.rc = 5;
 		
 		// Right Member Function
 		this.position.sets[3].memfunc = new Object();
-		this.position.sets[3].memfunc.lbp = 50;
+		this.position.sets[3].memfunc.lbp = 0;
 		this.position.sets[3].memfunc.lpp = 150;
 		this.position.sets[3].memfunc.lc = 5;
 		this.position.sets[3].memfunc.rpp = 250;
-		this.position.sets[3].memfunc.rbp = 350;
+		this.position.sets[3].memfunc.rbp = 400;
 		this.position.sets[3].memfunc.rc = 5;
 		
 		// Far Right Member Function
 		this.position.sets[4].memfunc = new Object();
-		this.position.sets[4].memfunc.lbp = 250;
+		this.position.sets[4].memfunc.lbp = 200;
 		this.position.sets[4].memfunc.lpp = 350;
 		this.position.sets[4].memfunc.lc = 5;
 		this.position.sets[4].memfunc.rpp = 650;
@@ -135,39 +135,39 @@ function FuzzyController() {
 		this.velocity.sets[0].memfunc.lpp = -650;
 		this.velocity.sets[0].memfunc.lc = 5;
 		this.velocity.sets[0].memfunc.rpp = -350;
-		this.velocity.sets[0].memfunc.rbp = -250;
+		this.velocity.sets[0].memfunc.rbp = -200;
 		this.velocity.sets[0].memfunc.rc = 5;
 		
 		// Left Member Function
 		this.velocity.sets[1].memfunc = new Object();
-		this.velocity.sets[1].memfunc.lbp = -350;
+		this.velocity.sets[1].memfunc.lbp = -400;
 		this.velocity.sets[1].memfunc.lpp = -250;
 		this.velocity.sets[1].memfunc.lc = 5;
 		this.velocity.sets[1].memfunc.rpp = -150;
-		this.velocity.sets[1].memfunc.rbp = -50;
+		this.velocity.sets[1].memfunc.rbp = 0;
 		this.velocity.sets[1].memfunc.rc = 5;
 		
 		// Center Member Function
 		this.velocity.sets[2].memfunc = new Object();
-		this.velocity.sets[2].memfunc.lbp = -150;
+		this.velocity.sets[2].memfunc.lbp = -200;
 		this.velocity.sets[2].memfunc.lpp = -50;
 		this.velocity.sets[2].memfunc.lc = 5;
 		this.velocity.sets[2].memfunc.rpp = 50;
-		this.velocity.sets[2].memfunc.rbp = 150;
+		this.velocity.sets[2].memfunc.rbp = 200;
 		this.velocity.sets[2].memfunc.rc = 5;
 		
 		// Right Member Function
 		this.velocity.sets[3].memfunc = new Object();
-		this.velocity.sets[3].memfunc.lbp = 50;
+		this.velocity.sets[3].memfunc.lbp = 0;
 		this.velocity.sets[3].memfunc.lpp = 150;
 		this.velocity.sets[3].memfunc.lc = 5;
 		this.velocity.sets[3].memfunc.rpp = 250;
-		this.velocity.sets[3].memfunc.rbp = 350;
+		this.velocity.sets[3].memfunc.rbp = 400;
 		this.velocity.sets[3].memfunc.rc = 5;
 		
 		// Far Right Member Function
 		this.velocity.sets[4].memfunc = new Object();
-		this.velocity.sets[4].memfunc.lbp = 250;
+		this.velocity.sets[4].memfunc.lbp = 200;
 		this.velocity.sets[4].memfunc.lpp = 350;
 		this.velocity.sets[4].memfunc.lc = 5;
 		this.velocity.sets[4].memfunc.rpp = 650;
