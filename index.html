@@ -20,10 +20,13 @@
 		<!-- TODO:
 			- DONE! - Test for input membership fuzzification
 			- DONE! - Test for action defuzzification
-			- Test for rules based on input fuzzy sets
-			- Test for overall controller (input -> suggested action)
+			- DONE! Test for overall controller (input -> suggested action)
+			- Game displays selected speed setting
 			- Way to save and load settings
+			--- Import and export via message box and plain text
+			- Code track
 			- Results display (at end or realtime update)
+			- Method to export results for Excel interpretation
 			- Genetic Algorithm Tuning
 			--- Initialization (random generate controllers)
 			--- Fitness evaluation (sped up run through track)
@@ -38,6 +41,7 @@
 			- Way to save and load tracks
 			- Organize website into multiple pages
 			- Graphic feedback of member functions while running
+			- Test for rules based on input fuzzy sets
 			- DONE! - Game with track controlled by user
 			- DONE! - Game through set track
 			- DONE! - Realtime feedback while running game
@@ -70,9 +74,10 @@
 					<br />1. <a href="#position_membership">Line Position Membership Function</a>
 					<br />2. <a href="#velocity_membership">Line Velocity Membership Function</a>
 					<br />3. <a href="#action_membership">Action Membership Function</a>
-					<br />4. <a href="#rules">Rules</a>
-					<br />5. <a href="#game">Game</a>
-					<br />6. <a href="#results">Results</a>
+					<br />4. <a href="#testing">Testing</a>
+					<br />5. <a href="#rules">Rules</a>
+					<br />6. <a href="#game">Game</a>
+					<br />7. <a href="#results">Results</a>
 				</td>
 			</tr>
 		</table>
@@ -1996,6 +2001,25 @@
 				</td>
 			</tr>		
 		</table>
+	
+		<!-- Testing -->
+		<a name="testing"> </a>
+		<table width="1200px">
+			<tr>
+				<td>
+					<hr />
+					<h2>Testing</h2>
+					<a href="#top">[Back to the top]</a><br /><br />
+					In this section, you can enter a test input to the overall system and get a recommended velocity change. This tests all parts of the controller at once.
+					<br /><br />
+					Position: <input id="input_testing_position" type="number" value="0" size="5" onchange="testOverall()"/>
+					<br /><br />
+					Velocity: <input id="input_testing_velocity" type="number" value="0" size="5" onchange="testOverall()"/>
+					<br />
+					Recommended Velocity Change: <input id="input_testing_action" type="number" value="0" size="5"/>
+				</td>
+			</tr>
+		</table>
 		
 		<!-- Initialise Input Values -->
 		<script>memfuncInit();</script>
@@ -2007,8 +2031,12 @@
 				<td>
 					<hr />
 					<h2>Game</h2>
-					<a href="#top">[Back to the top]</a><br /><br />
-					TODO<br /><br />
+					<a href="#top">[Back to the top]</a>
+					<br /><br />
+					
+					Control the track manually using the arrow keys. Left moves the track left, right moves it right. Up and down increase or decrease the 
+					speed of the track movement. You can also use 1, 2, and 3 to set track movment speed.
+					<br /><br />
 				</td>
 			</tr>
 			<tr>  <!-- Canvas -->

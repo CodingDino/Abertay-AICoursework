@@ -154,8 +154,8 @@ function Game() {
     draw = function() {
         // Clear the canvas to the level's bg color
         clear();
-		game_line.draw(game_line.position);
-		game_car.draw(game_line.position);
+		game_line.draw(0);
+		game_car.draw(0);
 		game_readout.draw(game_car,game_line);
     }  
 	
