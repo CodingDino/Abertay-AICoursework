@@ -261,27 +261,12 @@ function testOverall() {
 	document.getElementById("input_testing_action").value = result;
 }
 
-// content is the data you'll write to file<br/>
-// filename is the filename<br/>
-// what I did is use iFrame as a buffer, fill it up with text
-function save_content_to_file(content, filename)
-{
-    var dlg = false;
-    with(document){
-     ir=createElement('iframe');
-     ir.id='ifr';
-     ir.location='about.blank';
-     ir.style.display='none';
-     body.appendChild(ir);
-      with(getElementById('ifr').contentWindow.document){
-           open("text/plain", "replace");
-           charset = "utf-8";
-           write(content);
-           close();
-           document.charset = "utf-8";
-           dlg = execCommand('SaveAs', false, filename+'.txt');
-       }
-       body.removeChild(ir);
-     }
-    return dlg;
+// ************************************************************************
+// Function:    clamp()
+// Purpose:     limits value to the range min..max
+// ************************************************************************	
+clamp = function(value, min, max) {
+	if (value < min) value = min;
+	if (value > max) value = max;
+	return value;
 }

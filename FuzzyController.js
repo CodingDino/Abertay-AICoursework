@@ -304,13 +304,6 @@ function FuzzyController() {
 			vel = new Array(0,0,0,0,0),
 			act = new Array(0,0,0,0,0,0,0,0,0);
 		
-		// clamp(value, min, max) - limits value to the range min..max
-		clamp = function(value, min, max) {
-			if (value < min) value = min;
-			if (value > max) value = max;
-			return value;
-		}
-		
 		// Clamp input into universe of discourse
 		line_position = clamp(line_position, -600, 600);
 		line_velocity = clamp(line_velocity, -600, 600);

@@ -7,7 +7,7 @@
 // ************************************************************************
 // Global Constants
 // ************************************************************************
-var LINE_SPEED = 600;			// Constant speed factor for line movement
+var LINE_SPEED = 500;			// Constant speed factor for line movement
 
 // Line Class
 function Line() {
@@ -25,10 +25,13 @@ function Line() {
     // ********************************************************************
     this.logic = function() {
 		// Move the line based on it's direction and change rate
-		this.velocity = this.direction*this.change_rate*LINE_SPEED;
+		if(game_user_control) this.velocity = this.direction*this.change_rate*LINE_SPEED;
 		
 		// Update position based on velocity
 		this.position += this.velocity / FPS;
+		
+		// Clamp line to screen
+		this.position = clamp(this.position, 0-CANVAS_WIDTH/2, CANVAS_WIDTH/2)
     } 
 	
     // ********************************************************************

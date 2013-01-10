@@ -21,12 +21,15 @@
 			- DONE! - Test for input membership fuzzification
 			- DONE! - Test for action defuzzification
 			- DONE! Test for overall controller (input -> suggested action)
+			- Test for rules based on input fuzzy sets
 			- Game displays selected speed setting
 			- Way to save and load settings
 			--- Import and export via message box and plain text
-			- Code track
+			- DONE! Code track
 			- Results display (at end or realtime update)
 			- Method to export results for Excel interpretation
+			- Tune track to get good testing set
+			- Tune main algorithm manually
 			- Genetic Algorithm Tuning
 			--- Initialization (random generate controllers)
 			--- Fitness evaluation (sped up run through track)
@@ -37,16 +40,14 @@
 			--- Check for valid controller (clamp points on membership functions as needed)
 			--- Loop until some stopping point (termination)
 			--- Visual monitoring of genetic algorithm effectiveness (best fitness function)
-			- Curviness for Action (currently bugged)
-			- Way to save and load tracks
 			- Organize website into multiple pages
 			- Graphic feedback of member functions while running
-			- Test for rules based on input fuzzy sets
 			- DONE! - Game with track controlled by user
 			- DONE! - Game through set track
 			- DONE! - Realtime feedback while running game
 			- DONE! - Display of rules
 			- DONE! - Editing of rules
+			- ABANDONED! Curviness for Action (currently bugged)
 		-->
 		
 		<!-- Utility Scripts -->
@@ -54,6 +55,11 @@
         <script src="AI.js"></script>
         <script src="FuzzyController.js"></script>
         <script src="Utility.js"></script>
+        <script src="Car.js"></script>
+        <script src="Line.js"></script>
+        <script src="Readout.js"></script>
+        <script src="Track.js"></script>
+        <script src="Game.js"></script>
 		
 		<!-- Overview -->
 		<a name="top"></a>
@@ -2021,9 +2027,6 @@
 			</tr>
 		</table>
 		
-		<!-- Initialise Input Values -->
-		<script>memfuncInit();</script>
-		
 		<!-- Game -->
 		<a name="game"> </a>
 		<table width="1200px">
@@ -2037,6 +2040,8 @@
 					Control the track manually using the arrow keys. Left moves the track left, right moves it right. Up and down increase or decrease the 
 					speed of the track movement. You can also use 1, 2, and 3 to set track movment speed.
 					<br /><br />
+					<button type="button" id="game_button_user" onclick="game_user_control = true; startGame();">User-Controlled</button>
+					<br /><button type="button" id="game_button_auto" onclick="game_user_control = false; startGame();">Automated Track</button>
 				</td>
 			</tr>
 			<tr>  <!-- Canvas -->
@@ -2065,10 +2070,7 @@
 		</table>
 		
 		<!-- Game Scripts -->
-        <script src="Car.js"></script>
-        <script src="Line.js"></script>
-        <script src="Readout.js"></script>
-        <script src="Game.js"></script>
-        <script>startGame();</script>
+		<script>memfuncInit();</script>
+        <script>initialiseGame();</script>
     </body>
 </html>
