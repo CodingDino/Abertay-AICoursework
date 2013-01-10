@@ -9,7 +9,8 @@ var gLoop,                              // Game loop timer
     canvas_game,   						// The canvas itself
     ctx,           						// 2d graphics context
     FPS = 60,                           // Frames per second
-    DEBUGMODE = true;                   // Debug mode
+    DEBUGMODE = true,                   // Debug mode
+	RUNTIME = 60;						// Time the game will run before ending and processing results
 
 // Movement keys
 UP = 38;
@@ -30,6 +31,8 @@ function Game() {
     game_now = new Date();
     game_start_time = game_now.getTime();
     game_current_time = game_start_time;
+	game_stop = true;
+	game_interval_ID = 0;
 	
 	// Keypresses
 	game_keypress = new Object();
@@ -39,9 +42,11 @@ function Game() {
 	game_line = new Line();
 	game_readout = new Readout();
 	game_track = new Track();
+	game_results = new Results();
 	
-	// Initialise track
+	// Initialisation
 	game_track.initialise();
+	game_results.initialise();
     
     // ********************************************************************
     // Function:    onkeydown()
@@ -175,19 +180,35 @@ function Game() {
 
 // ********************************************************************
 // Function:    startGame()
-// Purpose:     Creates a game instance and runs the game loop FPS 
-//				times per second. 
+// Purpose:     Runs the game loop FPS times per second. 
 // ********************************************************************
 function startGame() {
-	var this_game = new Game();     // Create instance of the game
-	this_game.gameLoop();           // Run Game Loop
-	setInterval(this_game.gameLoop, 1000 / FPS);
+	stopGame();										// Stop any running version
+	
+	// zero everything
+	game_car.reset();
+	game_line.reset();
+	game_track.reset();
+	game_results.reset();
+	
+	// Start game interval
+	game_stop = false;
+	game_interval_ID = setInterval(this_game.gameLoop, 1000 / FPS);
 }
 
 // ********************************************************************
+// Function:    stopGame()
+// Purpose:     Stops the game 
+// ********************************************************************
+function stopGame() {
+	game_stop = true;
+	if (game_interval_ID) clearInterval(game_interval_ID);
+}
+
+
+// ********************************************************************
 // Function:    initialiseGame()
-// Purpose:     Creates a game instance and runs the game loop FPS 
-//				times per second. 
+// Purpose:     Creates a game instance and initialises game
 // ********************************************************************
 function initialiseGame() {
 	canvas_game = document.getElementById('canvas_game'),   // The canvas itself
@@ -196,4 +217,6 @@ function initialiseGame() {
 	// Set canvas size    
 	canvas_game.width = CANVAS_WIDTH;
 	canvas_game.height = CANVAS_HEIGHT;
+	
+	this_game = new Game();     // Create instance of the game
 }

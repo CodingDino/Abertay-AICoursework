@@ -60,4 +60,13 @@ function Car() {
         ctx.closePath();
         ctx.fill();
     }
+	
+    // ********************************************************************
+    // Function:    reset()
+    // Purpose:     Resets to starting values
+    // ********************************************************************
+    this.reset = function() {
+		this.position = 0;		
+		this.velocity = 0;		
+    }
 }

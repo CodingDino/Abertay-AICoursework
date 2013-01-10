@@ -47,4 +47,13 @@ function Line() {
 		ctx.lineTo(CANVAS_WIDTH/2+(this.position-camera),CANVAS_HEIGHT);
 		ctx.stroke();
     }
+	
+    // ********************************************************************
+    // Function:    reset()
+    // Purpose:     Resets to starting values
+    // ********************************************************************
+    this.reset = function() {
+		this.position = 0;		
+		this.velocity = 0;		
+    }
 }

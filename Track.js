@@ -14,6 +14,15 @@ function Track() {
 	this.instructions = new Array();	// Instruction set
 	
     // ********************************************************************
+    // Function:    reset()
+    // Purpose:     Resets to starting values
+    // ********************************************************************
+    this.reset = function() {
+		this.done = false;			
+		this.current = 0;		
+    }
+	
+    // ********************************************************************
     // Function:    initialise()
     // Purpose:     Sets default variables
     // ********************************************************************
