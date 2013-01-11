@@ -10,7 +10,7 @@ var gLoop,                              // Game loop timer
     ctx,           						// 2d graphics context
     FPS = 60,                           // Frames per second
     DEBUGMODE = true,                   // Debug mode
-	RUNTIME = 60;						// Time the game will run before ending and processing results
+	RUNTIME = 40;						// Time the game will run before ending and processing results
 
 // Movement keys
 UP = 38;
@@ -30,6 +30,7 @@ function Game() {
     // Timers
     game_now = new Date();
     game_start_time = game_now.getTime();
+    game_mark_time = game_start_time;
     game_current_time = game_start_time;
 	game_stop = true;
 	game_interval_ID = 0;
@@ -126,15 +127,15 @@ function Game() {
     // Purpose:     Continuous loop runs while the game is loaded. 
     // ********************************************************************
     this.gameLoop = function() {
-        logic();     // Run all logic functions
-        draw();      // Draw all objects and text
+        game_logic();     // Run all logic functions
+        game_draw();      // Draw all objects and text
     } 
 	
     // ********************************************************************
     // Function:    logic()
     // Purpose:     Handle all game logic. 
     // ********************************************************************
-    logic = function() {
+    game_logic = function() {
 	
 		// If there's no user control, get track control
 		if (!game_user_control) game_track.logic(game_line);
@@ -145,16 +146,25 @@ function Game() {
 		// Perform Car Logic
 		game_car.logic(game_line);
 		
+		// Record results
+		game_results.record(game_line, game_car);
+		
 		// Update timer
 		game_now = new Date();
 		game_current_time = game_now.getTime();
+		
+		// Stop game if done
+		if (game_current_time-game_start_time > RUNTIME*1000) {
+			stopGame();
+		}
+		
     } 
     
     // ********************************************************************
     // Function:    clear()
     // Purpose:     Sets up the canvas for each frame. 
     // ********************************************************************
-    clear = function() {
+    game_clear = function() {
         ctx.fillStyle = 'rgba(150, 150, 150, 255)';
         ctx.beginPath();                // Start drawing
         ctx.rect(0,0,                   // Draws rectangle
@@ -168,9 +178,9 @@ function Game() {
     // Function:    draw()
     // Purpose:     Draws all game objects and text to the canvas. 
     // ********************************************************************
-    draw = function() {
+    game_draw = function() {
         // Clear the canvas to the level's bg color
-        clear();
+        game_clear();
 		game_line.draw(0);
 		game_car.draw(0);
 		game_readout.draw(game_car,game_line);
@@ -183,13 +193,15 @@ function Game() {
 // Purpose:     Runs the game loop FPS times per second. 
 // ********************************************************************
 function startGame() {
-	stopGame();										// Stop any running version
+	stopGame();							// Stop any running version
 	
 	// zero everything
 	game_car.reset();
 	game_line.reset();
 	game_track.reset();
 	game_results.reset();
+    game_now = new Date();
+    game_start_time = game_now.getTime();
 	
 	// Start game interval
 	game_stop = false;
@@ -203,6 +215,13 @@ function startGame() {
 function stopGame() {
 	game_stop = true;
 	if (game_interval_ID) clearInterval(game_interval_ID);
+	
+	// Process results
+	game_results.process(game_current_time - game_start_time);
+	game_results.draw();
+	
+	// Clear canvas
+	window.setTimeout(game_clear(),1000);
 }
 
 

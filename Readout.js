@@ -95,6 +95,9 @@ function Readout() {
 				+(""+(controller.defuzzify("action",iter,act[iter])).area).substring(0,5)
 				+")"), READOUT_X_PAD*3, READOUT_TOP+5+READOUT_Y_PAD*(iter-1));
 		}
+		
+		// Misc
+		ctx.fillText(("runtime = "+(game_current_time-game_start_time)/1000).substring(0,READOUT_TRUNC), READOUT_X_PAD*4, READOUT_TOP+5);
 	
     }  
 	
