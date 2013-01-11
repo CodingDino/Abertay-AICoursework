@@ -6,7 +6,7 @@
 
 var controller = new FuzzyController();
 controller.initialise();
-controller.randomise();
+//controller.randomise();
 var CANVAS_WIDTH = 1200,                 
 	CANVAS_HEIGHT = 300,
 	FUNC_TOP = 50,
@@ -278,4 +278,13 @@ function clamp(value, min, max) {
 // ************************************************************************	
 function randomise(min, max) {
 	return Math.floor((Math.random()*(max-min+1))+min);
+}
+
+// ************************************************************************
+// Function:    choose()
+// Purpose:     Chooses a random item from an array
+// ************************************************************************	
+function choose(array) {
+	var index = randomise(0, array.size-1);
+	return array[index];
 }

@@ -37,6 +37,7 @@ function Game() {
 	
 	// Keypresses
 	game_keypress = new Object();
+	game_user_control = false;
 	
 	// Objects
 	game_car = new Car();

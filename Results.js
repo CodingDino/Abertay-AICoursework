@@ -166,7 +166,8 @@ function Results() {
     // Function:    draw()
     // Purpose:     Draws all results text to the canvas. 
     // ********************************************************************
-    this.draw = function() {
+    this.draw = function(ctx) {
+		if(ctx) this.ctx = ctx;
 	
         // Clear the readout
         this.clear();

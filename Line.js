@@ -23,9 +23,10 @@ function Line() {
     // Function:    logic()
     // Purpose:     Handles logic for line. 
     // ********************************************************************
-    this.logic = function() {
+    this.logic = function(user_control) {
+		if(game_user_control) user_control = game_user_control;
 		// Move the line based on it's direction and change rate
-		if(game_user_control) this.velocity = this.direction*this.change_rate*LINE_SPEED;
+		if(user_control) this.velocity = this.direction*this.change_rate*LINE_SPEED;
 		
 		// Update position based on velocity
 		this.position += this.velocity / FPS;
