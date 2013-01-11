@@ -262,15 +262,6 @@ function FuzzyController() {
 		// ********************************************************************
 		// Rules 
 		// ********************************************************************
-		// for (iter = 0; iter < this.action.sets.length; ++iter) {
-			// this.action.sets[iter].rules = new Rule();
-			// for(iter2 = 0; iter2 <= iter; ++iter2) {
-				// var limit = this.position.sets.length;
-				// if (iter2 < limit && (iter-iter2) < limit) {
-					// this.action.sets[iter].rules.addRule(iter2,(iter-iter2));
-				// }
-			// }
-		// }
 		this.rules = [];
 		for (iter = 0; iter < this.position.sets.length; ++iter) { // For each pos value, add an array of velocity
 			this.rules.push([]);
@@ -295,356 +286,153 @@ function FuzzyController() {
     // Purpose:     Randomises default variables
     // ********************************************************************
 	this.randomise = function() {
-		var points = new Array(0,0,0,0);
-	
-		// ********************************************************************
-		// Position Set Information 
-		// ********************************************************************
-		this.position = new Object();
-		this.position.sets = new Object();
-		this.position.sets.length = 5;
-		this.position.sets[0] = new Object();
-		this.position.sets[0].name = "Far Left";
-		this.position.sets[1] = new Object();
-		this.position.sets[1].name = "Left";
-		this.position.sets[2] = new Object();
-		this.position.sets[2].name = "Center";
-		this.position.sets[3] = new Object();
-		this.position.sets[3].name = "Right";
-		this.position.sets[4] = new Object();
-		this.position.sets[4].name = "Far Right";
-	
-		// ********************************************************************
-		// Velocity Set Information 
-		// ********************************************************************
-		this.velocity = new Object();
-		this.velocity.sets = new Object();
-		this.velocity.sets.length = 5;
-		this.velocity.sets[0] = new Object();
-		this.velocity.sets[0].name = "Large Left";
-		this.velocity.sets[1] = new Object();
-		this.velocity.sets[1].name = "Left";
-		this.velocity.sets[2] = new Object();
-		this.velocity.sets[2].name = "None";
-		this.velocity.sets[3] = new Object();
-		this.velocity.sets[3].name = "Right";
-		this.velocity.sets[4] = new Object();
-		this.velocity.sets[4].name = "Large Right";
-	
-		// ********************************************************************
-		// Action Set Information 
-		// ********************************************************************
-		this.action = new Object();
-		this.action.sets = new Object();
-		this.action.sets.length = 9;
-		this.action.sets[0] = new Object();
-		this.action.sets[0].name = "Extreme Left";
-		this.action.sets[1] = new Object();
-		this.action.sets[1].name = "Large Left";
-		this.action.sets[2] = new Object();
-		this.action.sets[2].name = "Left";
-		this.action.sets[3] = new Object();
-		this.action.sets[3].name = "Slight Left";
-		this.action.sets[4] = new Object();
-		this.action.sets[4].name = "None";
-		this.action.sets[5] = new Object();
-		this.action.sets[5].name = "Slight Right";
-		this.action.sets[6] = new Object();
-		this.action.sets[6].name = "Right";
-		this.action.sets[7] = new Object();
-		this.action.sets[7].name = "Large Right";
-		this.action.sets[8] = new Object();
-		this.action.sets[8].name = "Extreme Right";
+		var points = new Array();
 		
 		// ********************************************************************
 		// Line Position Member Function 
 		// ********************************************************************
+		for (iter = 0; iter < 4*this.position.sets.length-4; ++iter) {
+			points[iter] = randomise(-600,600);
+		}
+		points.sort( function(a,b) {return a - b;} );
 		
 		// Far Left Member Function
-		this.position.sets[0].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
-		this.position.sets[0].memfunc.lbp = points[0];
-		this.position.sets[0].memfunc.lpp = points[1];
-		this.position.sets[0].memfunc.rpp = points[2];
-		this.position.sets[0].memfunc.rbp = points[3];;
+		this.position.sets[0].memfunc.rpp = points[1];
+		this.position.sets[0].memfunc.rbp = points[4];
 		this.position.sets[0].memfunc.lc = 0;
 		this.position.sets[0].memfunc.rc = 0;
 		
 		// Left Member Function
-		this.position.sets[1].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
 		this.position.sets[1].memfunc.lbp = points[0];
-		this.position.sets[1].memfunc.lpp = points[1];
-		this.position.sets[1].memfunc.rpp = points[2];
-		this.position.sets[1].memfunc.rbp = points[3];;
+		this.position.sets[1].memfunc.lpp = points[2];
+		this.position.sets[1].memfunc.rpp = points[5];
+		this.position.sets[1].memfunc.rbp = points[8];
 		this.position.sets[1].memfunc.lc = 0;
 		this.position.sets[1].memfunc.rc = 0;
 		
 		// Center Member Function
-		this.position.sets[2].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
-		this.position.sets[2].memfunc.lbp = points[0];
-		this.position.sets[2].memfunc.lpp = points[1];
-		this.position.sets[2].memfunc.rpp = points[2];
-		this.position.sets[2].memfunc.rbp = points[3];;
+		this.position.sets[2].memfunc.lbp = points[3];
+		this.position.sets[2].memfunc.lpp = points[6];
+		this.position.sets[2].memfunc.rpp = points[9];
+		this.position.sets[2].memfunc.rbp = points[12];
 		this.position.sets[2].memfunc.lc = 0;
 		this.position.sets[2].memfunc.rc = 0;
 		
 		// Right Member Function
-		this.position.sets[3].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
-		this.position.sets[3].memfunc.lbp = points[0];
-		this.position.sets[3].memfunc.lpp = points[1];
-		this.position.sets[3].memfunc.rpp = points[2];
-		this.position.sets[3].memfunc.rbp = points[3];;
+		this.position.sets[3].memfunc.lbp = points[7];
+		this.position.sets[3].memfunc.lpp = points[10];
+		this.position.sets[3].memfunc.rpp = points[13];
+		this.position.sets[3].memfunc.rbp = points[15];
 		this.position.sets[3].memfunc.lc = 0;
 		this.position.sets[3].memfunc.rc = 0;
 		
 		// Far Right Member Function
-		this.position.sets[4].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
-		this.position.sets[4].memfunc.lbp = points[0];
-		this.position.sets[4].memfunc.lpp = points[1];
-		this.position.sets[4].memfunc.rpp = points[2];
-		this.position.sets[4].memfunc.rbp = points[3];;
+		this.position.sets[4].memfunc.lbp = points[11];
+		this.position.sets[4].memfunc.lpp = points[14];
 		this.position.sets[4].memfunc.lc = 0;
 		this.position.sets[4].memfunc.rc = 0;
 		
 		// ********************************************************************
 		// Line Velocity Member Function 
 		// ********************************************************************
+		for (iter = 0; iter < 4*this.velocity.sets.length-4; ++iter) {
+			points[iter] = randomise(-600,600);
+		}
+		points.sort( function(a,b) {return a - b;} );
 		
 		// Far Left Member Function
-		this.velocity.sets[0].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
-		this.velocity.sets[0].memfunc.lbp = points[0];
-		this.velocity.sets[0].memfunc.lpp = points[1];
-		this.velocity.sets[0].memfunc.rpp = points[2];
-		this.velocity.sets[0].memfunc.rbp = points[3];;
+		this.velocity.sets[0].memfunc.rpp = points[1];
+		this.velocity.sets[0].memfunc.rbp = points[4];
 		this.velocity.sets[0].memfunc.lc = 0;
 		this.velocity.sets[0].memfunc.rc = 0;
 		
 		// Left Member Function
-		this.velocity.sets[1].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
 		this.velocity.sets[1].memfunc.lbp = points[0];
-		this.velocity.sets[1].memfunc.lpp = points[1];
-		this.velocity.sets[1].memfunc.rpp = points[2];
-		this.velocity.sets[1].memfunc.rbp = points[3];;
+		this.velocity.sets[1].memfunc.lpp = points[2];
+		this.velocity.sets[1].memfunc.rpp = points[5];
+		this.velocity.sets[1].memfunc.rbp = points[8];
 		this.velocity.sets[1].memfunc.lc = 0;
 		this.velocity.sets[1].memfunc.rc = 0;
 		
 		// Center Member Function
-		this.velocity.sets[2].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
-		this.velocity.sets[2].memfunc.lbp = points[0];
-		this.velocity.sets[2].memfunc.lpp = points[1];
-		this.velocity.sets[2].memfunc.rpp = points[2];
-		this.velocity.sets[2].memfunc.rbp = points[3];;
+		this.velocity.sets[2].memfunc.lbp = points[3];
+		this.velocity.sets[2].memfunc.lpp = points[6];
+		this.velocity.sets[2].memfunc.rpp = points[9];
+		this.velocity.sets[2].memfunc.rbp = points[12];
 		this.velocity.sets[2].memfunc.lc = 0;
 		this.velocity.sets[2].memfunc.rc = 0;
 		
 		// Right Member Function
-		this.velocity.sets[3].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
-		this.velocity.sets[3].memfunc.lbp = points[0];
-		this.velocity.sets[3].memfunc.lpp = points[1];
-		this.velocity.sets[3].memfunc.rpp = points[2];
-		this.velocity.sets[3].memfunc.rbp = points[3];;
+		this.velocity.sets[3].memfunc.lbp = points[7];
+		this.velocity.sets[3].memfunc.lpp = points[10];
+		this.velocity.sets[3].memfunc.rpp = points[13];
+		this.velocity.sets[3].memfunc.rbp = points[15];
 		this.velocity.sets[3].memfunc.lc = 0;
 		this.velocity.sets[3].memfunc.rc = 0;
 		
 		// Far Right Member Function
-		this.velocity.sets[4].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
-		this.velocity.sets[4].memfunc.lbp = points[0];
-		this.velocity.sets[4].memfunc.lpp = points[1];
-		this.velocity.sets[4].memfunc.rpp = points[2];
-		this.velocity.sets[4].memfunc.rbp = points[3];;
+		this.velocity.sets[4].memfunc.lbp = points[11];
+		this.velocity.sets[4].memfunc.lpp = points[14];
 		this.velocity.sets[4].memfunc.lc = 0;
 		this.velocity.sets[4].memfunc.rc = 0;
 		
 		// ********************************************************************
 		// Action Member Function 
 		// ********************************************************************
+		for (iter = 0; iter < 4*this.action.sets.length-4; ++iter) {
+			points[iter] = randomise(-600,600);
+		}
+		points.sort( function(a,b) {return a - b;} );
 		
 		// Extreme Left Member Function
-		this.action.sets[0].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
-		this.action.sets[0].memfunc.lbp = points[0];
-		this.action.sets[0].memfunc.lpp = points[1];
-		this.action.sets[0].memfunc.rpp = points[2];
-		this.action.sets[0].memfunc.rbp = points[3];;
-		this.action.sets[0].memfunc.lc = 0;
-		this.action.sets[0].memfunc.rc = 0;
+		this.action.sets[0].memfunc.rpp = points[1];
+		this.action.sets[0].memfunc.rbp = points[4];
 		
 		// Large Left Member Function
-		this.action.sets[1].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
 		this.action.sets[1].memfunc.lbp = points[0];
-		this.action.sets[1].memfunc.lpp = points[1];
-		this.action.sets[1].memfunc.rpp = points[2];
-		this.action.sets[1].memfunc.rbp = points[3];;
-		this.action.sets[1].memfunc.lc = 0;
-		this.action.sets[1].memfunc.rc = 0;
+		this.action.sets[1].memfunc.lpp = points[2];
+		this.action.sets[1].memfunc.rpp = points[5];
+		this.action.sets[1].memfunc.rbp = points[8];
 		
 		// Left Member Function
-		this.action.sets[2].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
-		this.action.sets[2].memfunc.lbp = points[0];
-		this.action.sets[2].memfunc.lpp = points[1];
-		this.action.sets[2].memfunc.rpp = points[2];
-		this.action.sets[2].memfunc.rbp = points[3];;
-		this.action.sets[2].memfunc.lc = 0;
-		this.action.sets[2].memfunc.rc = 0;
+		this.action.sets[2].memfunc.lbp = points[3];
+		this.action.sets[2].memfunc.lpp = points[6];
+		this.action.sets[2].memfunc.rpp = points[9];
+		this.action.sets[2].memfunc.rbp = points[12];
 		
 		// Slight Left Member Function
-		this.action.sets[3].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
-		this.action.sets[3].memfunc.lbp = points[0];
-		this.action.sets[3].memfunc.lpp = points[1];
-		this.action.sets[3].memfunc.rpp = points[2];
-		this.action.sets[3].memfunc.rbp = points[3];;
-		this.action.sets[3].memfunc.lc = 0;
-		this.action.sets[3].memfunc.rc = 0;
+		this.action.sets[3].memfunc.lbp = points[7];
+		this.action.sets[3].memfunc.lpp = points[10];
+		this.action.sets[3].memfunc.rpp = points[13];
+		this.action.sets[3].memfunc.rbp = points[16];
 		
 		// Center Member Function
-		this.action.sets[4].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
-		this.action.sets[4].memfunc.lbp = points[0];
-		this.action.sets[4].memfunc.lpp = points[1];
-		this.action.sets[4].memfunc.rpp = points[2];
-		this.action.sets[4].memfunc.rbp = points[3];;
-		this.action.sets[4].memfunc.lc = 0;
-		this.action.sets[4].memfunc.rc = 0;
+		this.action.sets[4].memfunc.lbp = points[11];
+		this.action.sets[4].memfunc.lpp = points[14];
+		this.action.sets[4].memfunc.rpp = points[17];
+		this.action.sets[4].memfunc.rbp = points[20];
 		
 		// Slight Right Member Function
-		this.action.sets[5].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
-		this.action.sets[5].memfunc.lbp = points[0];
-		this.action.sets[5].memfunc.lpp = points[1];
-		this.action.sets[5].memfunc.rpp = points[2];
-		this.action.sets[5].memfunc.rbp = points[3];;
-		this.action.sets[5].memfunc.lc = 0;
-		this.action.sets[5].memfunc.rc = 0;
+		this.action.sets[5].memfunc.lbp = points[15];
+		this.action.sets[5].memfunc.lpp = points[18];
+		this.action.sets[5].memfunc.rpp = points[21];
+		this.action.sets[5].memfunc.rbp = points[24];
 		
 		// Right Member Function
-		this.action.sets[6].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
-		this.action.sets[6].memfunc.lbp = points[0];
-		this.action.sets[6].memfunc.lpp = points[1];
-		this.action.sets[6].memfunc.rpp = points[2];
-		this.action.sets[6].memfunc.rbp = points[3];;
-		this.action.sets[6].memfunc.lc = 0;
-		this.action.sets[6].memfunc.rc = 0;
+		this.action.sets[6].memfunc.lbp = points[19];
+		this.action.sets[6].memfunc.lpp = points[22];
+		this.action.sets[6].memfunc.rpp = points[25];
+		this.action.sets[6].memfunc.rbp = points[28];
 		
 		// Large Right Member Function
-		this.action.sets[7].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
-		this.action.sets[7].memfunc.lbp = points[0];
-		this.action.sets[7].memfunc.lpp = points[1];
-		this.action.sets[7].memfunc.rpp = points[2];
-		this.action.sets[7].memfunc.rbp = points[3];;
-		this.action.sets[7].memfunc.lc = 0;
-		this.action.sets[7].memfunc.rc = 0;
+		this.action.sets[7].memfunc.lbp = points[23];
+		this.action.sets[7].memfunc.lpp = points[26];
+		this.action.sets[7].memfunc.rpp = points[29];
+		this.action.sets[7].memfunc.rbp = points[31];
 		
 		// Extreme Right Member Function
-		this.action.sets[8].memfunc = new Object();
-		points[0] = randomise(-600,600);
-		points[1] = randomise(-600,600);
-		points[2] = randomise(-600,600);
-		points[3] = randomise(-600,600);
-		points.sort( function(a,b) {return a - b;} );
-		this.action.sets[8].memfunc.lbp = points[0];
-		this.action.sets[8].memfunc.lpp = points[1];
-		this.action.sets[8].memfunc.rpp = points[2];
-		this.action.sets[8].memfunc.rbp = points[3];;
-		this.action.sets[8].memfunc.lc = 0;
-		this.action.sets[8].memfunc.rc = 0;
-		
-		// ********************************************************************
-		// Rules 
-		// ********************************************************************
-		this.rules = [];
-		for (iter = 0; iter < this.position.sets.length; ++iter) { // For each pos value, add an array of velocity
-			this.rules.push([]);
-			for (iter2 = 0; iter2 < this.velocity.sets.length; ++iter2) {
-				this.rules[iter].push(randomise(0,this.action.sets.length-1)); // For each combo, random action
-			}
-		}
-		
+		this.action.sets[8].memfunc.lbp = points[27];
+		this.action.sets[8].memfunc.lpp = points[30];
 		
 	}
 

@@ -8,7 +8,7 @@
 var gLoop,                              // Game loop timer
     canvas_game,   						// The canvas itself
     ctx,           						// 2d graphics context
-    FPS = 60,                           // Frames per second
+    FPS = 20,                           // Frames per second
     DEBUGMODE = true,                   // Debug mode
 	RUNTIME = 60;						// Time the game will run before ending and processing results
 

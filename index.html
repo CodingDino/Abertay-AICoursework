@@ -40,6 +40,7 @@
 			--- Check for valid controller (clamp points on membership functions as needed)
 			--- Loop until some stopping point (termination)
 			--- Visual monitoring of genetic algorithm effectiveness (best fitness function)
+			--- Export results of genetic algorithm tuning
 			- Organize website into multiple pages
 			- Graphic feedback of member functions while running
 			- DONE! - Game with track controlled by user
@@ -61,6 +62,7 @@
         <script src="Track.js"></script>
         <script src="Results.js"></script>
         <script src="Game.js"></script>
+        <script src="GeneticAlgorithm.js"></script>
 		
 		<!-- Overview -->
 		<a name="top"></a>
@@ -85,6 +87,7 @@
 					<br />5. <a href="#rules">Rules</a>
 					<br />6. <a href="#game">Game</a>
 					<br />7. <a href="#results">Results</a>
+					<br />8. <a href="#genetics">Genetic Algorithm Tuning</a>
 				</td>
 			</tr>
 		</table>
@@ -2070,8 +2073,32 @@
 			</tr>
 		</table>
 		
+		<!-- Genetic Algorithms -->
+		<a name="genetics"> </a>
+		<table width="1200px">
+			<tr>
+				<td>
+					<hr />
+					<h2>Genetic Algorithm Tuning</h2>
+					<a href="#top">[Back to the top]</a>
+					<br /><br />
+					
+					Uses a genetic algorithm to tune the controller. Run until you get a result within desired range, then export from here and import into the main controller above.
+					<br /><br />
+					<button type="button" id="game_button_user" onclick=";">Start</button> <!-- TODO -->
+					<br /><button type="button" id="game_button_auto" onclick="">Stop and Export</button>  <!-- TODO -->
+				</td>
+			</tr>
+			<tr>  <!-- Canvas -->
+				<td>
+					<canvas id="canvas_genetics"></canvas>
+				</td>
+			</tr>
+		</table>
+		
 		<!-- Game Scripts -->
 		<script>memfuncInit();</script>
         <script>initialiseGame();</script>
+		<script>initialiseGenetics();</script>
     </body>
 </html>
