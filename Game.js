@@ -10,7 +10,7 @@ var gLoop,                              // Game loop timer
     ctx,           						// 2d graphics context
     FPS = 60,                           // Frames per second
     DEBUGMODE = true,                   // Debug mode
-	RUNTIME = 40;						// Time the game will run before ending and processing results
+	RUNTIME = 60;						// Time the game will run before ending and processing results
 
 // Movement keys
 UP = 38;
@@ -144,7 +144,7 @@ function Game() {
 		game_line.logic();
 		
 		// Perform Car Logic
-		game_car.logic(game_line);
+		game_car.logic(game_line, controller);
 		
 		// Record results
 		game_results.record(game_line, game_car);

@@ -26,13 +26,13 @@ function Car() {
     // Purpose:     Handles logic for line. 
 	// Arguments:	line - the line
     // ********************************************************************
-    this.logic = function(line) {
+    this.logic = function(line, control) {
 		// Process abs_line_pos
 		this.line_rel_vel = line.velocity - this.velocity;
 		this.line_position = line.position - this.position;
 		
 		// Send through fuzzy controller
-		vel_change = controller.process(this.line_position, this.line_rel_vel);
+		vel_change = control.process(this.line_position, this.line_rel_vel);
 		
 		// Check for max acceleration
 		if (vel_change > CAR_MAX_ACC) vel_change = CAR_MAX_ACC;

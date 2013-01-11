@@ -6,6 +6,7 @@
 
 var controller = new FuzzyController();
 controller.initialise();
+controller.randomise();
 var CANVAS_WIDTH = 1200,                 
 	CANVAS_HEIGHT = 300,
 	FUNC_TOP = 50,
@@ -265,8 +266,16 @@ function testOverall() {
 // Function:    clamp()
 // Purpose:     limits value to the range min..max
 // ************************************************************************	
-clamp = function(value, min, max) {
+function clamp(value, min, max) {
 	if (value < min) value = min;
 	if (value > max) value = max;
 	return value;
+}
+
+// ************************************************************************
+// Function:    randomise()
+// Purpose:     generates an integer in the range min..max (inclusive)
+// ************************************************************************	
+function randomise(min, max) {
+	return Math.floor((Math.random()*(max-min+1))+min);
 }
