@@ -272,6 +272,16 @@ function exportController() {
 }
 
 // ************************************************************************
+// Function:    importController()
+// Purpose:     Exports the controller to string 
+// ************************************************************************
+function importController() {
+	var result = document.getElementById("input_import").value;
+	controller.importAsString(result);
+	memfuncInit();
+}
+
+// ************************************************************************
 // Function:    clamp()
 // Purpose:     limits value to the range min..max
 // ************************************************************************	
