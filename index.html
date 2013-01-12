@@ -32,14 +32,14 @@
 			- Tune main algorithm manually
 			- Genetic Algorithm Tuning
 			--- DONE! Initialization (random generate controllers)
-			--- Fitness evaluation (sped up run through track)
-			------ Ensure sped up version is working by comparing statistics with normal version
-			--- Selection of best controllers based on track results
-			--- Crossover (genetically combine best performers)
-			--- Mutation (randomly change some stats a small percentage of the time)
-			--- Check for valid controller (clamp points on membership functions as needed)
+			--- DONE! Fitness evaluation (sped up run through track)
+			------ DONE! Ensure sped up version is working by comparing statistics with normal version
+			--- DONE! Selection of best controllers based on track results
+			--- DONE! Crossover (genetically combine best performers)
+			--- DONE! Mutation (randomly change some stats a small percentage of the time)
+			--- DONE! Check for valid controller (clamp points on membership functions as needed)
 			--- Loop until some stopping point (termination)
-			--- Visual monitoring of genetic algorithm effectiveness (best fitness function)
+			--- DONE! Visual monitoring of genetic algorithm effectiveness (best fitness function)
 			--- Export results of genetic algorithm tuning
 			- Organize website into multiple pages
 			- Graphic feedback of member functions while running
@@ -85,9 +85,10 @@
 					<br />3. <a href="#action_membership">Action Membership Function</a>
 					<br />4. <a href="#testing">Testing</a>
 					<br />5. <a href="#rules">Rules</a>
-					<br />6. <a href="#game">Game</a>
-					<br />7. <a href="#results">Results</a>
-					<br />8. <a href="#genetics">Genetic Algorithm Tuning</a>
+					<br />6. <a href="#impexp">Controller Import/Export</a>
+					<br />7. <a href="#game">Game</a>
+					<br />8. <a href="#results">Results</a>
+					<br />9. <a href="#genetics">Genetic Algorithm Tuning</a>
 				</td>
 			</tr>
 		</table>
@@ -2027,6 +2028,27 @@
 					Velocity: <input id="input_testing_velocity" type="number" value="0" size="5" onchange="testOverall()"/>
 					<br />
 					Recommended Velocity Change: <input id="input_testing_action" type="number" value="0" size="5"/>
+				</td>
+			</tr>
+		</table>
+		
+		<!-- Controller Import / Export -->
+		<a name="impexp"> </a>
+		<table width="1200px">
+			<tr>
+				<td>
+					<hr />
+					<h2>Controller Import / Export</h2>
+					<a href="#top">[Back to the top]</a>
+					<br /><br />
+					
+					This section allows configured controllers to be saved or loaded. This is done via a plain text stream, so the user needs to save this text somewhere of his or her own choice.
+					<br /><br />
+					<button type="button" id="button_export" onclick="exportController()">Export</button>
+					<textarea  id="input_export" type="text" value="" cols="40" rows="5"></textarea>
+					<br />
+					<button type="button" id="button_import" onclick="">Import</button>
+					<textarea  id="input_import" type="text" value="" cols="40" rows="5"></textarea>
 				</td>
 			</tr>
 		</table>

@@ -436,6 +436,54 @@ function FuzzyController() {
 		
 	}
 
+	
+    // ********************************************************************
+    // Function:    exportAsString()
+    // Purpose:     Exports the controller in a comma separated fashion
+	//				stuiable for Excel import.
+    // ********************************************************************
+	this.exportAsString = function() {
+	
+		var export_string = "Fuzzy Controller Data";
+	
+		// For each member function...
+		variables = new Array("position", "velocity", "action");
+		for (iter1 = 0; iter1 < variables.length; ++iter1) {
+			// Record variable name
+			export_string+="\n"+variables[iter1].capitalise()+" membership functions";
+			export_string+="\nname,lbp,lpp,lc,rpp,rbp,rc"
+			for (iter2 = 0; iter2 < this[variables[iter1]].sets.length; ++iter2) {
+				// Get membership function
+				export_string+="\n"+this[variables[iter1]].sets[iter2].name;
+				export_string+=","+this[variables[iter1]].sets[iter2].memfunc.lbp;
+				export_string+=","+this[variables[iter1]].sets[iter2].memfunc.lpp;
+				export_string+=","+this[variables[iter1]].sets[iter2].memfunc.lc;
+				export_string+=","+this[variables[iter1]].sets[iter2].memfunc.rpp;
+				export_string+=","+this[variables[iter1]].sets[iter2].memfunc.rbp;
+				export_string+=","+this[variables[iter1]].sets[iter2].memfunc.rc;
+			}
+		}
+		
+		// Get rules
+		export_string+="\nRules";
+		export_string+="\nposition,velocity,action";
+		for (iter = 0; iter < this.position.sets.length; ++iter) {
+			for (iter2 = 0; iter2 < this.velocity.sets.length; ++iter2) { // Set all rules to 0 initially
+				this.rules[iter].push(0);
+				export_string+="\n";
+				export_string+=this.position.sets[iter].name+",";
+				export_string+=this.velocity.sets[iter].name+",";
+				export_string+=this.action.sets[this.rules[iter][iter2]].name;
+			}
+		}
+		
+		return export_string;
+		
+	}
+
+ 
+	
+	
     // ********************************************************************
     // Function:    process()
     // Purpose:     Given input, process using AI logic and recommend an

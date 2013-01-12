@@ -263,6 +263,15 @@ function testOverall() {
 }
 
 // ************************************************************************
+// Function:    exportController()
+// Purpose:     Exports the controller to string 
+// ************************************************************************
+function exportController() {
+	var result = controller.exportAsString();
+	document.getElementById("input_export").value = result;
+}
+
+// ************************************************************************
 // Function:    clamp()
 // Purpose:     limits value to the range min..max
 // ************************************************************************	
@@ -295,4 +304,12 @@ function choose(array) {
 // ************************************************************************	
 function choose(a,b) {
 	if (randomise(0, 1)) return a; else return b;
+}
+
+// ************************************************************************
+// Function:    capitalise()
+// Purpose:     Capitalises the first character in a string.
+// ************************************************************************	
+String.prototype.capitalise = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
 }

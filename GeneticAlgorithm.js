@@ -74,6 +74,7 @@ function GeneticAlgorithm() {
 			for (i = 0; i < NUM_SOLUTIONS; ++i) {
 				this.results[i].process(current_time - this.start_time);
 				this.controls[i].inverse_raw_fitness = this.results[i].statistics.mean_distance;
+				this.controls[i].results = this.results[i];
 				if (this.controls[i].inverse_raw_fitness > max_fitness) max_fitness = this.controls[i].inverse_raw_fitness;
 				//console.log("      Processing solution with performance: "+this.controls[i].inverse_raw_fitness)
 			}
@@ -82,15 +83,14 @@ function GeneticAlgorithm() {
 				this.controls[i].raw_fitness = max_fitness-this.controls[i].inverse_raw_fitness;
 				sum_raw_fitness += this.controls[i].raw_fitness;
 			}
-			// Draw results to screen
-			this.draw();
 			// Normallise Fitness Values
-			// Subtracts the inverse from 1 to get a fitness where closer to 1 is good, closer to 0 is bad.
 			for (i = 0; i < NUM_SOLUTIONS; ++i) {
 				this.controls[i].normalised_fitness = this.controls[i].raw_fitness / sum_raw_fitness;
 			}
 			// Sort by decending fitness values
 			this.controls.sort( function(a,b) {return b.normalised_fitness - a.normalised_fitness;} );
+			// Draw results to screen
+			this.draw(this.controls[0].results);
 			// Calculate accumulated normalised fitness values
 			var sum_normalised_fitness=0;
 			for (i = 0; i < NUM_SOLUTIONS; ++i) {
@@ -278,7 +278,7 @@ function GeneticAlgorithm() {
 		this.ctx.fillStyle = "#222";
 		
 		// Statistics
-		this.ctx.fillText("SIMULATING GENERATION "+this.generation+"...", 5, CANVAS_WIDTH-5);
+		this.ctx.fillText("SIMULATING GENERATION "+this.generation+"...", CANVAS_WIDTH-5, 5);
 		
     }
 	
@@ -286,12 +286,22 @@ function GeneticAlgorithm() {
     // Function:    draw()
     // Purpose:     Draws all game objects and text to the canvas. 
     // ********************************************************************
-    this.draw = function() {
+    this.draw = function(result) {
         // Clear the canvas to the level's bg color
         this.clear();
 		
 		// Draw current results to the screen
-		this.results[0].draw(this.ctx);
+		result.draw(this.ctx);
+		
+		// Text properties
+		this.ctx.font = '20px san-serif';
+		this.ctx.textBaseline = 'top';
+		this.ctx.textAlign = 'right';
+		this.ctx.fillStyle = "#222";
+		
+		// Statistics
+		this.ctx.fillText("DISPLAYED BEST RESULT FROM "+this.generation+".", CANVAS_WIDTH-5, 5);
+		this.ctx.fillText("SIMULATING GENERATION "+(this.generation+1)+"...", CANVAS_WIDTH-5, 25);
 		
 		
     }	
