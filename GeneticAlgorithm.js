@@ -63,25 +63,31 @@ function GeneticAlgorithm() {
 			stopGenetics();
 			
 			// Process results for all solutions
-			this.now = new Date();
-			this.current_time = this.now.getTime();
-			// draw results to screen
-			this.draw();
+			var now = new Date();
+			var current_time = now.getTime();
 			
 			// SELECTION, CROSSOVER, AND MUTATION
 			console.log("   Calculating fitness values...");
 			// Calculate raw fitness and sum raw fitnesses
 			// Actually gets the inverse, as a high mean is undesireable.
-			var sum_inverse_raw_fitness=0;
+			var max_fitness = 0;
 			for (i = 0; i < NUM_SOLUTIONS; ++i) {
-				this.results[i].process(this.current_time - this.start_time);
-				this.controls[i].inverse_raw_fitness = this.results[i].mean_distance;
-				sum_inverse_raw_fitness += this.controls[i].inverse_raw_fitness;
+				this.results[i].process(current_time - this.start_time);
+				this.controls[i].inverse_raw_fitness = this.results[i].statistics.mean_distance;
+				if (this.controls[i].inverse_raw_fitness > max_fitness) max_fitness = this.controls[i].inverse_raw_fitness;
+				//console.log("      Processing solution with performance: "+this.controls[i].inverse_raw_fitness)
 			}
+			var sum_raw_fitness=0;
+			for (i = 0; i < NUM_SOLUTIONS; ++i) {
+				this.controls[i].raw_fitness = max_fitness-this.controls[i].inverse_raw_fitness;
+				sum_raw_fitness += this.controls[i].raw_fitness;
+			}
+			// Draw results to screen
+			this.draw();
 			// Normallise Fitness Values
 			// Subtracts the inverse from 1 to get a fitness where closer to 1 is good, closer to 0 is bad.
 			for (i = 0; i < NUM_SOLUTIONS; ++i) {
-				this.controls[i].normalised_fitness = 1-(this.controls[i].inverse_raw_fitness / sum_inverse_raw_fitness);
+				this.controls[i].normalised_fitness = this.controls[i].raw_fitness / sum_raw_fitness;
 			}
 			// Sort by decending fitness values
 			this.controls.sort( function(a,b) {return b.normalised_fitness - a.normalised_fitness;} );
@@ -91,22 +97,33 @@ function GeneticAlgorithm() {
 				sum_normalised_fitness += this.controls[i].normalised_fitness;
 				this.controls[i].accumulated_normalised_fitness = sum_normalised_fitness;
 			}
+			console.log("   Top performing solution: "+this.controls[0].inverse_raw_fitness+" mean distance from line.")
 			// Create array to hold new controllers
 			var new_controllers = Array();
-			var parent1, parent2;
 			// Repeat the following until we have a new population
 			console.log("   Producing offspring...");
 			while (new_controllers.length < NUM_SOLUTIONS) {
 				// Determine R between 0 and 1;
 				var R1 = Math.random(), R2 = Math.random();
+				var parent1=0, parent2=0;
 				// Determine parent1 and parent2
 				for (iter = 0; iter < NUM_SOLUTIONS; ++iter) {
-					if (this.controls[iter].accumulated_normalised_fitness >= R1) parent1 = this.controls[iter].accumulated_normalised_fitness;
-					if (this.controls[iter].accumulated_normalised_fitness >= R2) parent2 = this.controls[iter].accumulated_normalised_fitness;
+					//console.log("      Checking solution with ANF of "+this.controls[iter].accumulated_normalised_fitness+ " against R1 = " +R1+ " and R2 = " +R2 )
+					if (!parent1 && this.controls[iter].accumulated_normalised_fitness >= R1) {
+						parent1 = this.controls[iter];
+						//console.log("      Found parent1 with performance " +parent1.inverse_raw_fitness)
+					}
+					if (!parent2 && this.controls[iter].accumulated_normalised_fitness >= R2) {
+						parent2 = this.controls[iter];
+						//console.log("      Found parent2 with performance " +parent2.inverse_raw_fitness)
+					}
+					if (parent1 && parent2) break;
 				}
 				// Use Crossover to determine offspring settings
+				//console.log("      Crossing parents with performance " +parent1.inverse_raw_fitness+ " and " +parent2.inverse_raw_fitness)
 				var offspring = this.crossover(parent1,parent2);
 				// Mutation
+				//console.log("      Checking for mutation.")
 				offspring = this.mutate(offspring);
 				// Save resulting offspring in new array;
 				new_controllers.push(offspring);
@@ -131,20 +148,47 @@ function GeneticAlgorithm() {
     // Function:    crossover()
     // Purpose:     Combines two controllers using the Uniform Crossover method
     // ********************************************************************
-    this.crossover = function(parent1,parent2) {
+    this.crossover = function(p1,p2) {
+		//console.log("         Parents passed in with performance " +p1.inverse_raw_fitness+ " and " +p2.inverse_raw_fitness);
 		var offspring = new FuzzyController();
-		var parents = new Array(parent1, parent2);
+		var parents = new Array();
+		parents[0] = p1;
+		parents[1] = p2;
+		choose(parents);
+		//console.log("         Parents passed in with performance " +parents[0].inverse_raw_fitness+ " and " +parent[1].inverse_raw_fitness);
 		offspring.initialise();
 	
 		// Fitness Function Crossover
 		variables = new Array("position", "velocity", "action");
+		var point = new Array(0,0,0,0);
 		for (iter1 = 0; iter1 < variables.length; ++iter1) {
-			for (iter2 = 0; iter2 < offspring[variables[iter1]].sets; ++iter2) {
-				offspring[variables[iter1]].sets[iter2] = choose(parents)[variables[iter1]].sets[iter2];
+			for (iter2 = 0; iter2 < offspring[variables[iter1]].sets.length; ++iter2) {
+				point[0] = choose(p1,p2)[variables[iter1]].sets[iter2].memfunc.lbp;
+				//console.log("         Parent donated point "+point[0]+" from "+variables[iter1]+" set "+iter2+" lbp")
+				point[1] = choose(p1,p2)[variables[iter1]].sets[iter2].memfunc.lpp;
+				//console.log("         Parent donated point "+point[1]+" from "+variables[iter1]+" set "+iter2+" lpp")
+				point[2] = choose(p1,p2)[variables[iter1]].sets[iter2].memfunc.rpp;
+				//console.log("         Parent donated point "+point[2]+" from "+variables[iter1]+" set "+iter2+" rpp")
+				point[3] = choose(p1,p2)[variables[iter1]].sets[iter2].memfunc.rbp;
+				//console.log("         Parent donated point "+point[3]+" from "+variables[iter1]+" set "+iter2+" rbp")
+				
+				point.sort( function(a,b) {return a - b;} );
+				
+				offspring[variables[iter1]].sets[iter2].memfunc.lbp = point[0];
+				//console.log("         Offspring assigned "+point[0]+" for "+variables[iter1]+" set "+iter2+" lbp")
+				offspring[variables[iter1]].sets[iter2].memfunc.lpp = point[1];
+				//console.log("         Offspring assigned "+point[1]+" for "+variables[iter1]+" set "+iter2+" lpp")
+				offspring[variables[iter1]].sets[iter2].memfunc.rpp = point[2];
+				//console.log("         Offspring assigned "+point[2]+" for "+variables[iter1]+" set "+iter2+" rpp")
+				offspring[variables[iter1]].sets[iter2].memfunc.rbp = point[3];
+				//console.log("         Offspring assigned "+point[3]+" for "+variables[iter1]+" set "+iter2+" rbp")
 			}
 		}
 		
-		// Note: currently not crossing over rules, nor individual parts of the fitness functions
+		// Selection of data sent to log
+		//console.log("         Offpsring formed with position center lbp of: "+offspring.position.sets[2].memfunc.lbp)
+		
+		// Note: currently not crossing over rules
 	
 		return offspring;
 	}
@@ -159,16 +203,20 @@ function GeneticAlgorithm() {
 		for (iter1 = 0; iter1 < variables.length; ++iter1) {
 			for (iter2 = 0; iter2 < controller[variables[iter1]].sets.length; ++iter2) {
 				if (Math.random() < MUTATION_CHANCE) {
-					controller[variables[iter1]].sets[iter2].lbp = randomise(-650, controller[variables[iter1]].sets[iter2].lpp);
+					controller[variables[iter1]].sets[iter2].memfunc.lbp = randomise(-650, controller[variables[iter1]].sets[iter2].memfunc.lpp);
+					//console.log("         MUTATION! "+variables[iter1]+" set "+iter2+" lbp = "+controller[variables[iter1]].sets[iter2].memfunc.lbp)
 				}
 				if (Math.random() < MUTATION_CHANCE) {
-					controller[variables[iter1]].sets[iter2].lpp = randomise(controller[variables[iter1]].sets[iter2].lbp, controller[variables[iter1]].sets[iter2].rpp);
+					controller[variables[iter1]].sets[iter2].memfunc.lpp = randomise(controller[variables[iter1]].sets[iter2].memfunc.lbp, controller[variables[iter1]].sets[iter2].memfunc.rpp);
+					//console.log("         MUTATION! "+variables[iter1]+" set "+iter2+" lpp = "+controller[variables[iter1]].sets[iter2].memfunc.lpp)
 				}
 				if (Math.random() < MUTATION_CHANCE) {
-					controller[variables[iter1]].sets[iter2].rpp = randomise(controller[variables[iter1]].sets[iter2].lpp, controller[variables[iter1]].sets[iter2].rbp);
+					controller[variables[iter1]].sets[iter2].memfunc.rpp = randomise(controller[variables[iter1]].sets[iter2].memfunc.lpp, controller[variables[iter1]].sets[iter2].memfunc.rbp);
+					//console.log("         MUTATION! "+variables[iter1]+" set "+iter2+" rpp = "+controller[variables[iter1]].sets[iter2].memfunc.rpp)
 				}
 				if (Math.random() < MUTATION_CHANCE) {
-					controller[variables[iter1]].sets[iter2].rbp = randomise(controller[variables[iter1]].sets[iter2].rpp, 650);
+					controller[variables[iter1]].sets[iter2].memfunc.rbp = randomise(controller[variables[iter1]].sets[iter2].memfunc.rpp, 650);
+					//console.log("         MUTATION! "+variables[iter1]+" set "+iter2+" rbp = "+controller[variables[iter1]].sets[iter2].memfunc.rbp)
 				}
 			}
 		}
@@ -243,7 +291,7 @@ function GeneticAlgorithm() {
         this.clear();
 		
 		// Draw current results to the screen
-		//this.results[0].draw(this.ctx);
+		this.results[0].draw(this.ctx);
 		
 		
     }	
@@ -264,6 +312,10 @@ function geneticsLoop() {
 // ********************************************************************
 function startGenetics() {
 	this_genetics.interval_ID = setInterval(geneticsLoop, 1000 / OPS);
+	
+    var now = new Date();
+    this_genetics.start_time = now.getTime();
+	
 	console.log("Simulating generation "+this_genetics.generation+"...");
 }
 

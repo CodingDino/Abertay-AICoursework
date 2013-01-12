@@ -285,6 +285,14 @@ function randomise(min, max) {
 // Purpose:     Chooses a random item from an array
 // ************************************************************************	
 function choose(array) {
-	var index = randomise(0, array.size-1);
+	var index = randomise(0, array.length-1);
 	return array[index];
+}
+
+// ************************************************************************
+// Function:    choose()
+// Purpose:     Chooses a random item from an array
+// ************************************************************************	
+function choose(a,b) {
+	if (randomise(0, 1)) return a; else return b;
 }
