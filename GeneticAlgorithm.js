@@ -9,7 +9,7 @@ var FPS = 20,                           // Frames per second
     OPS = 100,                          // Operations per second
     DEBUGMODE = true,                   // Debug mode
 	//RUNTIME = 4,						// Time the game will run before ending and processing results
-	NUM_SOLUTIONS = 100,				// Number of members of the gene pool at any given time
+	NUM_SOLUTIONS = 1000,				// Number of members of the gene pool at any given time
 	MUTATION_CHANCE = 0.0005;			// 0.05% chance of mutation
     
 // GeneticAlgorithm Class
@@ -129,18 +129,24 @@ function GeneticAlgorithm() {
 				new_controllers.push(offspring);
 			}
 			// Prepare solutions for next round of evaluation
-			console.log("   Preparing the next generation...");
-			++this.generation;
-			this.controls = new_controllers;
-			// Prepare other arrays
-			for (i = 0; i < NUM_SOLUTIONS; ++i) {
-				this.tracks[i].reset();
-				this.results[i].reset();
-				this.cars[i].reset();
-				this.lines[i].reset();
+			if (this.stopall) {
+				var result = this.controls[0].exportAsString();
+				document.getElementById("input_genetics_export").value = result;
 			}
-			this.stop = false;
-			startGenetics();
+			else {
+				console.log("   Preparing the next generation...");
+				++this.generation;
+				this.controls = new_controllers;
+				// Prepare other arrays
+				for (i = 0; i < NUM_SOLUTIONS; ++i) {
+					this.tracks[i].reset();
+					this.results[i].reset();
+					this.cars[i].reset();
+					this.lines[i].reset();
+				}
+				this.stop = false;
+				startGenetics();
+			}
 		}
     } 
 	
@@ -182,6 +188,10 @@ function GeneticAlgorithm() {
 				//console.log("         Offspring assigned "+point[2]+" for "+variables[iter1]+" set "+iter2+" rpp")
 				offspring[variables[iter1]].sets[iter2].memfunc.rbp = point[3];
 				//console.log("         Offspring assigned "+point[3]+" for "+variables[iter1]+" set "+iter2+" rbp")
+				
+				// curviness
+				offspring[variables[iter1]].sets[iter2].memfunc.lc = choose(p1,p2)[variables[iter1]].sets[iter2].memfunc.lc;
+				offspring[variables[iter1]].sets[iter2].memfunc.rc = choose(p1,p2)[variables[iter1]].sets[iter2].memfunc.rc;
 			}
 		}
 		
@@ -301,8 +311,7 @@ function GeneticAlgorithm() {
 		
 		// Statistics
 		this.ctx.fillText("DISPLAYED BEST RESULT FROM "+this.generation+".", CANVAS_WIDTH-5, 5);
-		this.ctx.fillText("SIMULATING GENERATION "+(this.generation+1)+"...", CANVAS_WIDTH-5, 25);
-		
+		if (!this.stopall) this.ctx.fillText("SIMULATING GENERATION "+(this.generation+1)+"...", CANVAS_WIDTH-5, 25);
 		
     }	
 	
@@ -335,6 +344,14 @@ function startGenetics() {
 // ********************************************************************
 function stopGenetics() {
 	if (this_genetics.interval_ID) clearInterval(this_genetics.interval_ID);
+}
+
+// ********************************************************************
+// Function:    stopCalculations()
+// Purpose:     Stops genetic calculations entirely.
+// ********************************************************************
+function stopCalculations() {
+	this_genetics.stopall = true;
 }
 
 // ********************************************************************

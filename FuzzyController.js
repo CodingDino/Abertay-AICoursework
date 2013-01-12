@@ -640,7 +640,7 @@ function FuzzyController() {
 				
 				// Given t, calculate y
 				var y = Math.pow((1-t),3) + 3*Math.pow((1-t),2)*t;
-				fuzzy_value = 1-y; // Why??????!!!!!
+				fuzzy_value = 1-y; 
 			}
 		}
 		
