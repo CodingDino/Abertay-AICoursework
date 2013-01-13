@@ -2085,7 +2085,12 @@
 					<hr />
 					<h2>Results</h2>
 					<a href="#top">[Back to the top]</a><br /><br />
-					Once the track above has completed, you can view the results here. TODO: Results export.<br /><br />
+					Once the track above has completed, you can view the results here. The export button will display the results as a stream of plain text, 
+					which can be entered into the user's data processing program of choice.
+					<br /><br />
+					<button type="button" id="button_results_export" onclick="exportResults()">Export</button>
+					<textarea  id="input_results_export" type="text" value="" cols="40" rows="5"></textarea>
+					<br /><br />
 				</td>
 			</tr>
 			<tr>  <!-- Canvas -->

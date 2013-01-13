@@ -272,6 +272,15 @@ function exportController() {
 }
 
 // ************************************************************************
+// Function:    exportResults()
+// Purpose:     Exports the results to string 
+// ************************************************************************
+function exportResults() {
+	var result = game_results.exportAsString();
+	document.getElementById("input_results_export").value = result;
+}
+
+// ************************************************************************
 // Function:    importController()
 // Purpose:     Exports the controller to string 
 // ************************************************************************

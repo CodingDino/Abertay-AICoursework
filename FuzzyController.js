@@ -544,9 +544,6 @@ function FuzzyController() {
 		}
 		
 		// Use rules to determine degree of action membership
-		// for (iter = 0; iter < act.length; ++iter) {
-			// act[iter] = this.action.sets[iter].rules.processOutput(pos, vel);
-		// }
 		for (iter = 0; iter < pos.length; ++iter) {
 			for (iter2 = 0; iter2 < vel.length; ++iter2) {
 				var act_index = this.rules[iter][iter2];

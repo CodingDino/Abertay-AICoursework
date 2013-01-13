@@ -146,6 +146,95 @@ function Results() {
 			this.statistics.median = (sorted_distance[half-1] + sorted_distance[half]) / 2.0;
 		
     }
+	
+    // ********************************************************************
+    // Function:    exportAsString()
+    // Purpose:     Exports results as a comma separated string suitable 
+	//				for Excel import
+    // ********************************************************************
+    this.exportAsString = function() {
+		
+		if(!this.statistics.total_distance) return "Please allow simulation to finish before attempting export.";
+		
+		var export_string = "";
+		
+		// Statistics
+		export_string +="\nRESULTS,";
+		export_string +="\nTotal Data Points,"+this.data_set.length+",";
+		export_string +="\nRun Time (s),"+this.statistics.runtime/1000+",";
+		export_string +="\nDEVIATION FROM COURSE,";
+		export_string +="\nSum (Overall),"+this.statistics.total_distance+",";
+		export_string +="\nMedian,"+(this.statistics.median+"").substring(0,5)+",";
+		export_string +="\nMean,"+(this.statistics.mean_distance+"").substring(0,5)+",";
+		export_string +="\nStandard Dev.,"+((this.statistics.standard_deviation+"").substring(0,5))+",";
+		
+		// Percentage Variable Set Membership
+		export_string +="\nPOSITION MEMBERSHIP %,";
+		for (iter = 0; iter < this.statistics.pos_mem_percent.length; ++iter) {
+			export_string +="\n"+controller["position"].sets[iter].name+","+((this.statistics.pos_mem_percent[iter]+"").substring(0,5))+",";
+		}
+		export_string +="\nVELOCITY MEMBERSHIP %,";
+		for (iter = 0; iter < this.statistics.vel_mem_percent.length; ++iter) {
+			export_string +="\n"+controller["velocity"].sets[iter].name+","+((this.statistics.vel_mem_percent[iter]+"").substring(0,5))+",";
+		}
+		export_string +="\nACTION MEMBERSHIP %,";
+		for (iter = 0; iter < this.statistics.act_mem_percent.length; ++iter) {
+			export_string +="\n"+controller["action"].sets[iter].name+","+((this.statistics.act_mem_percent[iter]+"").substring(0,5))+",";
+		}
+		
+		// Raw Data
+		export_string +="\nRAW DATA,";
+		export_string +="\ncar pos, line pos, car vel, line vel,rel pos, rel vel,";
+		for (iter=0; iter < this.data_set.length; ++iter) {
+			export_string +="\n";
+			export_string +=(this.data_set[iter].car_pos+"").substring(0,5)+",";
+			export_string +=(this.data_set[iter].line_pos+"").substring(0,5)+",";
+			export_string +=(this.data_set[iter].car_vel+"").substring(0,5)+",";
+			export_string +=(this.data_set[iter].line_vel+"").substring(0,5)+",";
+			export_string +=((this.data_set[iter].line_pos-this.data_set[iter].car_pos)+"").substring(0,5)+",";
+			export_string +=((this.data_set[iter].line_vel-this.data_set[iter].car_vel)+"").substring(0,5)+",";
+		}
+		
+		// Variable Set Membership
+		export_string +="\nVARIABLE SET MEMBERSHIP,";
+		export_string +="\nPosition,,,,,";
+		export_string +="Velocity,,,,,";
+		export_string +="Action,,,,,,,,,";
+		export_string +="\nFar Left,Left,Center,Right,Far Right,";
+		export_string +="Large Left,Left,Center,Right,Large Right,";
+		export_string +="Extreme Left,Large Left,Left,Slight Left,Center,Slight Right,Right,Large Right,Extreme Right,";
+		
+		for (iter2=0; iter2 < this.data_set.length; ++iter2) {
+			export_string +="\n";
+			// Position
+			var pos = new Array(0,0,0,0,0);
+			for (iter = 0; iter < 5; ++iter) {
+				pos[iter] = controller.fuzzify("position",iter,(this.data_set[iter2].line_pos-this.data_set[iter2].car_pos));
+				export_string += (pos[iter]+"").substring(0,5)+",";
+			}
+			//Velocity
+			var vel = new Array(0,0,0,0,0);
+			for (iter = 0; iter < 5; ++iter) {
+				vel[iter] = controller.fuzzify("velocity",iter,(this.data_set[iter2].line_vel-this.data_set[iter2].car_vel));
+				export_string += (vel[iter]+"").substring(0,5)+",";
+			}
+			//Action
+			var act = new Array(0,0,0,0,0,0,0,0,0);
+			for (iter = 0; iter < pos.length; ++iter) {
+				for (iter3 = 0; iter3 < vel.length; ++iter3) {
+					var act_index = controller.rules[iter][iter3];
+					act[act_index] = Math.max(act[act_index], Math.min(pos[iter],vel[iter3]));
+				}
+			}
+			for (iter = 0; iter < 9; ++iter) {
+				export_string += (act[iter]+"").substring(0,5)+",";
+			}
+		}
+		
+		
+		
+		return export_string;
+	}
     
     // ********************************************************************
     // Function:    clear()

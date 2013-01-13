@@ -5,10 +5,8 @@
 // ************************************************************************ 
 
 // Global Variables
-var FPS = 20,                           // Frames per second
-    OPS = 100,                          // Operations per second
-    DEBUGMODE = true,                   // Debug mode
-	//RUNTIME = 4,						// Time the game will run before ending and processing results
+var OPS = 100,                          // Operations per second
+    //RUNTIME = 4,						// Time the game will run before ending and processing results
 	NUM_SOLUTIONS = 1000,				// Number of members of the gene pool at any given time
 	MUTATION_CHANCE = 0.0005;			// 0.05% chance of mutation
     
