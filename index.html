@@ -16,40 +16,6 @@
         </style>
     </head>
     <body>
-	
-		<!-- TODO:
-			- DONE! - Test for input membership fuzzification
-			- DONE! - Test for action defuzzification
-			- DONE! Test for overall controller (input -> suggested action)
-			- Test for rules based on input fuzzy sets
-			- Game displays selected speed setting
-			- Way to save and load settings
-			--- Import and export via message box and plain text
-			- DONE! Code track
-			- DONE! Results display (at end or realtime update)
-			- Method to export results for Excel interpretation
-			- Tune track to get good testing set
-			- Tune main algorithm manually
-			- Genetic Algorithm Tuning
-			--- DONE! Initialization (random generate controllers)
-			--- DONE! Fitness evaluation (sped up run through track)
-			------ DONE! Ensure sped up version is working by comparing statistics with normal version
-			--- DONE! Selection of best controllers based on track results
-			--- DONE! Crossover (genetically combine best performers)
-			--- DONE! Mutation (randomly change some stats a small percentage of the time)
-			--- DONE! Check for valid controller (clamp points on membership functions as needed)
-			--- Loop until some stopping point (termination)
-			--- DONE! Visual monitoring of genetic algorithm effectiveness (best fitness function)
-			--- Export results of genetic algorithm tuning
-			- Organize website into multiple pages
-			- Graphic feedback of member functions while running
-			- DONE! - Game with track controlled by user
-			- DONE! - Game through set track
-			- DONE! - Realtime feedback while running game
-			- DONE! - Display of rules
-			- DONE! - Editing of rules
-			- ABANDONED! Curviness for Action (currently bugged)
-		-->
 		
 		<!-- Utility Scripts -->
         <!--<script src="Rule.js"></script>-->
@@ -74,6 +40,9 @@
 					This webpage is an application demonstrating a fuzzy logic controller via a simple racing game. From this page, the user can edit
 					the fuzzy logic parameters and see their results in the game. The user can choose to run the AI through a set track, or to manually
 					control the track during the game's opperation. After the run, the game will display the statistics from it's previous run.
+					<br /><br />
+					Additionally, a controller can be automatically created using a genetic algorithm optimisation. This controller can then be exported and 
+					imported into the main game applicaiton. See the specific instructions in the sections below for more information.
 					<br /><br />
 				</td>
 			</tr>
@@ -502,7 +471,7 @@
 					<hr />
 					<h2>Line Velocity Membership Function</h2>
 					<a href="#top">[Back to the top]</a><br /><br />
-					<i>Relative</i> velocity of the line with respect to the AI car, in units of pixels/second. Combines line velocity (set by course) and AI car velocity (controlled by AI).<br /><br />
+					<i>Relative</i> velocity of the line with respect to the AI car, in units of pixels/second. Combines line velocity (set by track) and AI car velocity (controlled by AI).<br /><br />
 				</td>
 			</tr>
 			<tr>
@@ -2021,7 +1990,7 @@
 					<hr />
 					<h2>Testing</h2>
 					<a href="#top">[Back to the top]</a><br /><br />
-					In this section, you can enter a test input to the overall system and get a recommended velocity change. This tests all parts of the controller at once.
+					In this section, the user can enter a test input to the overall system and get a recommended velocity change. This tests all parts of the controller at once.
 					<br /><br />
 					Position: <input id="input_testing_position" type="number" value="0" size="5" onchange="testOverall()"/>
 					<br /><br />
